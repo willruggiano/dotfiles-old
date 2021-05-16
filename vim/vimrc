@@ -1,0 +1,92 @@
+call plug#begin('~/.vim/plugged')
+
+Plug 'tpope/vim-sensible'
+Plug 'tmux-plugins/vim-tmux'
+Plug 'junegunn/fzf', { 'dir': '~/src/fzf', 'do': './install --all --no-update-rc --no-zsh --no-fish' }
+Plug 'junegunn/fzf.vim'
+Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
+Plug 'tpope/vim-eunuch'
+Plug 'ycm-core/youcompleteme'
+Plug 'tridactyl/vim-tridactyl'
+Plug 'easymotion/vim-easymotion'
+Plug 'rizzatti/dash.vim'
+Plug 'puremourning/vimspector'
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'kshenoy/vim-signature'
+Plug 'tpope/vim-fugitive'
+Plug 'cdelledonne/vim-cmake'
+Plug 'airblade/vim-gitgutter'
+Plug 'rhysd/git-messenger.vim'
+
+" Always load devions as the last one!
+Plug 'ryanoasis/vim-devicons'
+
+call plug#end()
+
+" Start NERDTree, unless a file or session is specified, eg. vim -S session_file.vim.
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists('s:std_in') && v:this_session == '' | NERDTree | endif
+" Exit Vim if NERDTree is the only window left.
+"autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+"            \ quit | endif
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+"autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+            \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+" Open the existing NERDTree on each new tab.
+"autocmd BufWinEnter * silent NERDTreeMirror
+let g:NERDTreeStatusline = '%#NonText#'
+let g:webdevicons_enable_nerdtree = 0
+
+" Disable devicons in NERDTree for now, since it isn't working
+"let g:webdevicons_enable_nerdtree = 1
+
+" Map q to fzf.vim :History
+nmap q :History:<CR>
+
+" Use the old school binding for easymotion
+map <Leader> <Plug>(easymotion-prefix)
+
+map <Leader>ygi :YcmCompleter GoToInclude<CR>
+map <Leader>ygt :YcmCompleter GoTo<CR>
+map <Leader>ygd :YcmCompleter GoToDefinition<CR>
+map <Leader>ygs :YcmCompleter GoToSymbol<Space>
+
+" \d to perform a Dash lookup
+nnoremap <leader>d :Dash<cr>
+
+" 2021-05-13 Trying out vimspector
+let g:vimspector_enable_mappings = 'HUMAN'
+
+" Some sane defaults for navigating multiple windows
+set splitright
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Some sane aesthetic defaults
+set encoding=utf8
+set wrap
+set linebreak
+set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
+set number
+set fillchars=vert:\ ,fold:-,eob:~
+set guifont=JetBrainsMono-Regular:h11
+
+syntax enable
+
+colorscheme zellner
+
+" Let clangd fully control code completion
+let g:ycm_clangd_uses_ycmd_caching = 0
+" Use installed clangd, not YCM-bundled clangd which doesn't get updates.
+let g:ycm_clangd_binary_path = exepath('clangd')
+" Default clangd arguments
+let g:ycm_clangd_args = ['--log=verbose', '--pretty', '--enable-config', '--all-scopes-completion', '--background-index']
+
+" Enable loading a .vimrc from the cwd
+set exrc
+

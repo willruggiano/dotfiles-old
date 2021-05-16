@@ -1,0 +1,26 @@
+# Folder view config files
+*.DS_Store
+*.ini
+
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# Files that might appear on external disks
+.Trashes
+
+# Compiled Python files
+*.pyc
+
+# Application specific files
+venv
+node_modules
+.sass_cache
+
+# IDEA project specific files
+*.iml
+.idea
+.project
+
+# Build files
+build

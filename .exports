@@ -1,0 +1,42 @@
+# Java
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/
+export JAVA_HOME
+
+# Editor
+export VISUAL=nvim
+export EDITOR="$VISUAL"
+
+# Usr
+export DEV_DSK='dev-dsk-wruggian-1d-8dc87e37.us-east-1.amazon.com'
+
+# Perl
+PERL5LIB="/Users/wruggian/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/Users/wruggian/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/Users/wruggian/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/Users/wruggian/perl5"; export PERL_MM_OPT;
+
+# brazil-graph
+export BRAZIL_GRAPH_SVG_VIEWER="open -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+
+# internal Amazon certs
+# see: http://btdocs-alpha.aka.corp.amazon.com/docs/codeartifact/user-guide/troubleshooting.html
+export REQUESTS_CA_BUNDLE="$HOME/.mac-ca-roots"
+
+# AWS
+export PERSONAL_AWS_ACCOUNT=204178107251
+
+# SAM
+export SAM_ASSUME_ACCOUNT_ID="$PERSONAL_AWS_ACCOUNT"
+
+# Google Cloud
+export GOOGLE_APPLICATION_CREDENTIALS=/Users/wruggian/Desktop/preferences/pypinfo-2c4108b45e19.json
+
+# Lastpass
+export LASTPASS_LOGIN='wmruggiano@gmail.com'
+export LPASS_AGENT_TIMEOUT=0
+
+# Vim
+export MANPAGER="vim -M +MANPAGER -"
+
+# Suppress the "zsh is now the default shell" warning on macOS Catalina
+export BASH_SILENCE_DEPRECATION_WARNING=1

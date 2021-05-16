@@ -1,0 +1,11 @@
+{
+    "clangd.semanticHighlighting": true,
+    "clangd.arguments": [
+        "--log=verbose",
+        "--pretty",
+        "--all-scopes-completion",
+        "--header-insertion-decorators",
+        "--enable-config",
+        "--background-index"
+    ]
+}

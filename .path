@@ -1,0 +1,14 @@
+# paths, paths and more paths
+# ---------
+PATH=/usr/local/share/npm/bin:$PATH
+PATH=/Users/wruggian/.pyenv/bin:$PATH
+PATH=/Users/wruggian/bin:$PATH
+PATH=/Users/wruggian/.toolbox/bin:$PATH
+PATH=$STUFF_HOME/../bin:$PATH
+PATH=$(brew --prefix)/bin:$PATH
+PATH=$(python -m site --user-base)/bin:$PATH
+PATH=/usr/local/go/bin:$PATH
+PATH=/opt/local/bin:$PATH
+PATH=/Users/wruggian/src/emsdk:$PATH
+
+export PATH
