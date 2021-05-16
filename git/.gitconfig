@@ -41,8 +41,6 @@
 [amazon]
 	append-cr-url = true
 	pull-request-by-default = true
-[commit]
-	template = /Users/wruggian/dev/stuff/src/WhereWruggianKeepsHisStuff/usr/.gitmessage
 [credential]
 	helper = !aws --profile highlander-build-readonly codecommit credential-helper $@
 	UseHttpPath = true

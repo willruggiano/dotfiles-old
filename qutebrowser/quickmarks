@@ -1,0 +1,6 @@
+i3/userguide https://i3wm.org/docs/userguide.html
+pam/session-management http://www.linux-pam.org/Linux-PAM-html/mwg-expected-of-module-session.html
+pam/modules https://github.com/linux-pam/linux-pam/tree/master/modules/pam_unix
+pam/lastpass-cli https://github.com/lastpass/lastpass-cli/blob/master/cmd-login.c
+pam/man-page https://linux.die.net/man/3/pam_open_session
+pam/example https://github.com/LuisRusso/PamUUID
