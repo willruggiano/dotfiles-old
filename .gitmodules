@@ -4,3 +4,108 @@
 [submodule "zsh/oh-my-zsh/plugins/zsh-nodenv"]
 	path = zsh/oh-my-zsh/plugins/zsh-nodenv
 	url = https://github.com/mattberther/zsh-nodenv.git
+[submodule "tridactyl/base16-tridactyl"]
+	path = tridactyl/base16-tridactyl
+	url = https://github.com/bezmi/base16-tridactyl.git
+[submodule "nvim/plugins/coc.nvim"]
+	path = nvim/plugins/coc.nvim
+	url = https://github.com/neoclide/coc.nvim.git
+[submodule "nvim/plugins/dash.vim"]
+	path = nvim/plugins/dash.vim
+	url = https://github.com/rizzatti/dash.vim.git
+[submodule "nvim/plugins/dashboard-nvim"]
+	path = nvim/plugins/dashboard-nvim
+	url = https://github.com/glepnir/dashboard-nvim.git
+[submodule "nvim/plugins/fzf.vim"]
+	path = nvim/plugins/fzf.vim
+	url = https://github.com/junegunn/fzf.vim.git
+[submodule "nvim/plugins/git-messenger.vim"]
+	path = nvim/plugins/git-messenger.vim
+	url = https://github.com/rhysd/git-messenger.vim.git
+[submodule "nvim/plugins/gitsigns.nvim"]
+	path = nvim/plugins/gitsigns.nvim
+	url = https://github.com/lewis6991/gitsigns.nvim.git
+[submodule "nvim/plugins/gruvbox"]
+	path = nvim/plugins/gruvbox
+	url = https://github.com/morhetz/gruvbox.git
+[submodule "nvim/plugins/limelight.vim"]
+	path = nvim/plugins/limelight.vim
+	url = https://github.com/junegunn/limelight.vim.git
+[submodule "nvim/plugins/moonlight.nvim"]
+	path = nvim/plugins/moonlight.nvim
+	url = https://github.com/shaunsingh/moonlight.nvim.git
+[submodule "nvim/plugins/nord.nvim"]
+	path = nvim/plugins/nord.nvim
+	url = https://github.com/shaunsingh/nord.nvim.git
+[submodule "nvim/plugins/nvim-tree.lua"]
+	path = nvim/plugins/nvim-tree.lua
+	url = https://github.com/kyazdani42/nvim-tree.lua.git
+[submodule "nvim/plugins/nvim-treesitter"]
+	path = nvim/plugins/nvim-treesitter
+	url = https://github.com/nvim-treesitter/nvim-treesitter.git
+[submodule "nvim/plugins/nvim-treesitter-context"]
+	path = nvim/plugins/nvim-treesitter-context
+	url = https://github.com/romgrk/nvim-treesitter-context.git
+[submodule "nvim/plugins/nvim-treesitter-refactor"]
+	path = nvim/plugins/nvim-treesitter-refactor
+	url = https://github.com/nvim-treesitter/nvim-treesitter-refactor.git
+[submodule "nvim/plugins/nvim-web-devicons"]
+	path = nvim/plugins/nvim-web-devicons
+	url = https://github.com/kyazdani42/nvim-web-devicons.git
+[submodule "nvim/plugins/playground"]
+	path = nvim/plugins/playground
+	url = https://github.com/nvim-treesitter/playground.git
+[submodule "nvim/plugins/plenary.nvim"]
+	path = nvim/plugins/plenary.nvim
+	url = https://github.com/nvim-lua/plenary.nvim.git
+[submodule "nvim/plugins/popup.nvim"]
+	path = nvim/plugins/popup.nvim
+	url = https://github.com/nvim-lua/popup.nvim.git
+[submodule "nvim/plugins/telescope-coc.nvim"]
+	path = nvim/plugins/telescope-coc.nvim
+	url = https://github.com/fannheyward/telescope-coc.nvim.git
+[submodule "nvim/plugins/telescope.nvim"]
+	path = nvim/plugins/telescope.nvim
+	url = https://github.com/nvim-telescope/telescope.nvim.git
+[submodule "nvim/plugins/vim-airline"]
+	path = nvim/plugins/vim-airline
+	url = https://github.com/vim-airline/vim-airline.git
+[submodule "nvim/plugins/vim-airline-themes"]
+	path = nvim/plugins/vim-airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes.git
+[submodule "nvim/plugins/vim-bufferline"]
+	path = nvim/plugins/vim-bufferline
+	url = https://github.com/bling/vim-bufferline.git
+[submodule "nvim/plugins/vim-cmake"]
+	path = nvim/plugins/vim-cmake
+	url = https://github.com/cdelledonne/vim-cmake.git
+[submodule "nvim/plugins/vim-code-dark"]
+	path = nvim/plugins/vim-code-dark
+	url = https://github.com/tomasiser/vim-code-dark.git
+[submodule "nvim/plugins/vim-easymotion"]
+	path = nvim/plugins/vim-easymotion
+	url = https://github.com/easymotion/vim-easymotion.git
+[submodule "nvim/plugins/vim-eunuch"]
+	path = nvim/plugins/vim-eunuch
+	url = https://github.com/tpope/vim-eunuch.git
+[submodule "nvim/plugins/vim-fugitive"]
+	path = nvim/plugins/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "nvim/plugins/vim-gitgutter"]
+	path = nvim/plugins/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter.git
+[submodule "nvim/plugins/vim-illuminate"]
+	path = nvim/plugins/vim-illuminate
+	url = https://github.com/RRethy/vim-illuminate.git
+[submodule "nvim/plugins/vim-signature"]
+	path = nvim/plugins/vim-signature
+	url = https://github.com/kshenoy/vim-signature.git
+[submodule "nvim/plugins/vim-visual-multi"]
+	path = nvim/plugins/vim-visual-multi
+	url = https://github.com/mg979/vim-visual-multi.git
+[submodule "nvim/plugins/vimspector"]
+	path = nvim/plugins/vimspector
+	url = https://github.com/puremourning/vimspector.git
+[submodule "nvim/plugins/which-key.nvim"]
+	path = nvim/plugins/which-key.nvim
+	url = https://github.com/folke/which-key.nvim.git

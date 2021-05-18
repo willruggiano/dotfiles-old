@@ -5,19 +5,15 @@ Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-bufferline'
 Plug 'cdelledonne/vim-cmake'
 Plug 'easymotion/vim-easymotion'
-"Plug 'edkolev/tmuxline.vim'
 Plug 'fannheyward/telescope-coc.nvim'
 Plug 'folke/which-key.nvim'
 Plug 'glepnir/dashboard-nvim'
-Plug 'junegunn/fzf', { 'dir': '~/src/fzf', 'do': './install --all --no-update-rc --no-bash --no-fish' }
-Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'kshenoy/vim-signature'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'kshenoy/vim-signature'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
-Plug 'morhetz/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lua/popup.nvim'
@@ -35,7 +31,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" Always last!
+" Themes!
 Plug 'morhetz/gruvbox'
 Plug 'shaunsingh/moonlight.nvim'
 Plug 'shaunsingh/nord.nvim'
@@ -49,11 +45,8 @@ autocmd VimEnter *
   \|   PlugInstall --sync | q
   \| endif
 
-
 lua require('gitsigns').setup()
 
-
-"-- treesitter
 lua <<EOF
 require('nvim-treesitter.configs').setup {
   highlight = {
@@ -67,23 +60,17 @@ require('nvim-treesitter.configs').setup {
   }
 }
 EOF
-"-- /treesitter
-
 
 lua require('telescope').load_extension('coc')
-
 
 " \d to perform a Dash lookup
 nnoremap <leader>d :Dash<cr>
 
-
 " Shortcut to open nvim-tree
 nnoremap <Leader>t :NvimTreeToggle<CR>
 
-
 " 2021-05-13 Trying out vimspector
 let g:vimspector_enable_mappings = 'HUMAN'
-
 
 " Some sane defaults for navigating multiple windows
 set splitright
@@ -92,6 +79,14 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+
+"-- cmake
+let g:cmake_jump_on_error = 0 " We do not want to focus the console
+augroup vim-cmake-group
+autocmd User CMakeBuildFailed :cfirst
+augroup END
+
+"-- /cmake
 
 "-- coc.vim
 " Some servers have issues with backup files, see #649.
@@ -168,8 +163,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+"xmap <leader>f  <Plug>(coc-format-selected)
+"nmap <leader>f  <Plug>(coc-format-selected)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -201,19 +196,21 @@ nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
 nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols.
 nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+
 "--/ coc.vim
 
 
 "-- telescope
+
 nnoremap <silent><leader>ff :Telescope git_files<CR>
 nnoremap <silent><leader>fw :Telescope grep_string<CR>
 nnoremap <silent><leader>fg :Telescope live_grep<CR>
+
 "-- /telescope
 
 
 " Specify the fuzzy finder that Dashboard uses
-let g:dashboard_default_executive = 'fzf'
-
+let g:dashboard_default_executive = 'telescope'
 
 " Nvim-tree
 let g:nvim_tree_side = 'left'
@@ -286,6 +283,7 @@ nnoremap <silent> [b :bp<CR>
 nnoremap <silent> ]b :bn<CR>
 " Quick buffer switching
 nnoremap gb :ls<CR>:buffer<Space>
+
 "-- /bufferline
 
 
@@ -302,20 +300,16 @@ set fillchars=vert:\ ,fold:-,eob:~
 set guifont=JetBrainsMono-Regular:h11
 set cmdheight=2
 
-
-"-- theme
 let g:moonlight_borders = 0
 let g:moonlight_contrast = 0
-syntax enable
-filetype plugin indent on
-colorscheme codedark
-let g:airline_theme = 'codedark'
-"-- /theme
-
 
 " Clear search highlighting
 nnoremap <silent> <A-/> :let @/=""<CR>
 
+syntax enable
+filetype plugin indent on
+colorscheme codedark
+let g:airline_theme = 'codedark'
 
 " Allow loading local, project-specific .nvimrc files
 set exrc
