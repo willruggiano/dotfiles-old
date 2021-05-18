@@ -109,3 +109,9 @@
 [submodule "nvim/plugins/which-key.nvim"]
 	path = nvim/plugins/which-key.nvim
 	url = https://github.com/folke/which-key.nvim.git
+[submodule "zsh/oh-my-zsh/plugins/zsh-syntax-highlighting"]
+	path = zsh/oh-my-zsh/plugins/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "zsh/oh-my-zsh/plugins/zsh-autosuggestions"]
+	path = zsh/oh-my-zsh/plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions

@@ -100,7 +100,9 @@ plugins=(
     zsh-interactive-cd
     zsh_reload
     # Custom plugins:
-    zsh-autocomplete
+#    zsh-autocomplete
+    zsh-autosuggestions
+    zsh-syntax-highlighting
     zsh-nodenv
     #
     fzf
@@ -112,16 +114,13 @@ ZSH_TMUX_AUTOSTART=true
 # Use keychain to manage gpg and ssh identifies.
 zstyle :omz:plugins:keychain agents gpg,ssh
 # Autoload additional identities.
-zstyle :omz:plugins:keychain identities id_github
+zstyle :omz:plugins:keychain identities github_rsa id_rsa
 zstyle :omz:plugins:keychain options --quiet
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
-source $ZSH/custom/custom.zshrc
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# Source user-specific configuration.
+source $HOME/.user.zshrc
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -130,6 +129,18 @@ else
   export EDITOR='nvim'
 fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
 
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
+
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+### End of Zinit's installer chunk

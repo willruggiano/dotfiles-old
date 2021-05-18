@@ -17,7 +17,6 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kshenoy/vim-signature'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
-Plug 'morhetz/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lua/popup.nvim'
@@ -56,15 +55,16 @@ lua require('gitsigns').setup()
 "-- treesitter
 lua <<EOF
 require('nvim-treesitter.configs').setup {
-  highlight = {
-    enable = true,              -- false will disable the whole extension
-  },
-  playground = {
-    enable = true,
-    disable = {},
-    updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-    persist_queries = false -- Whether the query persists across vim sessions
-  }
+    ensure_intalled = { 'c', 'cpp', 'dockerfile', 'go', 'java', 'json', 'lua', 'python', 'rust', 'typescript', 'yaml' },
+    highlight = {
+        enable = true,              -- false will disable the whole extension
+    },
+    playground = {
+        enable = true,
+        disable = {},
+        updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+        persist_queries = false -- Whether the query persists across vim sessions
+    }
 }
 EOF
 "-- /treesitter
