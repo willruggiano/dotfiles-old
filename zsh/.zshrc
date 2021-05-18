@@ -77,13 +77,14 @@ plugins=(
     git-flow
     golang
     gradle
+    jenv
     jsontools
     jump
     keychain
     magic-enter
     node
     npm
-    per-directory-history
+#    per-directory-history
     pip
     pyenv
     python
@@ -96,14 +97,14 @@ plugins=(
     tmuxinator
     ubuntu
     urltools
-    vi-mode
     zsh-interactive-cd
     zsh_reload
     # Custom plugins:
 #    zsh-autocomplete
     zsh-autosuggestions
-    zsh-syntax-highlighting
     zsh-nodenv
+    zsh-syntax-highlighting
+    zsh-vi-mode
     #
     fzf
 )
@@ -119,8 +120,15 @@ zstyle :omz:plugins:keychain options --quiet
 
 source $ZSH/oh-my-zsh.sh
 
-# Source user-specific configuration.
-source $HOME/.user.zshrc
+export MANPAGER='nvim +Man!'
+
+export ZVM_VISUAL_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
+
+export FZF_DEFAULT_COMMAND='rg --files'
+export FZF_DEFAULT_OPTS="--no-mouse --height 50% -1 --reverse --multi --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2>/dev/null | head -30\' --preview-window='right:hidden:wrap' --bind='f3:execute(bat --style=numbers {} || less -f {}),ctrl-p:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute-silent(echo {+} | pbcopy)'"
+export FZF_ALT_C_OPTS="--preview 'ls {}'"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_OPTS="--select-1 --exit-0 $FZF_DEFAULT_OPTS"
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -129,18 +137,8 @@ else
   export EDITOR='nvim'
 fi
 
+alias ls='ls -FG'
 
+# Source user-specific configuration.
+source $HOME/.user.zshrc
 
-### Added by Zinit's installer
-if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-        print -P "%F{160}▓▒░ The clone has failed.%f%b"
-fi
-
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-### End of Zinit's installer chunk

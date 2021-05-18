@@ -2,7 +2,7 @@ call plug#begin('~/.config/nvim/plugins')
 
 " NeoVim specific settings here
 Plug 'airblade/vim-gitgutter'
-Plug 'bling/vim-bufferline'
+"Plug 'bling/vim-bufferline'
 Plug 'cdelledonne/vim-cmake'
 Plug 'easymotion/vim-easymotion'
 "Plug 'edkolev/tmuxline.vim'
@@ -168,8 +168,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+"xmap <leader>f  <Plug>(coc-format-selected)
+"nmap <leader>f  <Plug>(coc-format-selected)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -204,11 +204,13 @@ nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
 "--/ coc.vim
 
 
-"-- telescope
-nnoremap <silent><leader>ff :Telescope git_files<CR>
-nnoremap <silent><leader>fw :Telescope grep_string<CR>
-nnoremap <silent><leader>fg :Telescope live_grep<CR>
-"-- /telescope
+"-- fzf
+nnoremap <silent><leader>ff :Files<CR>
+nnoremap <silent><leader>fd :Files<space>
+nnoremap <silent><leader>fu :Rg <C-R><C-W><CR>
+nnoremap <silent><leader>fw :Rg<CR>
+nnoremap <silent><leader>o :History<CR>
+"-- /fzf
 
 
 " Specify the fuzzy finder that Dashboard uses
@@ -285,7 +287,7 @@ let g:tmuxline_preset = {
 nnoremap <silent> [b :bp<CR>
 nnoremap <silent> ]b :bn<CR>
 " Quick buffer switching
-nnoremap gb :ls<CR>:buffer<Space>
+nnoremap gb :Buffers<CR>
 "-- /bufferline
 
 
