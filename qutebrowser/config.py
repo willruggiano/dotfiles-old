@@ -3,7 +3,7 @@ config.load_autoconfig()
 
 # additional custom aliases
 c.aliases.update({
-    'lpass': 'spawn --userscript lastpass',
+    'lpass': 'spawn --userscript qute-lastpass',
     'settings': 'open -t qute://settings'
 })
 

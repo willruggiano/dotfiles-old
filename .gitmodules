@@ -1,0 +1,6 @@
+[submodule "zsh/oh-my-zsh/plugins/zsh-autocomplete"]
+	path = zsh/oh-my-zsh/plugins/zsh-autocomplete
+	url = https://github.com/marlonrichert/zsh-autocomplete.git
+[submodule "zsh/oh-my-zsh/plugins/zsh-nodenv"]
+	path = zsh/oh-my-zsh/plugins/zsh-nodenv
+	url = https://github.com/mattberther/zsh-nodenv.git

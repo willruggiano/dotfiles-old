@@ -4,3 +4,5 @@ pam/modules https://github.com/linux-pam/linux-pam/tree/master/modules/pam_unix
 pam/lastpass-cli https://github.com/lastpass/lastpass-cli/blob/master/cmd-login.c
 pam/man-page https://linux.die.net/man/3/pam_open_session
 pam/example https://github.com/LuisRusso/PamUUID
+reading/git-flow https://jeffkreeftmeijer.com/git-flow/
+todo/keychain https://www.funtoo.org/Keychain
