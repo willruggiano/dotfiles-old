@@ -118,3 +118,6 @@
 [submodule "zsh/oh-my-zsh/plugins/zsh-vi-mode"]
 	path = zsh/oh-my-zsh/plugins/zsh-vi-mode
 	url = https://github.com/jeffreytse/zsh-vi-mode
+[submodule "nvim/plugins/powerline"]
+	path = nvim/plugins/powerline
+	url = https://github.com/powerline/powerline.git

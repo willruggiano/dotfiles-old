@@ -71,6 +71,7 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+    cargo
     dircycle
     git
     git-extras
@@ -90,6 +91,8 @@ plugins=(
     python
     ripgrep
     rsync
+    rust
+    rustup
     safe-paste
     sudo
     themes
@@ -115,10 +118,12 @@ ZSH_TMUX_AUTOSTART=true
 # Use keychain to manage gpg and ssh identifies.
 zstyle :omz:plugins:keychain agents gpg,ssh
 # Autoload additional identities.
-zstyle :omz:plugins:keychain identities github_rsa id_rsa
+zstyle :omz:plugins:keychain identities id_github id_rsa
 zstyle :omz:plugins:keychain options --quiet
 
 source $ZSH/oh-my-zsh.sh
+
+export PATH=$HOME/.cargo/bin:$PATH
 
 export MANPAGER='nvim +Man!'
 
