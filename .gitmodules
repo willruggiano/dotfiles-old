@@ -106,3 +106,6 @@
 [submodule "nvim/plugins/powerline"]
 	path = nvim/plugins/powerline
 	url = https://github.com/powerline/powerline.git
+[submodule "nvim/plugins/fzf"]
+	path = nvim/plugins/fzf
+	url = https://github.com/junegunn/fzf.git

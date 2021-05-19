@@ -178,7 +178,6 @@ zinit ice depth=1
 zinit load jeffreytse/zsh-vi-mode
 #
 zinit wait silent for \
-    from"gh-r" as"program" junegunn/fzf \
     urbainvaes/fzf-marks \
     'https://github.com/junegunn/fzf/tree/master/shell/completion.zsh' \
     'https://github.com/junegunn/fzf/tree/master/shell/key-bindings.zsh'
