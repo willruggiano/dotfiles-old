@@ -73,6 +73,7 @@ ZSH_THEME="robbyrussell"
 plugins=(
     cargo
     dircycle
+    fzf
     git
     git-extras
     git-flow
@@ -80,7 +81,6 @@ plugins=(
     gradle
     jenv
     jsontools
-    jump
     keychain
     magic-enter
     node
@@ -102,14 +102,6 @@ plugins=(
     urltools
     zsh-interactive-cd
     zsh_reload
-    # Custom plugins:
-#    zsh-autocomplete
-    zsh-autosuggestions
-    zsh-nodenv
-    zsh-syntax-highlighting
-    zsh-vi-mode
-    #
-    fzf
 )
 
 # Start TMUX by default when opening a shell.
@@ -146,4 +138,48 @@ alias ls='ls -FG'
 
 # Source user-specific configuration.
 source $HOME/.user.zshrc
+
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
+
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zinit-zsh/z-a-rust \
+    zinit-zsh/z-a-as-monitor \
+    zinit-zsh/z-a-patch-dl \
+    zinit-zsh/z-a-bin-gem-node
+
+### End of Zinit's installer chunk
+
+
+zinit load mattberther/zsh-nodenv
+#
+zinit wait silent for \
+ atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+    zdharma/fast-syntax-highlighting \
+ blockf \
+    zsh-users/zsh-completions \
+ atload"!_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions
+#
+zinit ice depth=1
+zinit load jeffreytse/zsh-vi-mode
+#
+zinit wait silent for \
+    from"gh-r" as"program" junegunn/fzf \
+    urbainvaes/fzf-marks \
+    'https://github.com/junegunn/fzf/tree/master/shell/completion.zsh' \
+    'https://github.com/junegunn/fzf/tree/master/shell/key-bindings.zsh'
 
