@@ -73,10 +73,6 @@ ZSH_THEME="robbyrussell"
 plugins=(
     cargo
     dircycle
-    fzf
-    git
-    git-extras
-    git-flow
     golang
     gradle
     jenv
@@ -100,7 +96,6 @@ plugins=(
     tmuxinator
     ubuntu
     urltools
-    zsh-interactive-cd
     zsh_reload
 )
 
@@ -181,4 +176,9 @@ zinit wait silent for \
     urbainvaes/fzf-marks \
     'https://github.com/junegunn/fzf/tree/master/shell/completion.zsh' \
     'https://github.com/junegunn/fzf/tree/master/shell/key-bindings.zsh'
+
+zinit wait silent for \
+    OMZP::git \
+    OMZP::git-extras \
+    OMZP::git-flow
 
