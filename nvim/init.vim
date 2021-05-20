@@ -9,7 +9,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'fannheyward/telescope-coc.nvim'
 Plug 'folke/which-key.nvim'
 Plug 'glepnir/dashboard-nvim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf', { 'dir': '~/.zinit/plugins/junegunn---fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'kyazdani42/nvim-tree.lua'
