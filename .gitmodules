@@ -109,3 +109,9 @@
 [submodule "nvim/plugins/fzf"]
 	path = nvim/plugins/fzf
 	url = https://github.com/junegunn/fzf.git
+[submodule "nvim/plugins/vim-repeat"]
+	path = nvim/plugins/vim-repeat
+	url = https://github.com/tpope/vim-repeat.git
+[submodule "nvim/plugins/vim-surround"]
+	path = nvim/plugins/vim-surround
+	url = https://github.com/tpope/vim-surround.git
