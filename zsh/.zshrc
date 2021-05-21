@@ -77,6 +77,7 @@ _atload_bat() {
     export FZF_CTRL_T_OPTS="--select-1 --exit-0 $FZF_DEFAULT_OPTS"
     alias bat='bat --paging=never'
     alias batp='bat --paging=auto'
+    alias cat='bat'
 }
 
 zinit ice wait lucid from"gh-r" as"program" atload"_atload_bat" mv"bat* -> bat" pick"bat/bat"
@@ -114,16 +115,16 @@ zinit wait lucid for \
     from:gh as:null atclone'src/configure' atpull'%atclone' make'-C src' atload'_atload_pyenv' pyenv/pyenv \
     from:gh as:null atinit'ln -sf ~/.zinit/plugins/pyenv---pyenv-virtualenv $(pyenv root)/plugins/pyenv-virtualenv' atload'_atload_pyenv_virtualenv' pyenv/pyenv-virtualenv
 
-_atload_omzp_tmux() {
-    export ZSH_TMUX_CONFIG=~/dotfiles/tmux/tmux.conf
+_atload_rbenv() {
+    export RBENV_ROOT="$HOME/.zinit/plugins/rbenv---rbenv"
+    export PATH="$RBENV_ROOT/bin:$PATH"
+    eval "$(rbenv init - zsh)"
+    ln -sf $(rbenv root) $HOME/.rbenv
 }
 
-ZSH_TMUX_FIXTERM=false
-ZSH_TMUX_AUTOSTART=true
-
-#zinit ice wait lucid for \
-#    atload'_atload_omzp_tmux' OMZP::tmux \
-#    OMZP::tmuxinator
+zinit wait lucid for \
+    from:gh as:null atclone'src/configure' atpull'%atclone' make'-C src' atload'_atload_rbenv' rbenv/rbenv \
+    from:gh as:null atclone'PREFIX=/usr/local ./install.sh' atpull'%atclone' rbenv/ruby-build
 
 zinit wait lucid for \
     as:completion OMZP::cargo/_cargo \
@@ -214,6 +215,7 @@ autoload colors
 colors
 
 export PATH=$HOME/.cargo/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
 
 export MANPAGER='nvim +Man!'
 
