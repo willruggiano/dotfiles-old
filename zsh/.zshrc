@@ -71,7 +71,7 @@ zinit ice wait lucid from"gh-r" as"program" atload"_atload_exa" pick"bin/exa"
 zinit light ogham/exa
 
 _atload_bat() {
-    export FZF_DEFAULT_OPTS="--no-mouse --height 50% -1 --reverse --multi --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2>/dev/null | head -30\' --preview-window='right:hidden:wrap' --bind='f3:execute(bat --style=numbers {} || less -f {}),ctrl-p:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute-silent(echo {+} | pbcopy)'"
+    export FZF_DEFAULT_OPTS="--no-mouse --height 50% -1 --reverse --multi --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2>/dev/null | head -30\' --preview-window='right:hidden:wrap' --bind='f3:execute(bat --style=numbers {} || less -f {}),ctrl-p:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute(echo lucid {+} | pbcopy)'"
     export FZF_ALT_C_OPTS="--preview 'bat {}'"
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     export FZF_CTRL_T_OPTS="--select-1 --exit-0 $FZF_DEFAULT_OPTS"
@@ -110,9 +110,9 @@ _atload_pyenv_virtualenv() {
     eval "$(pyenv virtualenv-init -)"
 }
 
-zinit silent wait for \
-    from:gh atclone'src/configure' atpull'%atclone' make'-C src' atload'_atload_pyenv' pyenv/pyenv
-#    from:gh atinit'ln -sf ~/.zinit/plugins/pyenv---pyenv-virtualenv $(pyenv root)/plugins/pyenv-virtualenv' atload'_atload_pyenv_virtualenv' pyenv/pyenv-virtualenv
+zinit wait lucid for \
+    from:gh as:null atclone'src/configure' atpull'%atclone' make'-C src' atload'_atload_pyenv' pyenv/pyenv \
+    from:gh as:null atinit'ln -sf ~/.zinit/plugins/pyenv---pyenv-virtualenv $(pyenv root)/plugins/pyenv-virtualenv' atload'_atload_pyenv_virtualenv' pyenv/pyenv-virtualenv
 
 _atload_omzp_tmux() {
     export ZSH_TMUX_CONFIG=~/dotfiles/tmux/tmux.conf
@@ -208,7 +208,7 @@ zstyle ':prompt:pure:git:stash' show yes
 zstyle :omz:plugins:keychain agents gpg,ssh
 # Autoload additional identities.
 zstyle :omz:plugins:keychain identities id_github id_rsa
-zstyle :omz:plugins:keychain options --quiet
+zstyle :omz:plugins:keychain options --quiet --ignore-missing
 
 autoload colors
 colors
