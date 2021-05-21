@@ -29,7 +29,7 @@ zinit wait lucid for \
     OMZL::git.zsh \
     atload"unalias grv" OMZP::git
 
-zinit ice from:gh as:program atlone'./autogen.sh && ./configure' atpull'%atclone' make pick:tmux
+zinit ice from:gh as:program ver:3.2 atclone'./autogen.sh && ./configure' atpull'%atclone' make pick:tmux
 zinit light tmux/tmux
 
 PS1="READY >" # provide a simple prompt till the theme loads
@@ -103,6 +103,7 @@ _atload_pyenv() {
     export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init --path)"
     eval "$(pyenv init -)"
+    ln -sf $(pyenv root) $HOME/.pyenv
 }
 
 _atload_pyenv_virtualenv() {
@@ -120,9 +121,9 @@ _atload_omzp_tmux() {
 ZSH_TMUX_FIXTERM=false
 ZSH_TMUX_AUTOSTART=true
 
-zinit ice wait lucid for \
-    atload'_atload_omzp_tmux' OMZP::tmux \
-    OMZP::tmuxinator
+#zinit ice wait lucid for \
+#    atload'_atload_omzp_tmux' OMZP::tmux \
+#    OMZP::tmuxinator
 
 zinit wait lucid for \
     as:completion OMZP::cargo/_cargo \
@@ -142,8 +143,6 @@ zinit wait lucid for \
     as:completion OMZP::rustup/_rustup \
     OMZP::safe-paste \
     OMZP::sudo \
-    OMZP::tmux \
-    OMZP::tmuxinator \
     OMZP::ubuntu \
     OMZP::urltools \
     OMZP::zsh_reload
@@ -170,6 +169,18 @@ zinit wait lucid for \
     OMZP::git \
     OMZP::git-extras \
     'https://github.com/bobthecow/git-flow-completion/blob/master/git-flow-completion.zsh'
+
+case "$OS" in
+    Darwin)
+        zinit ice wait from:gh-r ver:nightly as:program \
+            mv'nvim-* -> nvim' bpick'*macos*' pick'nvim/bin/nvim'
+        ;;
+    *)
+        zinit ice wait lucid from:gh-r ver:nightly as:program \
+            mv'nvim-* -> nvim' bpick'*linux*' pick'nvim/bin/nvim'
+        ;;
+esac
+zinit light neovim/neovim
 
 autoload -Uz compinit
 compinit
@@ -220,4 +231,6 @@ export ZVM_VISUAL_MODE_CURSOR=$ZVM_CURSOR_BEAM
 
 # Source user-specific configuration.
 source $HOME/.user.zshrc
+
+[ "$DISPLAY" ] && [ -z "$TMUX" ] && tmux new -A
 
