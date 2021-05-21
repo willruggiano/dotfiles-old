@@ -35,6 +35,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'zinit-zsh/zinit-vim-syntax'
 
 " Always last!
 Plug 'morhetz/gruvbox'

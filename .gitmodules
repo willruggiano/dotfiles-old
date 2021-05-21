@@ -115,3 +115,6 @@
 [submodule "nvim/plugins/vim-surround"]
 	path = nvim/plugins/vim-surround
 	url = https://github.com/tpope/vim-surround.git
+[submodule "nvim/plugins/zinit-vim-syntax"]
+	path = nvim/plugins/zinit-vim-syntax
+	url = https://github.com/zinit-zsh/zinit-vim-syntax.git

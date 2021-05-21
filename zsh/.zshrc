@@ -29,11 +29,10 @@ zinit wait lucid for \
     OMZL::git.zsh \
     atload"unalias grv" OMZP::git
 
-PS1="READY >" # provide a simple prompt till the theme loads
+zinit ice from:gh as:program atlone'./autogen.sh && ./configure' atpull'%atclone' make pick:tmux
+zinit light tmux/tmux
 
-#zinit wait'!' lucid for \
-#    OMZL::prompt_info_functions.zsh \
-#    OMZT::robbyrussell
+PS1="READY >" # provide a simple prompt till the theme loads
 
 export STARSHIP_CONFIG=$HOME/.config/starship.toml
 
@@ -62,7 +61,7 @@ zinit ice wait lucid from"gh" as"program" \
 zinit light junegunn/fzf
 
 _atload_exa() {
-    alias ls='exa'
+    alias ls='exa -F'
     alias la='exa -a'
     alias ll='exa -l'
     alias lla='exa -a -l'
@@ -81,13 +80,13 @@ _atload_bat() {
 }
 
 zinit ice wait lucid from"gh-r" as"program" atload"_atload_bat" mv"bat* -> bat" pick"bat/bat"
-zinit light sharkdp/bat
+zinit light @sharkdp/bat
 
 _atload_fd() {
 }
 
 zinit ice wait lucid from"gh-r" as"program" atload"_atload_fd" mv"fd* -> fd" pick"fd/fd" nocompletions
-zinit light sharkdp/fd
+zinit light @sharkdp/fd
 
 _atload_ripgrep() {
     export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git" --no-ignore'
@@ -99,8 +98,34 @@ _atload_ripgrep() {
 zinit ice wait lucid from"gh-r" as"program" atload"_atload_ripgrep" mv"ripgrep* -> rg" pick"rg/rg" nocompletions
 zinit light BurntSushi/ripgrep
 
+_atload_pyenv() {
+    export PYENV_ROOT="$HOME/.zinit/plugins/pyenv---pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
+}
+
+_atload_pyenv_virtualenv() {
+    eval "$(pyenv virtualenv-init -)"
+}
+
+zinit silent wait for \
+    from:gh atclone'src/configure' atpull'%atclone' make'-C src' atload'_atload_pyenv' pyenv/pyenv
+#    from:gh atinit'ln -sf ~/.zinit/plugins/pyenv---pyenv-virtualenv $(pyenv root)/plugins/pyenv-virtualenv' atload'_atload_pyenv_virtualenv' pyenv/pyenv-virtualenv
+
+_atload_omzp_tmux() {
+    export ZSH_TMUX_CONFIG=~/dotfiles/tmux/tmux.conf
+}
+
+ZSH_TMUX_FIXTERM=false
+ZSH_TMUX_AUTOSTART=true
+
+zinit ice wait lucid for \
+    atload'_atload_omzp_tmux' OMZP::tmux \
+    OMZP::tmuxinator
+
 zinit wait lucid for \
-    as"completion" OMZP::cargo/_cargo \
+    as:completion OMZP::cargo/_cargo \
     OMZP::dircycle \
     OMZP::golang \
     OMZP::gradle \
@@ -110,15 +135,13 @@ zinit wait lucid for \
     OMZP::magic-enter \
     OMZP::node \
     OMZP::npm \
-    OMZP::pip \
     OMZP::python \
-    as"completion" OMZP::ripgrep/_ripgrep \
+    as:completion OMZP::ripgrep/_ripgrep \
     OMZP::rsync \
-    as"completion" OMZP::rust/_rust \
-    as"completion" OMZP::rustup/_rustup \
+    as:completion OMZP::rust/_rust \
+    as:completion OMZP::rustup/_rustup \
     OMZP::safe-paste \
     OMZP::sudo \
-    OMZP::themes \
     OMZP::tmux \
     OMZP::tmuxinator \
     OMZP::ubuntu \
@@ -195,13 +218,6 @@ export ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK
 export ZVM_OPPEND_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
 export ZVM_VISUAL_MODE_CURSOR=$ZVM_CURSOR_BEAM
 
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv init --path)"
-
 # Source user-specific configuration.
 source $HOME/.user.zshrc
-
-[ "${DISPLAY}" ] && [ -z "${TMUX}" ] && tmux new -A
 
