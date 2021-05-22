@@ -32,6 +32,9 @@ zinit wait lucid for \
 zinit ice from:gh as:program ver:3.2 atclone'./autogen.sh && ./configure' atpull'%atclone' make pick:tmux
 zinit light tmux/tmux
 
+zinit ice wait:1 lucid from:gh as:program pick'bin/xpanes'
+zinit light greymd/tmux-xpanes
+
 PS1="READY >" # provide a simple prompt till the theme loads
 
 export STARSHIP_CONFIG=$HOME/.config/starship.toml
@@ -40,11 +43,10 @@ _atload_starship() {
     eval "$(starship init zsh)"
 }
 
-zinit ice wait'!' lucid from"gh-r" as"program" atload"_atload_starship"
+zinit ice wait'!' lucid from:gh-r as:program atload"_atload_starship"
 zinit load starship/starship
 
 _atload_fzf() {
-
     if [ ! -z $TMUX ]; then
         if builtin command -v fzf-tmux > /dev/null 2>&1 ; then
             alias fzf='fzf-tmux -p'
@@ -60,6 +62,15 @@ zinit ice wait lucid from"gh" as"program" \
     pick"bin/(fzf|fzf-tmux)"
 zinit light junegunn/fzf
 
+zinit ice wait lucid from:gh-r as:program pick:sad
+zinit light ms-jpq/sad
+
+zinit ice wait lucid
+zinit light hlissner/zsh-autopair
+
+zinit ice wait:2 from:gh-r as:program mv'delta* -> delta' pick'delta/delta'
+zinit light dandavison/delta
+
 _atload_exa() {
     alias ls='exa -F'
     alias la='exa -a'
@@ -67,7 +78,7 @@ _atload_exa() {
     alias lla='exa -a -l'
 }
 
-zinit ice wait lucid from"gh-r" as"program" atload"_atload_exa" pick"bin/exa"
+zinit ice wait lucid from:gh-r as:program atload"_atload_exa" pick"bin/exa"
 zinit light ogham/exa
 
 _atload_bat() {
@@ -99,6 +110,9 @@ _atload_ripgrep() {
 zinit ice wait lucid from"gh-r" as"program" atload"_atload_ripgrep" mv"ripgrep* -> rg" pick"rg/rg" nocompletions
 zinit light BurntSushi/ripgrep
 
+zinit ice wait:4 lucid from:gh-r as:program mv'yq* -> yq' pick:yq
+zinit light mikefarah/yq
+
 _atload_pyenv() {
     export PYENV_ROOT="$HOME/.zinit/plugins/pyenv---pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
@@ -128,6 +142,10 @@ zinit wait lucid for \
 
 zinit wait lucid for \
     as:completion OMZP::cargo/_cargo \
+    as:completion OMZP::rust/_rust \
+    as:completion OMZP::rustup/_rustup
+
+zinit wait lucid for \
     OMZP::dircycle \
     OMZP::golang \
     OMZP::gradle \
@@ -140,8 +158,6 @@ zinit wait lucid for \
     OMZP::python \
     as:completion OMZP::ripgrep/_ripgrep \
     OMZP::rsync \
-    as:completion OMZP::rust/_rust \
-    as:completion OMZP::rustup/_rustup \
     OMZP::safe-paste \
     OMZP::sudo \
     OMZP::ubuntu \
