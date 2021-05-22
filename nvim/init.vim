@@ -17,11 +17,11 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kshenoy/vim-signature'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
 Plug 'nvim-treesitter/playground'
 Plug 'puremourning/vimspector'

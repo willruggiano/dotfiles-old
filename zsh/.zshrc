@@ -26,6 +26,7 @@ zinit light-mode for \
 setopt promptsubst
 
 zinit wait lucid for \
+    from:gh-r as:program pick'**/bin/gh' cli/cli \
     OMZL::git.zsh \
     atload"unalias grv" OMZP::git
 
