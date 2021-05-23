@@ -38,9 +38,8 @@ zinit light greymd/tmux-xpanes
 
 PS1="READY >" # provide a simple prompt till the theme loads
 
-export STARSHIP_CONFIG=$HOME/.config/starship.toml
-
 _atload_starship() {
+    export STARSHIP_CONFIG=$HOME/.config/starship.toml
     eval "$(starship init zsh)"
 }
 
@@ -69,7 +68,7 @@ zinit light ms-jpq/sad
 zinit ice wait lucid
 zinit light hlissner/zsh-autopair
 
-zinit ice wait:2 from:gh-r as:program mv'delta* -> delta' pick'delta/delta'
+zinit ice wait:2 lucid from:gh-r as:program mv'delta* -> delta' pick'delta/delta'
 zinit light dandavison/delta
 
 _atload_exa() {

@@ -211,5 +211,4 @@ mode "$mode_launcher" {
 # startup things:
 focus_follows_mouse no
 # exec --no-startup-id unclutter-xfixes --ignore-scrolling --timeout 1
-exec --no-startup-id guake
 

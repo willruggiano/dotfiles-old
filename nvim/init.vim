@@ -17,6 +17,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kshenoy/vim-signature'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
+Plug 'mildred/vim-bufmru'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lua/popup.nvim'
@@ -94,6 +95,15 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+
+" Buffer navigation
+imap <A-B> <C-O>:BufMRUPrev<CR>
+imap <A-b> <C-O>:BufMRUNext<CR>
+map <A-B> :BufMRUPrev<CR>
+map <A-b> :BufMRUNext<CR>
+map <Tab> :BufMRUNext<CR>
+map <S-Tab> :BufMRUPrev<CR>
 
 
 "-- coc.vim
@@ -315,6 +325,13 @@ syntax enable
 filetype plugin indent on
 colorscheme codedark
 let g:airline_theme = 'codedark'
+let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_symbols.linenr = 'L'
+let g:airline_symbols.colnr = 'C'
+let g:airline_symbols.dirty = '!'
 "-- /theme
 
 

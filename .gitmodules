@@ -118,3 +118,9 @@
 [submodule "nvim/plugins/zinit-vim-syntax"]
 	path = nvim/plugins/zinit-vim-syntax
 	url = https://github.com/zinit-zsh/zinit-vim-syntax.git
+[submodule "vim-bufmru"]
+	path = vim-bufmru
+	url = https://github.com/mildred/vim-bufmru.git
+[submodule "nvim/plugins/vim-bufmru"]
+	path = nvim/plugins/vim-bufmru
+	url = https://github.com/mildred/vim-bufmru.git
