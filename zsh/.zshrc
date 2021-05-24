@@ -82,7 +82,7 @@ zinit ice wait lucid from:gh-r as:program atload"_atload_exa" pick"bin/exa"
 zinit light ogham/exa
 
 _atload_bat() {
-    export FZF_DEFAULT_OPTS="--no-mouse --height 50% -1 --reverse --multi --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2>/dev/null | head -30\' --preview-window='right:hidden:wrap' --bind='f3:execute(bat --style=numbers {} || less -f {}),ctrl-p:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute(echo lucid {+} | pbcopy)'"
+    export FZF_DEFAULT_OPTS="--no-mouse --height 50% -1 --reverse --multi --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2>/dev/null | head -30\' --preview-window='right:hidden:wrap' --bind='f3:execute(bat --style=numbers {} || less -f {}),ctrl-p:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute(echo {+} | pbcopy)'"
     export FZF_ALT_C_OPTS="--preview 'bat {}'"
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     export FZF_CTRL_T_OPTS="--select-1 --exit-0 $FZF_DEFAULT_OPTS"
@@ -110,7 +110,11 @@ _atload_ripgrep() {
 zinit ice wait lucid from"gh-r" as"program" atload"_atload_ripgrep" mv"ripgrep* -> rg" pick"rg/rg" nocompletions
 zinit light BurntSushi/ripgrep
 
-zinit ice wait:4 lucid from:gh-r as:program mv'yq* -> yq' pick:yq
+_atload_yq() {
+    eval "$(yq shell-completion zsh)"
+}
+
+zinit ice wait:4 lucid from:gh-r as:program atload'_atload_yq' mv'yq* -> yq' pick:yq
 zinit light mikefarah/yq
 
 _atload_pyenv() {
@@ -204,6 +208,10 @@ compinit
 
 zinit ice wait lucid
 zinit light Aloxaf/fzf-tab
+
+if builtin command -v fuck > /dev/null; then
+    eval "$(thefuck --alias)"
+fi
 
 # Completion settings
 zstyle ':completion:*' verbose yes

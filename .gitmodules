@@ -124,3 +124,9 @@
 [submodule "nvim/plugins/vim-bufmru"]
 	path = nvim/plugins/vim-bufmru
 	url = https://github.com/mildred/vim-bufmru.git
+[submodule "nvim/plugins/nvim-autopairs"]
+	path = nvim/plugins/nvim-autopairs
+	url = https://github.com/windwp/nvim-autopairs.git
+[submodule "nvim/plugins/nvim-colorizer.lua"]
+	path = nvim/plugins/nvim-colorizer.lua
+	url = https://github.com/norcalli/nvim-colorizer.lua.git

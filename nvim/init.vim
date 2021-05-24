@@ -19,6 +19,7 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
 Plug 'mildred/vim-bufmru'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'norcalli/nvim-colorizer.lua'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -36,6 +37,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'windwp/nvim-autopairs'
 Plug 'zinit-zsh/zinit-vim-syntax'
 
 " Always last!
@@ -52,13 +54,22 @@ autocmd VimEnter *
   \|   PlugInstall --sync | q
   \| endif
 
+set termguicolors
 
+lua require('colorizer').setup()
 lua require('gitsigns').setup()
+
+lua <<EOF
+require('nvim-autopairs').setup {
+    check_ts = true,
+}
+EOF
 
 
 "-- treesitter
 lua <<EOF
 require('nvim-treesitter.configs').setup {
+    autopairs = { enable = true },
     ensure_intalled = { 'c', 'cpp', 'dockerfile', 'go', 'java', 'json', 'lua', 'python', 'rust', 'typescript', 'yaml' },
     highlight = {
         enable = true,              -- false will disable the whole extension
