@@ -118,11 +118,8 @@ zinit ice wait:4 lucid from:gh-r as:program atload'_atload_yq' mv'yq* -> yq' pic
 zinit light mikefarah/yq
 
 _atload_pyenv() {
-    export PYENV_ROOT="$HOME/.zinit/plugins/pyenv---pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init --path)"
     eval "$(pyenv init -)"
-    ln -sf $(pyenv root) $HOME/.pyenv
 }
 
 _atload_pyenv_virtualenv() {
@@ -130,7 +127,7 @@ _atload_pyenv_virtualenv() {
 }
 
 zinit wait lucid for \
-    from:gh as:null atclone'src/configure' atpull'%atclone' make'-C src' atload'_atload_pyenv' pyenv/pyenv \
+    from:gh as:command pick:bin/pyenv atinit'export PYENV_ROOT="$PWD"; ln -sf $PYENV_ROOT $HOME/.pyenv' atclone'src/configure' atpull'%atclone' make'-C src' atload'_atload_pyenv' pyenv/pyenv \
     from:gh as:null atinit'ln -sf ~/.zinit/plugins/pyenv---pyenv-virtualenv $(pyenv root)/plugins/pyenv-virtualenv' atload'_atload_pyenv_virtualenv' pyenv/pyenv-virtualenv
 
 _atload_rbenv() {
