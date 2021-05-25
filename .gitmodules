@@ -130,3 +130,12 @@
 [submodule "nvim/plugins/vim-gitgutter"]
 	path = nvim/plugins/vim-gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
+[submodule "nvim/plugins/coc-fzf"]
+	path = nvim/plugins/coc-fzf
+	url = https://github.com/antoinemadec/coc-fzf.git
+[submodule "nvim/plugins/vim-sneak"]
+	path = nvim/plugins/vim-sneak
+	url = https://github.com/justinmk/vim-sneak.git
+[submodule "nvim/plugins/nvim-treesitter-textobjects"]
+	path = nvim/plugins/nvim-treesitter-textobjects
+	url = https://github.com/nvim-treesitter/nvim-treesitter-textobjects.git

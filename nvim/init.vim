@@ -1,16 +1,17 @@
 call plug#begin('~/.config/nvim/plugins')
 
 " NeoVim specific settings here
+Plug 'antoinemadec/coc-fzf'
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-bufferline'
 Plug 'cdelledonne/vim-cmake'
-Plug 'easymotion/vim-easymotion'
 Plug 'fannheyward/telescope-coc.nvim'
 Plug 'folke/which-key.nvim'
 Plug 'glepnir/dashboard-nvim'
 Plug 'junegunn/fzf', { 'dir': '~/.zinit/plugins/junegunn---fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'justinmk/vim-sneak'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kshenoy/vim-signature'
@@ -24,6 +25,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/playground'
 Plug 'puremourning/vimspector'
 Plug 'rhysd/git-messenger.vim'
@@ -58,13 +60,14 @@ set termguicolors
 lua require('colorizer').setup()
 lua require('gitsigns').setup()
 
+"-- nvim-autopairs
 lua <<EOF
 require('nvim-autopairs').setup {
     check_ts = true,
     disable_filetype = { 'vim' }
 }
 EOF
-
+"-- /nvim-autopairs
 
 "-- treesitter
 lua <<EOF
@@ -79,6 +82,42 @@ require('nvim-treesitter.configs').setup {
         disable = {},
         updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
         persist_queries = false -- Whether the query persists across vim sessions
+    },
+    textobjects = {
+        move = {
+            enable = true,
+            set_jumps = true, -- whether to set jumps in the jumplist
+            goto_next_start = {
+                ["]m"] = "@function.inner",
+                ["]M"] = "@function.outer",
+                ["]]"] = "@class.outer",
+            },
+            goto_next_end = {
+                ["}m"] = "@function.inner",
+                ["}M"] = "@function.outer",
+                ["}}"] = "@class.outer",
+            },
+            goto_previous_start = {
+                ["[m"] = "@function.inner",
+                ["[M"] = "@function.outer",
+                ["[["] = "@class.outer",
+            },
+            goto_previous_end = {
+                ["{m"] = "@function.inner",
+                ["{M"] = "@function.outer",
+                ["{{"] = "@class.outer",
+            },
+        },
+        select = {
+            enable = true,
+            keymaps = {
+                -- You can use the capture groups defined in textobjects.scm
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ac"] = "@class.outer",
+                ["ic"] = "@class.inner",
+            },
+        },
     }
 }
 EOF
@@ -214,18 +253,22 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
   vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
 
+"-- coc-fzf
+let g:coc_fzf_preview = ''
+let g:coc_fzf_opts = []
 " Mappings for CocList
 " Show all diagnostics.
-nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <space>a  :<C-u>CocFzfList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+nnoremap <silent><nowait> <space>e  :<C-u>CocFzfList extensions<cr>
 " Show commands.
-nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+nnoremap <silent><nowait> <space>c  :<C-u>CocFzfList commands<cr>
 " Find symbol of current document.
-nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+nnoremap <silent><nowait> <space>o  :<C-u>CocFzfList outline<cr>
 " Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
-"--/ coc.vim
+nnoremap <silent><nowait> <space>s  :<C-u>CocFzfList symbols<cr>
+"-- /coc-fzf
+"-- /coc.vim
 
 
 "-- fzf
@@ -313,6 +356,14 @@ nnoremap <silent> ]b :bn<CR>
 " Quick buffer switching
 nnoremap gb :Buffers<CR>
 "-- /bufferline
+
+
+"-- vim-sneak
+map f <Plug>Sneak_f
+map F <Plug>Sneak_F
+map t <Plug>Sneak_t
+map T <Plug>Sneak_T
+"-- /vim-sneak
 
 
 " By default timeoutlen is 1000 ms
