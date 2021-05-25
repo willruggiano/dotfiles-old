@@ -2,10 +2,9 @@ call plug#begin('~/.config/nvim/plugins')
 
 " NeoVim specific settings here
 Plug 'airblade/vim-gitgutter'
-"Plug 'bling/vim-bufferline'
+Plug 'bling/vim-bufferline'
 Plug 'cdelledonne/vim-cmake'
 Plug 'easymotion/vim-easymotion'
-"Plug 'edkolev/tmuxline.vim'
 Plug 'fannheyward/telescope-coc.nvim'
 Plug 'folke/which-key.nvim'
 Plug 'glepnir/dashboard-nvim'
@@ -62,6 +61,7 @@ lua require('gitsigns').setup()
 lua <<EOF
 require('nvim-autopairs').setup {
     check_ts = true,
+    disable_filetype = { 'vim' }
 }
 EOF
 
@@ -246,11 +246,11 @@ let g:nvim_tree_side = 'left'
 let g:nvim_tree_width = 50
 let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ]
 let g:nvim_tree_auto_open = 0
-let g:nvim_tree_auto_close = 0
+let g:nvim_tree_auto_close = 1
 let g:nvim_tree_quit_on_open = 0
 let g:nvim_tree_follow = 1
 let g:nvim_tree_indent_markers = 1
-let g:nvim_tree_hide_dotfiles = 1
+let g:nvim_tree_hide_dotfiles = 0
 let g:nvim_tree_git_hl = 1
 let g:nvim_tree_root_folder_modifier = ':~'
 let g:nvim_tree_allow_resize = 1
@@ -327,6 +327,8 @@ set number
 set fillchars=vert:\ ,fold:-,eob:~
 set guifont=JetBrainsMono-Regular:h11
 set cmdheight=2
+set number         " Show current line number
+set relativenumber " Show relative line numbers
 
 
 "-- theme
@@ -343,6 +345,7 @@ endif
 let g:airline_symbols.linenr = 'L'
 let g:airline_symbols.colnr = 'C'
 let g:airline_symbols.dirty = '!'
+let g:airline_section_z = airline#section#create_right(['%p%%'])
 "-- /theme
 
 

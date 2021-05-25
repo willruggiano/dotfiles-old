@@ -85,9 +85,6 @@
 [submodule "nvim/plugins/vim-fugitive"]
 	path = nvim/plugins/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
-[submodule "nvim/plugins/vim-gitgutter"]
-	path = nvim/plugins/vim-gitgutter
-	url = https://github.com/airblade/vim-gitgutter.git
 [submodule "nvim/plugins/vim-illuminate"]
 	path = nvim/plugins/vim-illuminate
 	url = https://github.com/RRethy/vim-illuminate.git
@@ -130,3 +127,6 @@
 [submodule "nvim/plugins/nvim-colorizer.lua"]
 	path = nvim/plugins/nvim-colorizer.lua
 	url = https://github.com/norcalli/nvim-colorizer.lua.git
+[submodule "nvim/plugins/vim-gitgutter"]
+	path = nvim/plugins/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter.git

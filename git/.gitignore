@@ -1,5 +1,5 @@
 # Folder view config files
-*.DS_Store
+.DS_Store
 *.ini
 
 # Thumbnail cache files
@@ -22,5 +22,3 @@ node_modules
 .idea
 .project
 
-# Build files
-build

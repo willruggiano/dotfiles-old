@@ -2,6 +2,9 @@
 	email = wruggian@amazon.com
 	name = Will Ruggiano
 
+[core]
+    excludesfile = ~/.config/git/.gitignore
+
 [color]
 	ui = auto
 
