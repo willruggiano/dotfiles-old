@@ -1,0 +1,15 @@
+# /Users/wruggian/.config/tmuxinator/dev-debug.yml
+
+name: dev-debug
+root: <%= @args[0] %>
+
+on_project_stop: tmux attach
+
+windows:
+  - default:
+      layout: 7528,327x93,0,0{210x93,0,0,0,116x93,211,0[116x46,211,0,5,116x46,211,47,6]}
+      panes:
+        - nvim
+        - zsh
+        - zsh
+

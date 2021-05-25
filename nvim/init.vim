@@ -1,8 +1,8 @@
 call plug#begin('~/.config/nvim/plugins')
 
 " NeoVim specific settings here
-Plug 'antoinemadec/coc-fzf'
 Plug 'airblade/vim-gitgutter'
+Plug 'antoinemadec/coc-fzf'
 Plug 'bling/vim-bufferline'
 Plug 'cdelledonne/vim-cmake'
 Plug 'fannheyward/telescope-coc.nvim'
@@ -12,6 +12,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.zinit/plugins/junegunn---fzf', 'do': './instal
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'justinmk/vim-sneak'
+Plug 'kevinoid/vim-jsonc'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kshenoy/vim-signature'
@@ -206,9 +207,9 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gy :<C-u>CocCommand fzf-preview.CocTypeDefinitions<CR>
+nmap <silent> gi :<C-u>CocCommand fzf-preview.CocImplementations<CR>
+nmap <silent> gr :<C-u>CocCommand fzf-preview.CocReferences<CR>
 nmap <silent> <Leader>a :CocCommand clangd.switchSourceHeader<CR>
 
 " Use K to show documentation in preview window.
@@ -273,6 +274,7 @@ nnoremap <silent><nowait> <space>s  :<C-u>CocFzfList symbols<cr>
 
 "-- fzf
 nnoremap <silent><leader>ff :Files<CR>
+nnoremap <silent><leader>fg :<C-u>CocCommand fzf-preview.GitFiles<CR>
 nnoremap <silent><leader>fd :Files<space>
 nnoremap <silent><leader>fu :Rg <C-R><C-W><CR>
 nnoremap <silent><leader>fw :Rg<CR>
