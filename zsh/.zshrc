@@ -128,7 +128,8 @@ _atload_pyenv_virtualenv() {
 
 zinit wait lucid for \
     from:gh as:command pick:bin/pyenv atinit'export PYENV_ROOT="$PWD"; ln -sf $PYENV_ROOT $HOME/.pyenv' atclone'src/configure' atpull'%atclone' make'-C src' atload'_atload_pyenv' pyenv/pyenv \
-    from:gh as:null atinit'ln -sf ~/.zinit/plugins/pyenv---pyenv-virtualenv $(pyenv root)/plugins/pyenv-virtualenv' atload'_atload_pyenv_virtualenv' pyenv/pyenv-virtualenv
+    from:gh as:null atinit'ln -sf ~/.zinit/plugins/pyenv---pyenv-virtualenv $(pyenv root)/plugins/pyenv-virtualenv' atload'_atload_pyenv_virtualenv' pyenv/pyenv-virtualenv \
+    as:null id-as:pipx atinit'export PATH="$HOME/.local/bin:$PATH"' zdharma/null
 
 _atload_rbenv() {
     export RBENV_ROOT="$HOME/.zinit/plugins/rbenv---rbenv"
@@ -252,7 +253,6 @@ setopt auto_param_keys
 setopt extended_glob
 
 export PATH=$HOME/.cargo/bin:$PATH
-export PATH=$HOME/.local/bin:$PATH
 
 export MANPAGER='nvim +Man!'
 

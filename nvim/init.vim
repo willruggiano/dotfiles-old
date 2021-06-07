@@ -3,7 +3,6 @@ call plug#begin('~/.config/nvim/plugins')
 " NeoVim specific settings here
 Plug 'airblade/vim-gitgutter'
 Plug 'antoinemadec/coc-fzf'
-Plug 'bling/vim-bufferline'
 Plug 'cdelledonne/vim-cmake'
 Plug 'fannheyward/telescope-coc.nvim'
 Plug 'folke/which-key.nvim'
@@ -61,15 +60,6 @@ set termguicolors
 lua require('colorizer').setup()
 lua require('gitsigns').setup()
 
-"-- nvim-autopairs
-lua <<EOF
-require('nvim-autopairs').setup {
-    check_ts = true,
-    disable_filetype = { 'vim' }
-}
-EOF
-"-- /nvim-autopairs
-
 "-- treesitter
 lua <<EOF
 require('nvim-treesitter.configs').setup {
@@ -125,6 +115,18 @@ EOF
 "-- /treesitter
 
 
+"-- nvim-autopairs
+lua <<EOF
+local npairs = require('nvim-autopairs')
+npairs.setup {
+    check_ts = true,
+    disable_filetype = { 'vim' }
+}
+EOF
+"-- /nvim-autopairs
+
+
+
 lua require('telescope').load_extension('coc')
 
 
@@ -158,6 +160,8 @@ map <S-Tab> :BufMRUPrev<CR>
 
 
 "-- coc.vim
+let g:coc_global_extensions = [ 'coc-clangd', 'coc-clang-format-style-options', 'coc-cmake', 'coc-fzf-preview', 'coc-git', 'coc-json', 'coc-pyright' ]
+
 " Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
@@ -168,12 +172,7 @@ set shortmess+=c
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-if has("nvim-0.5.0") || has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
+set signcolumn=yes
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -210,6 +209,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy :<C-u>CocCommand fzf-preview.CocTypeDefinitions<CR>
 nmap <silent> gi :<C-u>CocCommand fzf-preview.CocImplementations<CR>
 nmap <silent> gr :<C-u>CocCommand fzf-preview.CocReferences<CR>
+nnoremap <Leader>G :<C-u>CocCommand fzf-preview.ProjectGrep<Space>
 nmap <silent> <Leader>a :CocCommand clangd.switchSourceHeader<CR>
 
 " Use K to show documentation in preview window.
@@ -258,16 +258,19 @@ endif
 let g:coc_fzf_preview = ''
 let g:coc_fzf_opts = []
 " Mappings for CocList
-" Show all diagnostics.
-nnoremap <silent><nowait> <space>a  :<C-u>CocFzfList diagnostics<cr>
-" Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocFzfList extensions<cr>
-" Show commands.
-nnoremap <silent><nowait> <space>c  :<C-u>CocFzfList commands<cr>
-" Find symbol of current document.
-nnoremap <silent><nowait> <space>o  :<C-u>CocFzfList outline<cr>
-" Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocFzfList symbols<cr>
+nnoremap <silent><nowait> <space>a  :<C-u>CocFzfList actions<CR>
+nnoremap <silent><nowait> <space>c  :<C-u>CocFzfList commands<CR>
+nnoremap <silent><nowait> <space>da :<C-u>CocFzfList diagnostics<CR>
+nnoremap <silent><nowait> <space>db :<C-u>CocFzfList diagnostics<CR>
+nnoremap <silent><nowait> <space>e  :<C-u>CocFzfList extensions<CR>
+nnoremap <silent><nowait> <space>o  :<C-u>CocFzfList outline<CR>
+nnoremap <silent><nowait> <space>s  :<C-u>CocFzfList symbols<CR>
+" Quick buffer switching
+nnoremap <silent><nowait> gb        :<C-u>CocCommand fzf-preview.Buffers<CR>
+" Mappings for coc-git
+nnoremap <silent><nowait> <space>f  :<C-u>CocCommand fzf-preview.GitFiles<CR>
+nnoremap <silent><nowait> <space>gl :<C-u>CocCommand fzf-preview.GitLogs<CR>
+nnoremap <silent><nowait> <space>gs :<C-u>CocCommand fzf-preview.GitStatus<CR>
 "-- /coc-fzf
 "-- /coc.vim
 
@@ -355,8 +358,6 @@ let g:tmuxline_preset = {
 " Move to previous/next
 nnoremap <silent> [b :bp<CR>
 nnoremap <silent> ]b :bn<CR>
-" Quick buffer switching
-nnoremap gb :Buffers<CR>
 "-- /bufferline
 
 
