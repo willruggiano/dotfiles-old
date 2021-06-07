@@ -201,10 +201,18 @@ case "$OS" in
 esac
 zinit light neovim/neovim
 
-zinit ice wait lucid from'git.zx2c4.com' as:program \
-    atclone'cp src/completion/pass.zsh-completion _pass_completion' atpull'%atclone' \
-    make'PREFIX=$ZPFX install' pick'$ZPFX/bin/pass'
-zinit light password-store
+function _atload_pass() {
+    export PASSWORD_STORE_ENABLE_EXTENSIONS=true
+}
+
+zinit wait lucid for \
+  from'git.zx2c4.com' as:program \
+  atclone'cp src/completion/pass.zsh-completion _pass_completion' atpull'%atclone' atload'_atload_pass' \
+  make'PREFIX=$ZPFX install' pick'$ZPFX/bin/pass' \
+    password-store \
+  from:gh as:null atclone'' atpull'%atclone' make'PREFIX=$ZPFX LIBDIR=$PREFIX BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' tadfisher/pass-otp \
+  from:gh as:null atclone'' atpull'%atclone' make'PREFIX=$ZPFX install' roddhjav/pass-update
+
 
 autoload -Uz compinit
 compinit
