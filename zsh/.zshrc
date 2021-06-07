@@ -26,7 +26,7 @@ zinit light-mode for \
 setopt promptsubst
 
 zinit wait lucid for \
-    from:gh-r as:program pick'**/bin/gh' cli/cli \
+    from:gh-r as:program pick'usr/bin/gh' cli/cli \
     OMZL::git.zsh \
     atload"unalias grv" OMZP::git
 
@@ -199,6 +199,11 @@ case "$OS" in
         ;;
 esac
 zinit light neovim/neovim
+
+zinit ice wait lucid from'git.zx2c4.com' as:program \
+    atclone'cp src/completion/pass.zsh-completion _pass_completion' atpull'%atclone' \
+    make'PREFIX=$ZPFX install' pick'$ZPFX/bin/pass'
+zinit light password-store
 
 autoload -Uz compinit
 compinit
