@@ -21,12 +21,14 @@ config.bind('bd', 'bookmark-del')
 config.unbind('\'')  # as we will use standard vim mark/jump semantics
 config.bind('m', 'enter-mode set_mark')
 config.bind('`', 'enter-mode jump_mark')
-# pass bindings
-config.bind(',P', 'spawn --userscript qute-pass --password-only')
-config.bind(',p', 'spawn --userscript qute-pass')
 
-# using gvim requires absolute path
-c.editor.command = ['/usr/local/bin/nvim', '-f', '{file}', '-c', 'normal {line}G{column0}l']
+import platform
+if platform.system() == 'Linux':
+    # pass bindings (only on ubuntu for now)
+    config.bind(',P', 'spawn --userscript qute-pass --password-only')
+    config.bind(',p', 'spawn --userscript qute-pass')
+
+c.editor.command = ['alacritty', "-e 'nvim -f {file} -c normal {line}G{column0}l'"]
 
 # default start page/search engine
 c.url.default_page = 'https://google.com'
