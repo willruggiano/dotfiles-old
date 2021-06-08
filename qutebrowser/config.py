@@ -28,7 +28,7 @@ if platform.system() == 'Linux':
     config.bind(',P', 'spawn --userscript qute-pass --password-only')
     config.bind(',p', 'spawn --userscript qute-pass')
 
-c.editor.command = ['alacritty', "-e 'nvim -f {file} -c normal {line}G{column0}l'"]
+c.editor.command = ['/usr/local/bin/alacritty', '-e', '/bin/zsh', '-c', '/usr/local/bin/nvim --noplugin +"call cursor({line},{column0})" {file}']
 
 # default start page/search engine
 c.url.default_page = 'https://google.com'
