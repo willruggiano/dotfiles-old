@@ -56,6 +56,7 @@ autocmd VimEnter *
   \| endif
 
 set termguicolors
+filetype plugin on
 
 lua require('colorizer').setup()
 lua require('gitsigns').setup()
@@ -213,7 +214,7 @@ nnoremap <Leader>G :<C-u>CocCommand fzf-preview.ProjectGrep<Space>
 nmap <silent> <Leader>a :CocCommand clangd.switchSourceHeader<CR>
 
 " Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+"nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -275,14 +276,21 @@ nnoremap <silent><nowait> <space>gs :<C-u>CocCommand fzf-preview.GitStatus<CR>
 "-- /coc.vim
 
 
-"-- fzf
+"-- fzf and ripgrep
 nnoremap <silent><leader>ff :Files<CR>
 nnoremap <silent><leader>fg :<C-u>CocCommand fzf-preview.GitFiles<CR>
 nnoremap <silent><leader>fd :Files<space>
 nnoremap <silent><leader>fu :Rg <C-R><C-W><CR>
 nnoremap <silent><leader>fw :Rg<CR>
 nnoremap <silent><leader>o :History<CR>
-"-- /fzf
+
+if executable('rg')
+    set grepprg=rg\ --vimgrep\ --smart-case\ --follow
+endif
+
+cnoreabbrev fzf FZF
+cnoreabbrev rg Rg
+"-- /fzf and ripgrep
 
 
 " Specify the fuzzy finder that Dashboard uses
@@ -405,6 +413,12 @@ let g:airline_section_z = airline#section#create_right(['%p%%'])
 
 " Clear search highlighting
 nnoremap <silent> <A-/> :let @/=""<CR>
+
+" Abbreviations
+cnoreabbrev cmake CMakeGenerate
+cnoreabbrev build CMakeBuild
+cnoreabbrev git Git
+cnoreabbrev h vert help
 
 
 " Allow loading local, project-specific .nvimrc files
