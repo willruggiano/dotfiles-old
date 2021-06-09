@@ -1,3 +1,5 @@
+[[ -f $HOME/.user.before.zshrc ]] && source $HOME/.user.before.zshrc
+
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
@@ -214,6 +216,11 @@ zinit wait lucid for \
   from:gh as:null make'PREFIX=$ZPFX install' roddhjav/pass-update \
   from:gh as:null make'PREFIX=$ZPFX BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' palortoff/pass-extension-tail
 
+if [[ -z "$_ZSHRC_DISABLE_EMSDK" ]]; then
+    zinit ice wait lucid from:gh as:program pick:emsdk nocompletions
+    zinit light emscripten-core/emsdk
+fi
+
 autoload -Uz compinit
 compinit
 
@@ -265,11 +272,7 @@ export PATH=$HOME/.cargo/bin:$PATH
 export MANPAGER='nvim +Man!'
 
 # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
-else
-  export EDITOR='nvim'
-fi
+export EDITOR='nvim'
 
 export ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BEAM
 export ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK
@@ -277,7 +280,7 @@ export ZVM_OPPEND_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
 export ZVM_VISUAL_MODE_CURSOR=$ZVM_CURSOR_BEAM
 
 # Source user-specific configuration.
-source $HOME/.user.zshrc
+[[ -f $HOME/.user.zshrc ]] && source $HOME/.user.zshrc
 
 [ "$DISPLAY" ] && [ -z "$TMUX" ] && tmux new -A
 

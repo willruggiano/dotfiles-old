@@ -36,6 +36,7 @@ c.editor.command = ['/usr/local/bin/alacritty', '-e', '/bin/zsh', '-c', '/usr/lo
 c.url.default_page = 'https://google.com'
 c.url.start_pages = ['https://google.com']
 c.url.searchengines.update({
+    'github': 'https://github.com/{}',
     'google': 'https://google.com/search?q={}',
     'code': 'https://code.amazon.com/search?term={}',
     'package': 'https://code.amazon.com/packages/{}/trees/mainline'
