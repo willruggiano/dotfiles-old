@@ -24,9 +24,11 @@ config.bind('`', 'enter-mode jump_mark')
 
 import platform
 if platform.system() == 'Linux':
-    # pass bindings (only on ubuntu for now)
+    # pass bindings
     config.bind(',P', 'spawn --userscript qute-pass --password-only')
     config.bind(',p', 'spawn --userscript qute-pass')
+    # mpv bindings (maybe for macOS too?)
+    config.bind(';v', 'hint links spawn mpv {hint-url}')
 
 c.editor.command = ['/usr/local/bin/alacritty', '-e', '/bin/zsh', '-c', '/usr/local/bin/nvim --noplugin +"call cursor({line},{column0})" {file}']
 

@@ -207,7 +207,7 @@ function _atload_pass() {
 
 zinit wait lucid for \
   from'git.zx2c4.com' as:program \
-  atclone'cp src/completion/pass.zsh-completion _pass_completion' atpull'%atclone' atload'_atload_pass' \
+  atclone'cp src/completion/pass.zsh-completion _pass_completion; cp contrib/dmenu/passmenu $ZPFX/bin/' atpull'%atclone' atload'_atload_pass' \
   make'PREFIX=$ZPFX install' pick'$ZPFX/bin/pass' \
     password-store \
   from:gh as:null make'PREFIX=$ZPFX LIBDIR=$ZPFX/lib BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' tadfisher/pass-otp \
