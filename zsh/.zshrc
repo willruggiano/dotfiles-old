@@ -231,20 +231,11 @@ if [[ -z "$_ZSHRC_DISABLE_EMSDK" ]]; then
     zinit light emscripten-core/emsdk
 fi
 
-function _atload_mpv() {
-    # So qutebrowser can find it.
-    ln -sf $ZPFX/bin/mpv /usr/local/bin/mpv
-}
-
 case "$OS" in
     Darwin)
-        # On macOS we use IINA instead of mpv.
-        zinit ice wait lucid from:gh-r as:program extract'' pick'IINA.app/Contents/MacOS/iina-cli' nocompletions \
-            atload'ln -sf $(pwd)/IINA.app/Contents/MacOS/iina-cli /usr/local/bin/mpv'
-        zinit light iina/iina
+        # On macOS we use install mpv through homebrew.
         ;;
     *)
-        # On Linux we use mpv.
         # N.B. Requires lua5.1 (package manager) and youtube-dl (pip)
         zinit wait lucid for \
             as:program pick'$ZPFX/bin/mpv' \
