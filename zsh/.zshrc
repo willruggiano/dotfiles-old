@@ -221,6 +221,19 @@ if [[ -z "$_ZSHRC_DISABLE_EMSDK" ]]; then
     zinit light emscripten-core/emsdk
 fi
 
+function _atload_mpv() {
+    # So qutebrowser can find it.
+    ln -sf $ZPFX/bin/mpv /usr/local/bin/mpv
+}
+
+# N.B. Requires lua5.1 (package manager) and youtube-dl (pip)
+zinit wait lucid for \
+    as:program pick'$ZPFX/bin/mpv' \
+        atclone'PREFIX=$ZPFX ./rebuild -j$(nproc)' atpull'%atclone' atload'_atload_mpv' \
+        nocompletions \
+        mpv-player/mpv-build \
+    as:completion 'https://github.com/mpv-player/mpv/blob/master/etc/_mpv.zsh'
+
 autoload -Uz compinit
 compinit
 
@@ -244,7 +257,6 @@ zstyle ':completion:*' group-name ''
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-separator '-->'
 zstyle ':completion:*:manuals' separate-sections true
-zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 zstyle ':prompt:pure:git:stash' show yes
 # Use keychain to manage gpg and ssh identifies.
