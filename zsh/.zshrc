@@ -1,3 +1,6 @@
+OS=$(uname -s)
+export GPG_TTY=$TTY
+
 [[ -f $HOME/.user.before.zshrc ]] && source $HOME/.user.before.zshrc
 
 ### Added by Zinit's installer
@@ -191,14 +194,21 @@ zinit wait lucid for \
     OMZP::git-extras \
     'https://github.com/bobthecow/git-flow-completion/blob/master/git-flow-completion.zsh'
 
+function _atload_nvim() {
+    export MANPAGER='nvim +Man!'
+    export EDITOR='nvim'
+}
+
 case "$OS" in
     Darwin)
         zinit ice wait from:gh-r ver:nightly as:program \
-            mv'nvim-* -> nvim' bpick'*macos*' pick'nvim/bin/nvim'
+            mv'nvim-* -> nvim' bpick'*macos*' pick'nvim/bin/nvim' \
+            atload'_atload_nvim'
         ;;
     *)
         zinit ice wait lucid from:gh-r ver:nightly as:program \
-            mv'nvim-* -> nvim' bpick'*linux*' pick'nvim/bin/nvim'
+            mv'nvim-* -> nvim' bpick'*linux*' pick'nvim/bin/nvim' \
+            atload'_atload_nvim'
         ;;
 esac
 zinit light neovim/neovim
@@ -226,13 +236,25 @@ function _atload_mpv() {
     ln -sf $ZPFX/bin/mpv /usr/local/bin/mpv
 }
 
-# N.B. Requires lua5.1 (package manager) and youtube-dl (pip)
-zinit wait lucid for \
-    as:program pick'$ZPFX/bin/mpv' \
-        atclone'PREFIX=$ZPFX ./rebuild -j$(nproc)' atpull'%atclone' atload'_atload_mpv' \
-        nocompletions \
-        mpv-player/mpv-build \
-    as:completion 'https://github.com/mpv-player/mpv/blob/master/etc/_mpv.zsh'
+case "$OS" in
+    Darwin)
+        # On macOS we use IINA instead of mpv.
+        zinit ice wait lucid from:gh-r as:program extract'' pick'IINA.app/Contents/MacOS/iina-cli' nocompletions \
+            atload'ln -sf $(pwd)/IINA.app/Contents/MacOS/iina-cli /usr/local/bin/mpv'
+        zinit light iina/iina
+        ;;
+    *)
+        # On Linux we use mpv.
+        # N.B. Requires lua5.1 (package manager) and youtube-dl (pip)
+        zinit wait lucid for \
+            as:program pick'$ZPFX/bin/mpv' \
+                atclone'PREFIX=$ZPFX ./rebuild -j$(nproc)' atpull'%atclone' atload'ln -sf $ZPFX/bin/mpv /usr/local/bin/mpv' \
+                nocompletions \
+                mpv-player/mpv-build \
+            as:completion 'https://github.com/mpv-player/mpv/blob/master/etc/_mpv.zsh'
+        ;;
+esac
+
 
 autoload -Uz compinit
 compinit
@@ -281,10 +303,6 @@ setopt extended_glob
 
 export PATH=$HOME/.cargo/bin:$PATH
 
-export MANPAGER='nvim +Man!'
-
-# Preferred editor for local and remote sessions
-export EDITOR='nvim'
 
 export ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BEAM
 export ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK
