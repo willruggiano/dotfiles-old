@@ -237,9 +237,10 @@ case "$OS" in
         ;;
     *)
         # N.B. Requires lua5.1 (package manager) and youtube-dl (pip)
+        # Qutebrowser will need: update-alternatives --install /usr/local/bin/mpv mpv $ZPFX/bin/mpv 100
         zinit wait lucid for \
             as:program pick'$ZPFX/bin/mpv' \
-                atclone'PREFIX=$ZPFX ./rebuild -j$(nproc)' atpull'%atclone' atload'ln -sf $ZPFX/bin/mpv /usr/local/bin/mpv' \
+                atclone'PREFIX=$ZPFX ./rebuild -j$(nproc)' atpull'%atclone' \
                 nocompletions \
                 mpv-player/mpv-build \
             as:completion 'https://github.com/mpv-player/mpv/blob/master/etc/_mpv.zsh'
