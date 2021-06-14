@@ -1,6 +1,5 @@
 call plug#begin('~/.config/nvim/plugins')
 
-" NeoVim specific settings here
 Plug 'airblade/vim-gitgutter'
 Plug 'antoinemadec/coc-fzf'
 Plug 'cdelledonne/vim-cmake'
@@ -276,7 +275,6 @@ if executable('rg')
     set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 endif
 
-cnoreabbrev fzf FZF
 cnoreabbrev rg Rg
 "-- /fzf and ripgrep
 
