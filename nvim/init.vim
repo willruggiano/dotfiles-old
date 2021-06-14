@@ -5,6 +5,7 @@ Plug 'antoinemadec/coc-fzf'
 Plug 'cdelledonne/vim-cmake'
 Plug 'folke/which-key.nvim'
 Plug 'glepnir/dashboard-nvim'
+Plug 'hashivim/vim-terraform'
 Plug 'junegunn/fzf', { 'dir': '~/.zinit/plugins/junegunn---fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim'
@@ -361,6 +362,11 @@ map F <Plug>Sneak_F
 map t <Plug>Sneak_t
 map T <Plug>Sneak_T
 "-- /vim-sneak
+
+
+"-- vim-terraform
+let g:terraform_align = 1
+let g:terraform_fmt_on_save = 1
 
 
 " By default timeoutlen is 1000 ms

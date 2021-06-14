@@ -6,3 +6,5 @@ pam/man-page https://linux.die.net/man/3/pam_open_session
 pam/example https://github.com/LuisRusso/PamUUID
 reading/git-flow https://jeffkreeftmeijer.com/git-flow/
 todo/keychain https://www.funtoo.org/Keychain
+trezor/wallet wallet.trezor.io
+tmux/cheathseet https://gist.github.com/henrik/1967800

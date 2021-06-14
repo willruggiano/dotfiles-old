@@ -13,3 +13,4 @@ settings:
     https://www.youtube.com: false
   content.register_protocol_handler:
     https://mail.google.com?extsrc=mailto&url=%25s: true
+    https://wallet.trezor.io#/send/%25s: true

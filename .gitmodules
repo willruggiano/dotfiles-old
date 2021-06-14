@@ -154,3 +154,6 @@
 [submodule "nvim/plugins/vim-jsonc"]
 	path = nvim/plugins/vim-jsonc
 	url = https://github.com/kevinoid/vim-jsonc.git
+[submodule "nvim/plugins/vim-terraform"]
+	path = nvim/plugins/vim-terraform
+	url = https://github.com/hashivim/vim-terraform.git

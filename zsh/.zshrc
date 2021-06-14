@@ -158,7 +158,6 @@ zinit wait lucid for \
     OMZP::gradle \
     OMZP::jenv \
     OMZP::jsontools \
-    OMZP::keychain \
     OMZP::magic-enter \
     OMZP::node \
     OMZP::npm \
@@ -218,13 +217,14 @@ function _atload_pass() {
 }
 
 zinit wait lucid for \
-  from'git.zx2c4.com' as:program \
-  atclone'cp src/completion/pass.zsh-completion _pass_completion; cp contrib/dmenu/passmenu $ZPFX/bin/' atpull'%atclone' atload'_atload_pass' \
-  make'PREFIX=$ZPFX install' pick'$ZPFX/bin/pass' \
-    password-store \
-  from:gh as:null make'PREFIX=$ZPFX LIBDIR=$ZPFX/lib BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' tadfisher/pass-otp \
-  from:gh as:null make'PREFIX=$ZPFX install' roddhjav/pass-update \
-  from:gh as:null make'PREFIX=$ZPFX BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' palortoff/pass-extension-tail
+    from'git.zx2c4.com' as:program \
+        atclone'cp src/completion/pass.zsh-completion _pass_completion; cp contrib/dmenu/passmenu $ZPFX/bin/' atpull'%atclone' atload'_atload_pass' \
+        make'PREFIX=$ZPFX install' pick'$ZPFX/bin/pass' \
+        password-store \
+    as:null make'PREFIX=$ZPFX LIBDIR=$ZPFX/lib BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' tadfisher/pass-otp \
+    as:null make'PREFIX=$ZPFX install' roddhjav/pass-update \
+    as:null make'PREFIX=$ZPFX BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' palortoff/pass-extension-tail \
+    as:null make'PREFIX=$ZPFX BINDIR=$ZPFX/bin BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' rjekker/pass-extension-meta
 
 if [[ -z "$_ZSHRC_DISABLE_EMSDK" ]]; then
     zinit ice wait lucid from:gh as:program pick:emsdk nocompletions
@@ -248,6 +248,7 @@ case "$OS" in
 esac
 
 
+
 autoload -Uz compinit
 compinit
 
@@ -256,6 +257,8 @@ zinit light Aloxaf/fzf-tab
 
 if builtin command -v fuck > /dev/null; then
     eval "$(thefuck --alias)"
+else
+    echo 'fuck: not found; skipping set up'
 fi
 
 # Completion settings
@@ -273,11 +276,15 @@ zstyle ':completion:*' list-separator '-->'
 zstyle ':completion:*:manuals' separate-sections true
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 zstyle ':prompt:pure:git:stash' show yes
-# Use keychain to manage gpg and ssh identifies.
-zstyle :omz:plugins:keychain agents gpg,ssh
-# Autoload additional identities.
-zstyle :omz:plugins:keychain identities id_github id_rsa
-zstyle :omz:plugins:keychain options --quiet --ignore-missing
+
+#### Keychain / GPG / SSH ####
+if builtin command -v gpgconf > /dev/null; then
+    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+else
+    echo 'gpgconf: not found; not setting SSH_AUTH_SOCK'
+fi
+
+keychain --quiet --ignore-missing --agents gpg 
 
 autoload colors
 colors
@@ -295,14 +302,26 @@ setopt extended_glob
 
 export PATH=$HOME/.cargo/bin:$PATH
 
-
 export ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BEAM
 export ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK
 export ZVM_OPPEND_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
 export ZVM_VISUAL_MODE_CURSOR=$ZVM_CURSOR_BEAM
+
+function encrypt() {
+    local out="$1.$(date +%s).enc"
+    gpg --encrypt --armor --output $out -r wmruggiano@gmail.com "$1" && echo "$1 -> $out"
+}
+
+function decrypt() {
+    local out=$(echo "$1" | rev | cut -c16- | rev)
+    gpg --decrypt --output $out "$1" && echo "$1 -> $out"
+}
 
 # Source user-specific configuration.
 [[ -f $HOME/.user.zshrc ]] && source $HOME/.user.zshrc
 
 [ "$DISPLAY" ] && [ -z "$TMUX" ] && tmux new -A
 
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/bin/terraform terraform
