@@ -4,7 +4,6 @@ call plug#begin('~/.config/nvim/plugins')
 Plug 'airblade/vim-gitgutter'
 Plug 'antoinemadec/coc-fzf'
 Plug 'cdelledonne/vim-cmake'
-Plug 'fannheyward/telescope-coc.nvim'
 Plug 'folke/which-key.nvim'
 Plug 'glepnir/dashboard-nvim'
 Plug 'junegunn/fzf', { 'dir': '~/.zinit/plugins/junegunn---fzf', 'do': './install --bin' }
@@ -22,7 +21,6 @@ Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
@@ -126,11 +124,6 @@ npairs.setup {
 EOF
 "-- /nvim-autopairs
 
-
-
-lua require('telescope').load_extension('coc')
-
-
 " \d to perform a Dash lookup
 nnoremap <leader>d :Dash<cr>
 
@@ -194,11 +187,6 @@ if has('nvim')
 else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
-
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.

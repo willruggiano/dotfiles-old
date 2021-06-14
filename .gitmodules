@@ -55,12 +55,6 @@
 [submodule "nvim/plugins/popup.nvim"]
 	path = nvim/plugins/popup.nvim
 	url = https://github.com/nvim-lua/popup.nvim.git
-[submodule "nvim/plugins/telescope-coc.nvim"]
-	path = nvim/plugins/telescope-coc.nvim
-	url = https://github.com/fannheyward/telescope-coc.nvim.git
-[submodule "nvim/plugins/telescope.nvim"]
-	path = nvim/plugins/telescope.nvim
-	url = https://github.com/nvim-telescope/telescope.nvim.git
 [submodule "nvim/plugins/vim-airline"]
 	path = nvim/plugins/vim-airline
 	url = https://github.com/vim-airline/vim-airline.git
