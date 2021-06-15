@@ -6,6 +6,9 @@
 [core]
     excludesfile = ~/.config/git/.gitignore
 
+[credential "https://github.com"]
+    helper = !gh auth git-credential
+
 [color]
 	ui = auto
 
