@@ -1,5 +1,4 @@
 OS=$(uname -s)
-export GPG_TTY=$TTY
 
 [[ -f $HOME/.user.before.zshrc ]] && source $HOME/.user.before.zshrc
 
@@ -255,7 +254,7 @@ compinit
 zinit ice wait lucid
 zinit light Aloxaf/fzf-tab
 
-if builtin command -v fuck > /dev/null; then
+if command -v fuck > /dev/null; then
     eval "$(thefuck --alias)"
 else
     echo 'fuck: not found; skipping set up'
@@ -278,13 +277,16 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 zstyle ':prompt:pure:git:stash' show yes
 
 #### Keychain / GPG / SSH ####
-if builtin command -v gpgconf > /dev/null; then
-    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-else
-    echo 'gpgconf: not found; not setting SSH_AUTH_SOCK'
+KEYCHAIN_AGENTS="${KEYCHAIN_AGENTS:-gpg}"
+if pgrep gpg-agent > /dev/null; then
+    export GPG_AGENT_INFO="~/.gnupg/S.gpg-agent:$(pgrep gpg-agent):1"
 fi
-
-keychain --quiet --ignore-missing --agents gpg 
+if command -v keychain > /dev/null; then
+    eval $(keychain --quiet --ignore-missing  --eval --gpg2 --agents $KEYCHAIN_AGENTS --inherit any $KEYCHAIN_IDENTITIES)
+fi
+if pgrep gpg-agent > /dev/null; then
+    export GPG_TTY=$TTY
+fi
 
 autoload colors
 colors

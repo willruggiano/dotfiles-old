@@ -111,6 +111,8 @@ require('nvim-treesitter.configs').setup {
     }
 }
 EOF
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
 "-- /treesitter
 
 
@@ -128,8 +130,13 @@ EOF
 nnoremap <leader>d :Dash<cr>
 
 
-" Shortcut to open nvim-tree
-nnoremap <Leader>t :NvimTreeToggle<CR>
+"-- "toggle" keybinds
+nnoremap <leader>tt :NvimTreeToggle<CR>
+"--/ "toggle" keybinds
+
+
+au CmdLineEnter * set norelativenumber | redraw
+au CmdlineLeave * set relativenumber
 
 
 " 2021-05-13 Trying out vimspector
@@ -350,11 +357,6 @@ let g:tmuxline_preset = {
       \'y'    : '#W %R',
       \'z'    : '#H'}
 
-" Move to previous/next
-nnoremap <silent> [b :bp<CR>
-nnoremap <silent> ]b :bn<CR>
-"-- /bufferline
-
 
 "-- vim-sneak
 map f <Plug>Sneak_f
@@ -367,6 +369,7 @@ map T <Plug>Sneak_T
 "-- vim-terraform
 let g:terraform_align = 1
 let g:terraform_fmt_on_save = 1
+"--/ vim-terraform
 
 
 " By default timeoutlen is 1000 ms
