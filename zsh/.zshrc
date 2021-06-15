@@ -33,7 +33,7 @@ zinit wait lucid for \
     from:gh-r as:program bpick'*.tar.gz' pick'**/bin/gh' cli/cli \
     OMZL::git.zsh \
     atload"unalias grv" OMZP::git \
-    as:program from:gh make'PREFIX=$ZPFX install' nvie/gitflow
+    as:program from:gh make'install prefix=$ZPFX' nvie/gitflow
 
 zinit ice from:gh as:program ver:3.2 atclone'./autogen.sh && ./configure' atpull'%atclone' make pick:tmux
 zinit light tmux/tmux
