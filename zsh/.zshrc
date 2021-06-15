@@ -30,7 +30,7 @@ zinit light-mode for \
 setopt promptsubst
 
 zinit wait lucid for \
-    from:gh-r as:program pick'usr/bin/gh' cli/cli \
+    from:gh-r as:program bpick'*.tar.gz' pick'**/bin/gh' cli/cli \
     OMZL::git.zsh \
     atload"unalias grv" OMZP::git
 
@@ -58,13 +58,10 @@ _atload_fzf() {
     fi
 }
 
-zinit ice wait lucid from"gh" as"program" \
-    make"install" \
-    atclone"cp shell/completion.zsh _fzf" \
-    atpull"%atclone" \
-    atload"_atload_fzf" \
-    pick"bin/(fzf|fzf-tmux)"
-zinit light junegunn/fzf
+zinit wait lucid for \
+    as:program pick'**/bin/(go|gofmt)' extract'!' 'https://golang.org/dl/go1.16.5.linux-amd64.tar.gz' \
+    as:program from:gh atclone'./install --bin && cp shell/completion.zsh _fzf' atpull'%atclone' \
+	    junegunn/fzf
 
 zinit ice wait lucid from:gh-r as:program pick:sad
 zinit light ms-jpq/sad
@@ -144,7 +141,7 @@ _atload_rbenv() {
 
 zinit wait lucid for \
     from:gh as:null atclone'src/configure' atpull'%atclone' make'-C src' atload'_atload_rbenv' rbenv/rbenv \
-    from:gh as:null atclone'PREFIX=/usr/local ./install.sh' atpull'%atclone' rbenv/ruby-build
+    from:gh as:null atclone'PREFIX=$ZPFX ./install.sh' atpull'%atclone' rbenv/ruby-build
 
 zinit wait lucid for \
     as:completion OMZP::cargo/_cargo \
@@ -230,23 +227,33 @@ if [[ -z "$_ZSHRC_DISABLE_EMSDK" ]]; then
     zinit light emscripten-core/emsdk
 fi
 
+if [[ -z "$SSH_TTY" ]]; then
+    case "$OS" in
+        Darwin)
+            # On macOS we use install mpv through homebrew.
+            ;;
+        *)
+            # N.B. Requires lua5.1 (package manager) and youtube-dl (pip)
+            # Qutebrowser will need: update-alternatives --install /usr/local/bin/mpv mpv $ZPFX/bin/mpv 100
+            zinit wait lucid for \
+                as:program pick'$ZPFX/bin/mpv' \
+                    atclone'PREFIX=$ZPFX ./rebuild -j$(nproc)' atpull'%atclone' \
+                    nocompletions \
+                    mpv-player/mpv-build \
+                as:completion 'https://github.com/mpv-player/mpv/blob/master/etc/_mpv.zsh'
+            ;;
+    esac
+fi
+
 case "$OS" in
     Darwin)
-        # On macOS we use install mpv through homebrew.
+        zinit ice wait lucid as:program from:gh-r bpick'*macos*.dmg' pick:bin/cmake
         ;;
     *)
-        # N.B. Requires lua5.1 (package manager) and youtube-dl (pip)
-        # Qutebrowser will need: update-alternatives --install /usr/local/bin/mpv mpv $ZPFX/bin/mpv 100
-        zinit wait lucid for \
-            as:program pick'$ZPFX/bin/mpv' \
-                atclone'PREFIX=$ZPFX ./rebuild -j$(nproc)' atpull'%atclone' \
-                nocompletions \
-                mpv-player/mpv-build \
-            as:completion 'https://github.com/mpv-player/mpv/blob/master/etc/_mpv.zsh'
+        zinit ice wait lucid as:program from:gh-r extract'!' bpick'*linux-x86*.tar.gz' pick'**/bin/cmake'
         ;;
 esac
-
-
+zinit light Kitware/CMake
 
 autoload -Uz compinit
 compinit
