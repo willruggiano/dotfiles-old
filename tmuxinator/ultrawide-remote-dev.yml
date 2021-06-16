@@ -1,0 +1,18 @@
+# /Users/wruggian/.config/tmuxinator/ultrawide-remote-dev.yml
+
+name: ultrawide-remote-dev
+root: ~
+
+windows:
+  - editor:
+      layout: 848a,491x95,0,0{332x95,0,0,0,158x95,333,0[158x17,333,0,1,158x77,333,18,2]}
+      panes:
+        - main:
+          - ssh dev-desktop
+          - kinit && mwinit -o
+        - htop:
+          - ssh dev-desktop
+          - htop
+        - term:
+          - ssh dev-desktop
+
