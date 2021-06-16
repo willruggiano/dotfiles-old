@@ -10,5 +10,6 @@
     ],
     "git.enableGutters": false,
     "signature.target": "float",
-    "signature.preferShownAbove": false
+    "signature.preferShownAbove": false,
+    "clangd.path": "/home/wruggian/.config/coc/extensions/coc-clangd-data/install/12.0.0/clangd_12.0.0/bin/clangd"
 }

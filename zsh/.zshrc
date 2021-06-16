@@ -64,7 +64,8 @@ _atload_fzf() {
 
 zinit wait lucid for \
     as:program pick'**/bin/(go|gofmt)' extract'!' 'https://golang.org/dl/go1.16.5.linux-amd64.tar.gz' \
-    as:program from:gh atclone'./install --bin && cp shell/completion.zsh _fzf' atpull'%atclone' \
+    as:program from:gh pick:'bin/(fzf|fzf-tmux)' \
+        atclone'./install --bin && cp shell/completion.zsh _fzf' atpull'%atclone' \
 	    junegunn/fzf
 
 zinit ice wait lucid from:gh-r as:program pick:sad
