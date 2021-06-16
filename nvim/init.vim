@@ -6,6 +6,7 @@ Plug 'cdelledonne/vim-cmake'
 Plug 'folke/which-key.nvim'
 Plug 'glepnir/dashboard-nvim'
 Plug 'hashivim/vim-terraform'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'junegunn/fzf', { 'dir': '~/.zinit/plugins/junegunn---fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim'
@@ -414,6 +415,7 @@ cnoreabbrev cmake CMakeGenerate
 cnoreabbrev build CMakeBuild
 cnoreabbrev git Git
 cnoreabbrev h vert help
+cnoreabbrev md MarkdownPreview
 
 
 " Allow loading local, project-specific .nvimrc files

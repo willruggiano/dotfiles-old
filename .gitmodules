@@ -157,3 +157,6 @@
 [submodule "nvim/plugins/vim-terraform"]
 	path = nvim/plugins/vim-terraform
 	url = https://github.com/hashivim/vim-terraform.git
+[submodule "nvim/plugins/markdown-preview.nvim"]
+	path = nvim/plugins/markdown-preview.nvim
+	url = https://github.com/iamcco/markdown-preview.nvim.git
