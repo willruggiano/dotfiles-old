@@ -121,9 +121,6 @@
 [submodule "nvim/plugins/nvim-colorizer.lua"]
 	path = nvim/plugins/nvim-colorizer.lua
 	url = https://github.com/norcalli/nvim-colorizer.lua.git
-[submodule "nvim/plugins/vim-gitgutter"]
-	path = nvim/plugins/vim-gitgutter
-	url = https://github.com/airblade/vim-gitgutter.git
 [submodule "nvim/plugins/coc-fzf"]
 	path = nvim/plugins/coc-fzf
 	url = https://github.com/antoinemadec/coc-fzf.git
@@ -160,3 +157,6 @@
 [submodule "nvim/plugins/markdown-preview.nvim"]
 	path = nvim/plugins/markdown-preview.nvim
 	url = https://github.com/iamcco/markdown-preview.nvim.git
+[submodule "nvim/plugins/indent-blankline.nvim"]
+	path = nvim/plugins/indent-blankline.nvim
+	url = https://github.com/lukas-reineke/indent-blankline.nvim.git

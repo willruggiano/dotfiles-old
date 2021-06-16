@@ -1,6 +1,5 @@
 call plug#begin('~/.config/nvim/plugins')
 
-Plug 'airblade/vim-gitgutter'
 Plug 'antoinemadec/coc-fzf'
 Plug 'cdelledonne/vim-cmake'
 Plug 'folke/which-key.nvim'
@@ -16,6 +15,7 @@ Plug 'kyazdani42/nvim-tree.lua'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kshenoy/vim-signature'
 Plug 'lewis6991/gitsigns.nvim'
+Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
 Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
 Plug 'mildred/vim-bufmru'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
@@ -58,7 +58,43 @@ set termguicolors
 filetype plugin on
 
 lua require('colorizer').setup()
-lua require('gitsigns').setup()
+lua <<EOF
+require('gitsigns').setup {
+    signs = {
+        add = {
+            hl = 'GitSignsAdd',
+            text = '+',
+            numhl = 'GitSignsAddNr',
+            linehl = 'GitSignsAddLn'
+        },
+        change = {
+            hl = 'GitSignsChange',
+            text = '~',
+            numhl = 'GitSignsChangeNr',
+            linehl = 'GitSignsChangeLn'
+        },
+        delete = {
+            hl = 'GitSignsDelete',
+            text = '-',
+            numhl = 'GitSignsDeleteNr',
+            linehl = 'GitSignsDeleteLn'
+        },
+        topdelete = {
+            hl = 'GitSignsDelete',
+            text = '-',
+            numhl = 'GitSignsDeleteNr',
+            linehl = 'GitSignsDeleteLn'
+        },
+        changedelete = {
+            hl = 'GitSignsChange',
+            text = '-',
+            numhl = 'GitSignsChangeNr',
+            linehl = 'GitSignsChangeLn'
+        },
+    },
+    current_line_blame = true
+}
+EOF
 
 "-- treesitter
 lua <<EOF
@@ -66,7 +102,7 @@ require('nvim-treesitter.configs').setup {
     autopairs = { enable = true },
     ensure_intalled = { 'c', 'cpp', 'dockerfile', 'go', 'java', 'json', 'lua', 'python', 'rust', 'typescript', 'yaml' },
     highlight = {
-        enable = true,              -- false will disable the whole extension
+        enable = true  -- false will disable the whole extension
     },
     playground = {
         enable = true,
