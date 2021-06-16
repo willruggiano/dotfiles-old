@@ -27,6 +27,7 @@ if platform.system() == 'Linux':
     # pass bindings
     config.bind(',P', 'spawn --userscript qute-pass --password-only')
     config.bind(',p', 'spawn --userscript qute-pass')
+    config.bind(',o', 'spawn --userscript qute-pass -o')
     # mpv bindings
     config.bind(';v', 'hint links spawn mpv {hint-url}')
 elif platform.system() == 'Darwin':
