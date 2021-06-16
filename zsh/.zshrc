@@ -62,8 +62,17 @@ _atload_fzf() {
     fi
 }
 
+export GO_VERSION="1.16.5"
+case "$OS" in
+    Darwin)
+        GOLANG_URL="https://golang.org/dl/go$GO_VERSION.darwin-amd64.tar.gz"
+        ;;
+    *)
+        GOLANG_URL="https://golang.org/dl/go$GO_VERSION.linux-amd64.tar.gz"
+        ;;
+esac
 zinit wait lucid for \
-    as:program pick'**/bin/(go|gofmt)' extract'!' 'https://golang.org/dl/go1.16.5.linux-amd64.tar.gz' \
+    as:program pick'**/bin/(go|gofmt)' extract'!' "$GOLANG_URL" \
     as:program from:gh pick:'bin/(fzf|fzf-tmux)' \
         atclone'./install --bin && cp shell/completion.zsh _fzf' atpull'%atclone' \
 	    junegunn/fzf
