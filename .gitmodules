@@ -19,18 +19,12 @@
 [submodule "nvim/plugins/gitsigns.nvim"]
 	path = nvim/plugins/gitsigns.nvim
 	url = https://github.com/lewis6991/gitsigns.nvim.git
-[submodule "nvim/plugins/gruvbox"]
-	path = nvim/plugins/gruvbox
-	url = https://github.com/morhetz/gruvbox.git
 [submodule "nvim/plugins/limelight.vim"]
 	path = nvim/plugins/limelight.vim
 	url = https://github.com/junegunn/limelight.vim.git
 [submodule "nvim/plugins/moonlight.nvim"]
 	path = nvim/plugins/moonlight.nvim
 	url = https://github.com/shaunsingh/moonlight.nvim.git
-[submodule "nvim/plugins/nord.nvim"]
-	path = nvim/plugins/nord.nvim
-	url = https://github.com/shaunsingh/nord.nvim.git
 [submodule "nvim/plugins/nvim-tree.lua"]
 	path = nvim/plugins/nvim-tree.lua
 	url = https://github.com/kyazdani42/nvim-tree.lua.git
@@ -55,21 +49,9 @@
 [submodule "nvim/plugins/popup.nvim"]
 	path = nvim/plugins/popup.nvim
 	url = https://github.com/nvim-lua/popup.nvim.git
-[submodule "nvim/plugins/vim-airline"]
-	path = nvim/plugins/vim-airline
-	url = https://github.com/vim-airline/vim-airline.git
-[submodule "nvim/plugins/vim-airline-themes"]
-	path = nvim/plugins/vim-airline-themes
-	url = https://github.com/vim-airline/vim-airline-themes.git
-[submodule "nvim/plugins/vim-bufferline"]
-	path = nvim/plugins/vim-bufferline
-	url = https://github.com/bling/vim-bufferline.git
 [submodule "nvim/plugins/vim-cmake"]
 	path = nvim/plugins/vim-cmake
 	url = https://github.com/cdelledonne/vim-cmake.git
-[submodule "nvim/plugins/vim-code-dark"]
-	path = nvim/plugins/vim-code-dark
-	url = https://github.com/tomasiser/vim-code-dark.git
 [submodule "nvim/plugins/vim-easymotion"]
 	path = nvim/plugins/vim-easymotion
 	url = https://github.com/easymotion/vim-easymotion.git
@@ -94,9 +76,6 @@
 [submodule "nvim/plugins/which-key.nvim"]
 	path = nvim/plugins/which-key.nvim
 	url = https://github.com/folke/which-key.nvim.git
-[submodule "nvim/plugins/powerline"]
-	path = nvim/plugins/powerline
-	url = https://github.com/powerline/powerline.git
 [submodule "nvim/plugins/fzf"]
 	path = nvim/plugins/fzf
 	url = https://github.com/junegunn/fzf.git
@@ -109,9 +88,6 @@
 [submodule "nvim/plugins/zinit-vim-syntax"]
 	path = nvim/plugins/zinit-vim-syntax
 	url = https://github.com/zinit-zsh/zinit-vim-syntax.git
-[submodule "vim-bufmru"]
-	path = vim-bufmru
-	url = https://github.com/mildred/vim-bufmru.git
 [submodule "nvim/plugins/vim-bufmru"]
 	path = nvim/plugins/vim-bufmru
 	url = https://github.com/mildred/vim-bufmru.git
@@ -119,7 +95,7 @@
 	path = nvim/plugins/nvim-autopairs
 	url = https://github.com/windwp/nvim-autopairs.git
 [submodule "nvim/plugins/nvim-colorizer.lua"]
-	path = nvim/plugins/nvim-colorizer.lua
+    path = nvim/plugins/nvim-colorizer.lua
 	url = https://github.com/norcalli/nvim-colorizer.lua.git
 [submodule "nvim/plugins/coc-fzf"]
 	path = nvim/plugins/coc-fzf
@@ -160,3 +136,9 @@
 [submodule "nvim/plugins/indent-blankline.nvim"]
 	path = nvim/plugins/indent-blankline.nvim
 	url = https://github.com/lukas-reineke/indent-blankline.nvim.git
+[submodule "nvim/plugins/lualine.nvim"]
+	path = nvim/plugins/lualine.nvim
+	url = https://github.com/hoob3rt/lualine.nvim.git
+[submodule "nvim/plugins/onedark.nvim"]
+	path = nvim/plugins/onedark.nvim
+	url = https://github.com/ful1e5/onedark.nvim.git

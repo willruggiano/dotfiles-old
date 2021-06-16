@@ -35,16 +35,12 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'windwp/nvim-autopairs'
 Plug 'zinit-zsh/zinit-vim-syntax'
 
-" Always last!
-Plug 'morhetz/gruvbox'
-Plug 'shaunsingh/moonlight.nvim'
-Plug 'shaunsingh/nord.nvim'
-Plug 'tomasiser/vim-code-dark'
+" Themes, and statusline
+Plug 'hoob3rt/lualine.nvim'
+Plug 'ful1e5/onedark.nvim'
 
 call plug#end()
 
@@ -57,41 +53,24 @@ autocmd VimEnter *
 set termguicolors
 filetype plugin on
 
+
+"-- lualine
+lua <<EOF
+require('lualine').setup {
+  options = {
+    theme = 'onedark',
+    -- For round icons (require Nerd-Font)
+    -- section_separators = {"", ""},
+    -- component_separators = {"", ""},
+    -- ... your lualine config
+  }
+}
+EOF
+"--/ lualine
+
 lua require('colorizer').setup()
 lua <<EOF
 require('gitsigns').setup {
-    signs = {
-        add = {
-            hl = 'GitSignsAdd',
-            text = '+',
-            numhl = 'GitSignsAddNr',
-            linehl = 'GitSignsAddLn'
-        },
-        change = {
-            hl = 'GitSignsChange',
-            text = '~',
-            numhl = 'GitSignsChangeNr',
-            linehl = 'GitSignsChangeLn'
-        },
-        delete = {
-            hl = 'GitSignsDelete',
-            text = '-',
-            numhl = 'GitSignsDeleteNr',
-            linehl = 'GitSignsDeleteLn'
-        },
-        topdelete = {
-            hl = 'GitSignsDelete',
-            text = '-',
-            numhl = 'GitSignsDeleteNr',
-            linehl = 'GitSignsDeleteLn'
-        },
-        changedelete = {
-            hl = 'GitSignsChange',
-            text = '-',
-            numhl = 'GitSignsChangeNr',
-            linehl = 'GitSignsChangeLn'
-        },
-    },
     current_line_blame = true
 }
 EOF
@@ -377,24 +356,6 @@ let g:nvim_tree_icons = {
 \ }
 
 
-"-- bufferline
-if has('termguicolors')
-    set termguicolors
-endif
-
-let g:bufferline_echo = 0
-
-let g:tmuxline_preset = {
-      \'a'    : '#S',
-      \'b'    : '#W',
-      \'c'    : '#H',
-      \'win'  : '#I #W',
-      \'cwin' : '#I #W',
-      \'x'    : '%a',
-      \'y'    : '#W %R',
-      \'z'    : '#H'}
-
-
 "-- vim-sneak
 map f <Plug>Sneak_f
 map F <Plug>Sneak_F
@@ -430,16 +391,7 @@ let g:moonlight_borders = 0
 let g:moonlight_contrast = 0
 syntax enable
 filetype plugin indent on
-colorscheme codedark
-let g:airline_theme = 'codedark'
-let g:airline_powerline_fonts = 1
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_symbols.linenr = 'L'
-let g:airline_symbols.colnr = 'C'
-let g:airline_symbols.dirty = '!'
-let g:airline_section_z = airline#section#create_right(['%p%%'])
+colorscheme onedark
 "-- /theme
 
 
