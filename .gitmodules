@@ -22,9 +22,6 @@
 [submodule "nvim/plugins/limelight.vim"]
 	path = nvim/plugins/limelight.vim
 	url = https://github.com/junegunn/limelight.vim.git
-[submodule "nvim/plugins/moonlight.nvim"]
-	path = nvim/plugins/moonlight.nvim
-	url = https://github.com/shaunsingh/moonlight.nvim.git
 [submodule "nvim/plugins/nvim-tree.lua"]
 	path = nvim/plugins/nvim-tree.lua
 	url = https://github.com/kyazdani42/nvim-tree.lua.git
