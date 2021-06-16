@@ -287,6 +287,9 @@ else
     echo 'fuck: not found; skipping set up'
 fi
 
+zinit ice wait lucid as:program from:gh-r bpick'*pass*' pick:docker-credential-pass nocompletions
+zinit light docker/docker-credential-helpers
+
 # Completion settings
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
