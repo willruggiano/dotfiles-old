@@ -268,6 +268,11 @@ case "$OS" in
 esac
 zinit light Kitware/CMake
 
+zinit ice wait lucid from:gh ver:3.0.5 \
+    atclone'./autogen.sh && ./configure --prefix=$ZPFX' atpull'%atclone' \
+    make'install' pick'$ZPFX/bin/htop' nocompletions
+zinit light htop-dev/htop
+
 autoload -Uz compinit
 compinit
 

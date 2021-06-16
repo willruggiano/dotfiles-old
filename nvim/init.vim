@@ -59,10 +59,7 @@ lua <<EOF
 require('lualine').setup {
   options = {
     theme = 'onedark',
-    -- For round icons (require Nerd-Font)
-    -- section_separators = {"", ""},
-    -- component_separators = {"", ""},
-    -- ... your lualine config
+    disabled_filetypes = { 'NvimTree' }
   }
 }
 EOF
@@ -127,6 +124,7 @@ require('nvim-treesitter.configs').setup {
     }
 }
 EOF
+set foldlevelstart=99
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 "-- /treesitter
@@ -142,6 +140,11 @@ npairs.setup {
 EOF
 "-- /nvim-autopairs
 
+
+"-- indentline-blankline
+let g:indent_blankline_filetype_exclude = ['dashboard']
+"--/ indentline-blankline
+
 " \d to perform a Dash lookup
 nnoremap <leader>d :Dash<cr>
 
@@ -149,10 +152,6 @@ nnoremap <leader>d :Dash<cr>
 "-- "toggle" keybinds
 nnoremap <leader>tt :NvimTreeToggle<CR>
 "--/ "toggle" keybinds
-
-
-au CmdLineEnter * set norelativenumber | redraw
-au CmdlineLeave * set relativenumber
 
 
 " 2021-05-13 Trying out vimspector
