@@ -38,7 +38,7 @@ zinit wait lucid for \
     from:gh-r as:program bpick'*.tar.gz' pick'**/bin/gh' cli/cli \
     OMZL::git.zsh \
     atload"unalias grv" OMZP::git \
-    as:program from:gh make'install prefix=$ZPFX' nvie/gitflow
+    as:program from:gh make'install prefix=$ZPFX' pick'$ZPFX/bin/git-flow' nvie/gitflow
 
 zinit ice from:gh as:program ver:3.2 atclone'./autogen.sh && ./configure' atpull'%atclone' make pick:tmux
 zinit light tmux/tmux
@@ -95,7 +95,7 @@ _atload_exa() {
     alias lla='exa -a -l'
 }
 
-zinit ice wait lucid from:gh-r as:program atload"_atload_exa" pick"bin/exa"
+zinit ice wait lucid from:gh-r as:program atload'_atload_exa' pick'bin/exa'
 zinit light ogham/exa
 
 _atload_bat() {
@@ -108,13 +108,13 @@ _atload_bat() {
     alias cat='bat'
 }
 
-zinit ice wait lucid from"gh-r" as"program" atload"_atload_bat" mv"bat* -> bat" pick"bat/bat"
+zinit ice wait lucid from:gh-r as:program atload'_atload_bat' mv'bat* -> bat' pick:bat/bat
 zinit light @sharkdp/bat
 
 _atload_fd() {
 }
 
-zinit ice wait lucid from"gh-r" as"program" atload"_atload_fd" mv"fd* -> fd" pick"fd/fd" nocompletions
+zinit ice wait lucid from:gh-r as:program atload'_atload_fd' mv'fd* -> fd' pick:fd/fd nocompletions
 zinit light @sharkdp/fd
 
 _atload_ripgrep() {
