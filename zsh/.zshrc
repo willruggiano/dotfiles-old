@@ -1,7 +1,9 @@
 OS=$(uname -s)
+PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin
 
-# This is a popular installation directory.
+# These are popular installation directories.
 export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/.cargo/bin:$PATH
 
 [[ -f $HOME/.user.before.zshrc ]] && source $HOME/.user.before.zshrc
 
@@ -260,7 +262,7 @@ fi
 
 case "$OS" in
     Darwin)
-        zinit ice wait lucid as:program from:gh-r bpick'*macos*.dmg' pick:bin/cmake
+        zinit ice wait lucid as:program from:gh-r bpick'*macos*.dmg' pick'**/bin/cmake'
         ;;
     *)
         zinit ice wait lucid as:program from:gh-r extract'!' bpick'*linux-x86*.tar.gz' pick'**/bin/cmake'
@@ -268,7 +270,7 @@ case "$OS" in
 esac
 zinit light Kitware/CMake
 
-zinit ice wait lucid from:gh ver:3.0.5 \
+zinit ice wait lucid as:program from:gh ver:3.0.5 \
     atclone'./autogen.sh && ./configure --prefix=$ZPFX' atpull'%atclone' \
     make'install' pick'$ZPFX/bin/htop' nocompletions
 zinit light htop-dev/htop
@@ -327,8 +329,6 @@ setopt auto_param_slash
 setopt auto_param_keys
 setopt extended_glob
 
-export PATH=$HOME/.cargo/bin:$PATH
-
 export ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BEAM
 export ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK
 export ZVM_OPPEND_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
@@ -347,8 +347,5 @@ function decrypt() {
 # Source user-specific configuration.
 [[ -f $HOME/.user.zshrc ]] && source $HOME/.user.zshrc
 
-[ "$DISPLAY" ] && [ -z "$TMUX" ] && tmux new -A
+[ -n "$_ZSHRC_AUTO_TMUX" ] && [ "$DISPLAY" ] && [ -z "$TMUX" ] && tmux new -A
 
-
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/bin/terraform terraform

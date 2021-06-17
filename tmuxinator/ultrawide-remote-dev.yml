@@ -1,6 +1,6 @@
 # /Users/wruggian/.config/tmuxinator/ultrawide-remote-dev.yml
 
-name: ultrawide-remote-dev
+name: remote-dev
 root: ~
 
 windows:
