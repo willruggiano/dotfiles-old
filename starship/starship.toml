@@ -40,5 +40,7 @@ disabled = false
 
 [hostname]
 ssh_only = true
-format = '[($hostname)](bold read) '
+format = """
+[$hostname](bold red)
+"""
 
