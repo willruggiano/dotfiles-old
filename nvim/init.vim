@@ -1,6 +1,6 @@
 call plug#begin('~/.config/nvim/plugins')
 
-Plug 'antoinemadec/coc-fzf'
+Plug 'antoinemadec/coc-fzf', { 'branch': 'release' }
 Plug 'cdelledonne/vim-cmake'
 Plug 'folke/which-key.nvim'
 Plug 'glepnir/dashboard-nvim'
