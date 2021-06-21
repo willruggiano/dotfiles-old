@@ -34,17 +34,18 @@ zinit light-mode for \
 # Most themes use this option
 setopt promptsubst
 
+zinit ice lucid \
+    atclone'(( !${+commands[dircolors]} )) && local P=g; \
+        TERM=ansi ${P}dircolors -b dircolors >! colors.zsh' \
+    atpull'%atclone' pick"colors.zsh" nocompile'!' \
+    atload'zstyle ":completion:*:default" list-colors "${(s.:.)LS_COLORS}";'
+zinit light zpm-zsh/dircolors-material
+
 zinit wait lucid for \
     from:gh-r as:program bpick'*.tar.gz' pick'**/bin/gh' cli/cli \
     OMZL::git.zsh \
     atload"unalias grv" OMZP::git \
     as:program from:gh make'install prefix=$ZPFX' pick'$ZPFX/bin/git-flow' nvie/gitflow
-
-zinit ice from:gh as:program ver:3.2 atclone'./autogen.sh && ./configure' atpull'%atclone' make pick:tmux
-zinit light tmux/tmux
-
-zinit ice wait:1 lucid from:gh as:program pick'bin/xpanes'
-zinit light greymd/tmux-xpanes
 
 PS1="READY >" # provide a simple prompt till the theme loads
 
@@ -56,10 +57,17 @@ _atload_starship() {
 zinit ice wait'!' lucid from:gh-r as:program atload"_atload_starship"
 zinit load starship/starship
 
+zinit ice wait lucid from:gh as:program ver:3.2 atclone'./autogen.sh && ./configure' atpull'%atclone' make pick:tmux
+zinit light tmux/tmux
+
+zinit ice wait:1 lucid from:gh as:program pick'bin/xpanes'
+zinit light greymd/tmux-xpanes
+
 _atload_fzf() {
     if [ ! -z $TMUX ]; then
-        if builtin command -v fzf-tmux > /dev/null 2>&1 ; then
-            alias fzf='fzf-tmux -p'
+        if command -v fzf-tmux > /dev/null 2>&1 ; then
+            # 2021-06-20 Disabling for now. Kinda prefer inline fzf
+            # alias fzf='fzf-tmux -p'
         fi
     fi
 }
@@ -76,7 +84,7 @@ esac
 zinit wait lucid for \
     as:program pick'**/bin/(go|gofmt)' extract'!' "$GOLANG_URL" \
     as:program from:gh pick:'bin/(fzf|fzf-tmux)' \
-        atclone'./install --bin && cp shell/completion.zsh _fzf' atpull'%atclone' \
+        atclone'./install --bin && cp shell/completion.zsh _fzf' atpull'%atclone' atload'_atload_fzf' \
 	    junegunn/fzf
 
 zinit ice wait lucid from:gh-r as:program pick:sad
@@ -235,7 +243,8 @@ zinit wait lucid for \
     as:null make'PREFIX=$ZPFX LIBDIR=$ZPFX/lib BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' tadfisher/pass-otp \
     as:null make'PREFIX=$ZPFX install' roddhjav/pass-update \
     as:null make'PREFIX=$ZPFX BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' palortoff/pass-extension-tail \
-    as:null make'PREFIX=$ZPFX BINDIR=$ZPFX/bin BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' rjekker/pass-extension-meta
+    as:null make'PREFIX=$ZPFX BINDIR=$ZPFX/bin BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' rjekker/pass-extension-meta \
+    as:program from:gh-r bpick'*pass*' pick:docker-credential-pass nocompletions docker/docker-credential-helpers
 
 if [[ -z "$_ZSHRC_DISABLE_EMSDK" ]]; then
     zinit ice wait lucid from:gh as:program pick:emsdk nocompletions
@@ -278,6 +287,8 @@ zinit light htop-dev/htop
 autoload -Uz compinit
 compinit
 
+zinit cdreplay -q
+
 zinit ice wait lucid
 zinit light Aloxaf/fzf-tab
 
@@ -287,8 +298,12 @@ else
     echo 'fuck: not found; skipping set up'
 fi
 
-zinit ice wait lucid as:program from:gh-r bpick'*pass*' pick:docker-credential-pass nocompletions
-zinit light docker/docker-credential-helpers
+zinit ice lucid \
+    atclone'(( !${+commands[dircolors]} )) && local P=g; \
+        TERM=ansi ${P}dircolors -b dircolors >! colors.zsh' \
+    atpull'%atclone' pick"colors.zsh" nocompile'!' \
+    atload'zstyle ":completion:*:default" list-colors "${(s.:.)LS_COLORS}";'
+zinit light zpm-zsh/dircolors-material
 
 # Completion settings
 zstyle ':completion:*' verbose yes
@@ -300,7 +315,6 @@ zstyle ':completion:*:options' description 'yes'
 zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*:git-checkout:*' sort false
 zstyle ':completion:*' group-name ''
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-separator '-->'
 zstyle ':completion:*:manuals' separate-sections true
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
@@ -312,7 +326,7 @@ if pgrep gpg-agent > /dev/null; then
     export GPG_AGENT_INFO="~/.gnupg/S.gpg-agent:$(pgrep gpg-agent):1"
 fi
 if command -v keychain > /dev/null; then
-    eval $(keychain --quiet --ignore-missing  --eval --gpg2 --agents $KEYCHAIN_AGENTS --inherit any $KEYCHAIN_IDENTITIES)
+    eval $(keychain --quiet --ignore-missing --eval --gpg2 --agents $KEYCHAIN_AGENTS --inherit any $KEYCHAIN_IDENTITIES 2> /dev/null)
 fi
 if pgrep gpg-agent > /dev/null; then
     export GPG_TTY=$TTY

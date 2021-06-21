@@ -142,7 +142,7 @@ EOF
 
 
 "-- indentline-blankline
-let g:indent_blankline_filetype_exclude = ['dashboard']
+let g:indent_blankline_filetype_exclude = ['dashboard', 'help', 'man']
 "--/ indentline-blankline
 
 " \d to perform a Dash lookup
