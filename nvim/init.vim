@@ -288,7 +288,12 @@ nnoremap <silent><nowait> gb        :<C-u>CocCommand fzf-preview.Buffers<CR>
 nnoremap <silent><nowait> <space>f  :<C-u>CocCommand fzf-preview.GitFiles<CR>
 nnoremap <silent><nowait> <space>gl :<C-u>CocCommand fzf-preview.GitLogs<CR>
 nnoremap <silent><nowait> <space>gs :<C-u>CocCommand fzf-preview.GitStatus<CR>
-"-- /coc-fzf
+"--/ coc-fzf
+
+"-- vista
+let g:vista_default_executive = 'coc'
+"--/ vista
+
 "-- /coc.vim
 
 
