@@ -15,6 +15,7 @@ Plug 'kyazdani42/nvim-tree.lua'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kshenoy/vim-signature'
 Plug 'lewis6991/gitsigns.nvim'
+Plug 'liuchengxu/vista.vim'
 Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
 Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
 Plug 'mildred/vim-bufmru'
@@ -52,6 +53,11 @@ autocmd VimEnter *
 
 set termguicolors
 filetype plugin on
+
+
+"-- onedark
+lua require('onedark').setup()
+"--/ onedark
 
 
 "-- lualine
@@ -142,7 +148,7 @@ EOF
 
 
 "-- indentline-blankline
-let g:indent_blankline_filetype_exclude = ['dashboard', 'help', 'man']
+let g:indent_blankline_filetype_exclude = ['dashboard', 'help', 'man', 'vimcmake']
 "--/ indentline-blankline
 
 " \d to perform a Dash lookup
@@ -284,6 +290,18 @@ nnoremap <silent><nowait> <space>gl :<C-u>CocCommand fzf-preview.GitLogs<CR>
 nnoremap <silent><nowait> <space>gs :<C-u>CocCommand fzf-preview.GitStatus<CR>
 "-- /coc-fzf
 "-- /coc.vim
+
+
+"-- cppman
+function! s:CppMan()
+    let old_isk = &iskeyword
+    setl iskeyword+=:
+    let str = expand("<cword>")
+    let &l:iskeyword = old_isk
+    execute 'Man ' . str
+endfunction
+command! CppMan :call s:CppMan()
+"--/ cppman
 
 
 "-- fzf and ripgrep

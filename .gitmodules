@@ -4,6 +4,7 @@
 [submodule "nvim/plugins/coc.nvim"]
 	path = nvim/plugins/coc.nvim
 	url = https://github.com/neoclide/coc.nvim.git
+    branch = release
 [submodule "nvim/plugins/dash.vim"]
 	path = nvim/plugins/dash.vim
 	url = https://github.com/rizzatti/dash.vim.git
@@ -67,6 +68,7 @@
 [submodule "nvim/plugins/vim-visual-multi"]
 	path = nvim/plugins/vim-visual-multi
 	url = https://github.com/mg979/vim-visual-multi.git
+    branch = master
 [submodule "nvim/plugins/vimspector"]
 	path = nvim/plugins/vimspector
 	url = https://github.com/puremourning/vimspector.git
@@ -133,9 +135,13 @@
 [submodule "nvim/plugins/indent-blankline.nvim"]
 	path = nvim/plugins/indent-blankline.nvim
 	url = https://github.com/lukas-reineke/indent-blankline.nvim.git
+    branch = lua
 [submodule "nvim/plugins/lualine.nvim"]
 	path = nvim/plugins/lualine.nvim
 	url = https://github.com/hoob3rt/lualine.nvim.git
 [submodule "nvim/plugins/onedark.nvim"]
 	path = nvim/plugins/onedark.nvim
 	url = https://github.com/ful1e5/onedark.nvim.git
+[submodule "nvim/plugins/vista.vim"]
+	path = nvim/plugins/vista.vim
+	url = https://github.com/liuchengxu/vista.vim.git
