@@ -83,7 +83,7 @@ EOF
 lua <<EOF
 require('nvim-treesitter.configs').setup {
     autopairs = { enable = true },
-    ensure_intalled = { 'c', 'cpp', 'dockerfile', 'go', 'java', 'json', 'lua', 'python', 'rust', 'typescript', 'yaml' },
+    ensure_installed = { 'c', 'cpp', 'dockerfile', 'go', 'java', 'json', 'lua', 'python', 'rust', 'typescript', 'yaml' },
     highlight = {
         enable = true  -- false will disable the whole extension
     },
