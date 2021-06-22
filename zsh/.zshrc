@@ -361,6 +361,10 @@ function decrypt() {
     gpg --decrypt --output $out "$1" && echo "$1 -> $out"
 }
 
+function gpg-reset-card() {
+    gpg-connect-agent "scd serialno" "learn --force" /bye
+}
+
 # Source user-specific configuration.
 [[ -f $HOME/.user.zshrc ]] && source $HOME/.user.zshrc
 
