@@ -200,6 +200,7 @@
 [submodule "nvim/plugins/fzf-lsp.nvim"]
 	path = nvim/plugins/fzf-lsp.nvim
 	url = https://github.com/gfanto/fzf-lsp.nvim.git
+    branch = main
 [submodule "nvim/plugins/nvim-compe"]
 	path = nvim/plugins/nvim-compe
 	url = https://github.com/hrsh7th/nvim-compe.git
