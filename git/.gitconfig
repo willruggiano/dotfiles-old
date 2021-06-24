@@ -38,6 +38,7 @@
   	rv  = review
   	sm  = show-merges
   	st  = status
+    amend = commit -a --amend --no-edit
 
 [color "branch"]
   	current = yellow reverse

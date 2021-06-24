@@ -1,5 +1,5 @@
 {
-    "clangd.semanticHighlighting": true,
+    "clangd.semanticHighlighting": false,
     "clangd.arguments": [
         "--log=verbose",
         "--pretty",

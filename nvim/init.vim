@@ -1,6 +1,5 @@
 call plug#begin('~/.config/nvim/plugins')
 
-Plug 'antoinemadec/coc-fzf', { 'branch': 'release' }
 Plug 'cdelledonne/vim-cmake'
 Plug 'folke/which-key.nvim'
 Plug 'glepnir/dashboard-nvim'
@@ -20,7 +19,6 @@ Plug 'liuchengxu/vista.vim'
 Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
 Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
 Plug 'mildred/vim-bufmru'
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lua/popup.nvim'
@@ -40,6 +38,10 @@ Plug 'tpope/vim-surround'
 Plug 'windwp/nvim-autopairs'
 Plug 'zinit-zsh/zinit-vim-syntax'
 
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-compe'
+Plug 'gfanto/fzf-lsp.nvim'
+
 " Themes, and statusline
 Plug 'hoob3rt/lualine.nvim'
 Plug 'ful1e5/onedark.nvim'
@@ -53,6 +55,7 @@ autocmd VimEnter *
   \| endif
 
 set termguicolors
+set completeopt=menuone,noselect
 filetype plugin on
 
 
@@ -167,6 +170,7 @@ let g:vimspector_enable_mappings = 'HUMAN'
 
 " Some sane defaults for navigating multiple windows
 set splitright
+set splitbelow
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
@@ -182,120 +186,119 @@ map <Tab> :BufMRUNext<CR>
 map <S-Tab> :BufMRUPrev<CR>
 
 
-"-- coc.vim
-let g:coc_global_extensions = [ 'coc-clangd', 'coc-clang-format-style-options', 'coc-cmake', 'coc-fzf-preview', 'coc-git', 'coc-json', 'coc-pyright' ]
+"-- nvim-lsp
 
-" Some servers have issues with backup files, see #649.
-set nobackup
-set nowritebackup
-set updatetime=100  " ms
+lua << EOF
+local nvim_lsp = require('lspconfig')
 
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
+-- Use an on_attach function to only map the following keys 
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-set signcolumn=yes
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+  --Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
 
-" Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+end
 
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy :<C-u>CocCommand fzf-preview.CocTypeDefinitions<CR>
-nmap <silent> gi :<C-u>CocCommand fzf-preview.CocImplementations<CR>
-nmap <silent> gr :<C-u>CocCommand fzf-preview.CocReferences<CR>
-nnoremap <Leader>G :<C-u>CocCommand fzf-preview.ProjectGrep<Space>
-nmap <silent> <Leader>a :CocCommand clangd.switchSourceHeader<CR>
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = { "clangd", "pyright" }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup { on_attach = on_attach }
+end
 
-" Use K to show documentation in preview window.
-"nnoremap <silent> K :call <SID>show_documentation()<CR>
+-- Map :Format to vim.lsp.buf.formatting()
+vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
+-- Compe setup
+require('compe').setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = true;
+
+  source = {
+    path = true;
+    nvim_lsp = true;
+  };
+}
+
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+local check_back_space = function()
+    local col = vim.fn.col('.') - 1
+    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+        return true
+    else
+        return false
+    end
+end
+
+-- Use (s-)tab to:
+--- move to prev/next item in completion menuone
+--- jump to prev/next snippet's placeholder
+_G.tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-n>"
+  elseif check_back_space() then
+    return t "<Tab>"
   else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
+    return vim.fn['compe#complete']()
+  end
+end
+_G.s_tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-p>"
+  else
+    return t "<S-Tab>"
+  end
+end
 
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
+vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+EOF
 
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
+lua require('fzf_lsp').setup()
 
-" Formatting selected code.
-"xmap <leader>f  <Plug>(coc-format-selected)
-"nmap <leader>f  <Plug>(coc-format-selected)
+let g:vista_default_executive = 'nvim_lsp'
 
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
-
-" Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call CocAction('fold', <f-args>)
-
-" Add `:OrganizeImports` command for organize imports of the current buffer.
-command! -nargs=0 OrganizeImports :call CocAction('runCommand', 'editor.action.organizeImport')
-
-" Remap <C-f> and <C-b> for scroll float windows/popups.
-if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-endif
-
-"-- coc-fzf
-let g:coc_fzf_preview = ''
-let g:coc_fzf_opts = []
-" Mappings for CocList
-nnoremap <silent><nowait> <space>a  :<C-u>CocFzfList actions<CR>
-nnoremap <silent><nowait> <space>c  :<C-u>CocFzfList commands<CR>
-nnoremap <silent><nowait> <space>da :<C-u>CocFzfList diagnostics<CR>
-nnoremap <silent><nowait> <space>db :<C-u>CocFzfList diagnostics<CR>
-nnoremap <silent><nowait> <space>e  :<C-u>CocFzfList extensions<CR>
-nnoremap <silent><nowait> <space>o  :<C-u>CocFzfList outline<CR>
-nnoremap <silent><nowait> <space>s  :<C-u>CocFzfList symbols<CR>
-" Quick buffer switching
-nnoremap <silent><nowait> gb        :<C-u>CocCommand fzf-preview.Buffers<CR>
-" Mappings for coc-git
-nnoremap <silent><nowait> <space>f  :<C-u>CocCommand fzf-preview.GitFiles<CR>
-nnoremap <silent><nowait> <space>gl :<C-u>CocCommand fzf-preview.GitLogs<CR>
-nnoremap <silent><nowait> <space>gs :<C-u>CocCommand fzf-preview.GitStatus<CR>
-"--/ coc-fzf
-
-"-- vista
-let g:vista_default_executive = 'coc'
-"--/ vista
-
-"-- /coc.vim
+"--/ nvim-lsp
 
 
 "-- cppman
@@ -393,6 +396,20 @@ let g:terraform_fmt_on_save = 1
 "--/ vim-terraform
 
 
+lua <<EOF
+-- Highlight on yank
+vim.api.nvim_exec([[
+  augroup YankHighlight
+    autocmd!
+    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+  augroup end
+]], false)
+
+-- Y yank until the end of line
+vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true})
+EOF
+
+
 " By default timeoutlen is 1000 ms
 set timeoutlen=500
 
@@ -407,6 +424,10 @@ set guifont=JetBrainsMono-Regular:h11
 set cmdheight=2
 set number         " Show current line number
 set relativenumber " Show relative line numbers
+set ignorecase
+set smartcase
+set hlsearch!
+set incsearch
 
 
 "-- theme
@@ -417,9 +438,6 @@ filetype plugin indent on
 colorscheme onedark
 "-- /theme
 
-
-" Clear search highlighting
-nnoremap <silent> <A-/> :let @/=""<CR>
 
 " Abbreviations
 cnoreabbrev cmake CMakeGenerate

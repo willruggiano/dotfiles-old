@@ -197,3 +197,12 @@
 	path = nvim/plugins/vista.vim
 	url = https://github.com/liuchengxu/vista.vim.git
 	update = rebase
+[submodule "nvim/plugins/fzf-lsp.nvim"]
+	path = nvim/plugins/fzf-lsp.nvim
+	url = https://github.com/gfanto/fzf-lsp.nvim.git
+[submodule "nvim/plugins/nvim-compe"]
+	path = nvim/plugins/nvim-compe
+	url = https://github.com/hrsh7th/nvim-compe.git
+[submodule "nvim/plugins/nvim-lspconfig"]
+	path = nvim/plugins/nvim-lspconfig
+	url = https://github.com/neovim/nvim-lspconfig.git
