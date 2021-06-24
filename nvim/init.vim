@@ -141,7 +141,6 @@ set foldexpr=nvim_treesitter#foldexpr()
 
 "-- nvim-autopairs
 lua <<EOF
-_G.__is_log = true
 local npairs = require('nvim-autopairs')
 npairs.setup {
     check_ts = true,
