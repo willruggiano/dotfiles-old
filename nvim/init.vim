@@ -5,7 +5,6 @@ Plug 'folke/which-key.nvim'
 Plug 'glepnir/dashboard-nvim'
 Plug 'hashivim/vim-terraform'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-"Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'junegunn/fzf', { 'dir': '~/.zinit/plugins/junegunn---fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim'
@@ -29,8 +28,8 @@ Plug 'nvim-treesitter/playground'
 Plug 'puremourning/vimspector'
 Plug 'rhysd/git-messenger.vim'
 Plug 'rizzatti/dash.vim'
-Plug 'romgrk/nvim-treesitter-context'
 Plug 'RRethy/vim-illuminate'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
@@ -142,11 +141,16 @@ set foldexpr=nvim_treesitter#foldexpr()
 
 "-- nvim-autopairs
 lua <<EOF
+_G.__is_log = true
 local npairs = require('nvim-autopairs')
 npairs.setup {
     check_ts = true,
     disable_filetype = { 'vim' }
 }
+-- local endwise = require('nvim-autopairs.ts-rule').endwise
+-- npairs.add_rules({
+--     endwise('{', '};', 'cpp', 'field_declaration_list')
+-- })
 EOF
 "-- /nvim-autopairs
 
@@ -221,12 +225,11 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "clangd", "pyright" }
+local servers = { 'clangd', 'pyright' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach }
 end
@@ -252,8 +255,27 @@ require('compe').setup {
   source = {
     path = true;
     nvim_lsp = true;
+    nvim_lua = true;
   };
 }
+
+-- Setup completion confirmation to take into account autopairs
+local npairs = require('nvim-autopairs')
+_G.completion_confirm = function()
+  if vim.fn.pumvisible() ~= 0 then
+    if vim.fn.complete_info()["selected"] ~= -1 then
+      return vim.fn['compe#confirm'](npairs.esc('<CR>'))
+    else
+      return npairs.esc('<CR>')
+    end
+  else
+    return npairs.autopairs_cr()
+  end
+end
+
+vim.api.nvim_set_keymap('i', '<CR>', 'v:lua.completion_confirm()', {expr = true , noremap = true})
+vim.api.nvim_set_keymap('i', '<C-Space>', 'compe#complete()', {expr = true, noremap = true})
+vim.api.nvim_set_keymap('i', '<C-e>', 'compe#close("<C-e>")', {expr = true, noremap = true})
 
 local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -273,25 +295,25 @@ end
 --- jump to prev/next snippet's placeholder
 _G.tab_complete = function()
   if vim.fn.pumvisible() == 1 then
-    return t "<C-n>"
+    return t '<C-n>'
   elseif check_back_space() then
-    return t "<Tab>"
+    return t '<Tab>'
   else
     return vim.fn['compe#complete']()
   end
 end
 _G.s_tab_complete = function()
   if vim.fn.pumvisible() == 1 then
-    return t "<C-p>"
+    return t '<C-p>'
   else
-    return t "<S-Tab>"
+    return t '<S-Tab>'
   end
 end
 
-vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+vim.api.nvim_set_keymap('i', '<Tab>', 'v:lua.tab_complete()', {expr = true})
+vim.api.nvim_set_keymap('s', '<Tab>', 'v:lua.tab_complete()', {expr = true})
+vim.api.nvim_set_keymap('i', '<S-Tab>', 'v:lua.s_tab_complete()', {expr = true})
+vim.api.nvim_set_keymap('s', '<S-Tab>', 'v:lua.s_tab_complete()', {expr = true})
 EOF
 
 lua require('fzf_lsp').setup()
@@ -426,8 +448,9 @@ set number         " Show current line number
 set relativenumber " Show relative line numbers
 set ignorecase
 set smartcase
-set hlsearch!
+set nohlsearch
 set incsearch
+set signcolumn=yes
 
 
 "-- theme

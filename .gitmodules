@@ -206,3 +206,6 @@
 [submodule "nvim/plugins/nvim-lspconfig"]
 	path = nvim/plugins/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig.git
+[submodule "nvim/plugins/vim-commentary"]
+	path = nvim/plugins/vim-commentary
+	url = https://github.com/tpope/vim-commentary.git
