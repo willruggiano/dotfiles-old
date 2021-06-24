@@ -240,7 +240,6 @@ zinit wait lucid for \
         atclone'cp src/completion/pass.zsh-completion _pass_completion; cp contrib/dmenu/passmenu $ZPFX/bin/' atpull'%atclone' atload'_atload_pass' \
         make'PREFIX=$ZPFX install' pick'$ZPFX/bin/pass' \
         password-store \
-    as:null make'PREFIX=$ZPFX LIBDIR=$ZPFX/lib BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' tadfisher/pass-otp \
     as:null make'PREFIX=$ZPFX install' roddhjav/pass-update \
     as:null make'PREFIX=$ZPFX BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' palortoff/pass-extension-tail \
     as:null make'PREFIX=$ZPFX BINDIR=$ZPFX/bin BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' rjekker/pass-extension-meta \
@@ -264,7 +263,9 @@ if [[ -z "$SSH_TTY" ]]; then
                     atclone'PREFIX=$ZPFX ./rebuild -j$(nproc)' atpull'%atclone' \
                     nocompletions \
                     mpv-player/mpv-build \
-                as:completion 'https://github.com/mpv-player/mpv/blob/master/etc/_mpv.zsh'
+                as:completion 'https://github.com/mpv-player/mpv/blob/master/etc/_mpv.zsh' \
+                as:program pick:ff2mpv atclone'./install.sh' atpull'%atclone' nocompletions \
+                    woodruffw/ff2mpv
             ;;
     esac
 fi
@@ -283,6 +284,9 @@ zinit ice wait lucid as:program from:gh ver:3.0.5 \
     atclone'./autogen.sh && ./configure --prefix=$ZPFX' atpull'%atclone' \
     make'install' pick'$ZPFX/bin/htop' nocompletions
 zinit light htop-dev/htop
+
+zinit ice wait lucid as:program from:gh-r pick:doctl nocompletions
+zinit light digitalocean/doctl
 
 autoload -Uz compinit
 compinit
