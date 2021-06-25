@@ -155,7 +155,7 @@ EOF
 
 
 "-- indentline-blankline
-let g:indent_blankline_filetype_exclude = ['dashboard', 'help', 'man', 'vimcmake']
+let g:indent_blankline_filetype_exclude = ['dashboard', 'help', 'man', 'tsplaygroud', 'vimcmake']
 "--/ indentline-blankline
 
 " \d to perform a Dash lookup
@@ -181,6 +181,7 @@ nnoremap <C-H> <C-W><C-H>
 
 
 " Buffer navigation
+set hidden
 imap <A-B> <C-O>:BufMRUPrev<CR>
 imap <A-b> <C-O>:BufMRUNext<CR>
 map <A-B> :BufMRUPrev<CR>
@@ -226,12 +227,21 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
+nvim_lsp.clangd.setup {
+    cmd = { 'clangd', '--log=verbose', '--background-index' },
+    on_attach = on_attach
+}
+
+nvim_lsp.pyright.setup {
+    on_attach = on_attach
+}
+
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'clangd', 'pyright' }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { on_attach = on_attach }
-end
+-- local servers = { 'clangd', 'pyright' }
+-- for _, lsp in ipairs(servers) do
+--   nvim_lsp[lsp].setup { on_attach = on_attach }
+-- end
 
 -- Map :Format to vim.lsp.buf.formatting()
 vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
@@ -321,6 +331,15 @@ let g:vista_default_executive = 'nvim_lsp'
 
 "--/ nvim-lsp
 
+
+"-- vimspector
+lua <<EOF
+vim.api.nvim_set_keymap('n', '<Leader>di', '<Plug>VimspectorBalloonEval', {})
+vim.api.nvim_set_keymap('x', '<Leader>di', '<Plug>VimspectorBalloonEval', {})
+vim.api.nvim_set_keymap('n', '<LocalLeader><F11>', '<Plug>VimspectorUpFrame', {})
+vim.api.nvim_set_keymap('n', '<LocalLeader><F12>', '<Plug>VimspectorDownFrame', {})
+EOF
+"-- vimspector
 
 "-- cppman
 function! s:CppMan()
