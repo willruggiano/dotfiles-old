@@ -47,6 +47,40 @@ zinit wait lucid for \
     atload"unalias grv" OMZP::git \
     as:program from:gh make'install prefix=$ZPFX' pick'$ZPFX/bin/git-flow' nvie/gitflow
 
+function die() {
+    echo "$@"
+}
+
+function git-turtle() {
+    local n=""
+    local branch=""
+    local dryrun=false
+    for a in "$@"; do
+    case "$a" in
+        -n)
+            shift; n="$1"; shift
+            ;;
+        -b)
+            shift; branch="$1"; shift
+            ;;
+        --dryrun)
+            shift; dryrun=true
+            ;;
+    esac
+    done
+    [[ -z $n ]] || [[ -z $branch ]] && die '-n and -b|--branch are required'
+    local git_reset="git reset --keep HEAD~${n}"
+    local git_check="git checkout -t -b $branch"
+    local git_pick="git cherry-pick ..HEAD@{2}"
+    if $dryrun; then
+        echo "+ $git_reset"
+        echo "+ $git_check"
+        echo "+ $git_pick"
+    else
+        eval "$git_reset && $git_check && $git_pick"
+    fi
+}
+
 PS1="READY >" # provide a simple prompt till the theme loads
 
 _atload_starship() {
@@ -87,7 +121,14 @@ zinit wait lucid for \
         atclone'./install --bin && cp shell/completion.zsh _fzf' atpull'%atclone' atload'_atload_fzf' \
 	    junegunn/fzf
 
-zinit ice wait lucid from:gh-r as:program pick:sad
+case "$OS" in
+    Darwin)
+        zinit ice wait lucid from:gh-r as:program pick:sad
+        ;;
+    *)
+        zinit ice wait lucid from:gh-r as:program bpick'*linux*.zip' pick:sad
+        ;;
+esac
 zinit light ms-jpq/sad
 
 zinit ice wait lucid

@@ -2,13 +2,14 @@ call plug#begin('~/.config/nvim/plugins')
 
 Plug 'cdelledonne/vim-cmake'
 Plug 'folke/which-key.nvim'
+Plug 'ggandor/lightspeed.nvim'
 Plug 'glepnir/dashboard-nvim'
 Plug 'hashivim/vim-terraform'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'junegunn/fzf', { 'dir': '~/.zinit/plugins/junegunn---fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim'
-Plug 'justinmk/vim-sneak'
+Plug 'kevinhwang91/nvim-hlslens'
 Plug 'kevinoid/vim-jsonc'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'kyazdani42/nvim-web-devicons'
@@ -29,14 +30,17 @@ Plug 'puremourning/vimspector'
 Plug 'rhysd/git-messenger.vim'
 Plug 'rizzatti/dash.vim'
 Plug 'RRethy/vim-illuminate'
+Plug 'sindrets/diffview.nvim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
 Plug 'windwp/nvim-autopairs'
 Plug 'zinit-zsh/zinit-vim-syntax'
 
+" LSP setup
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
 Plug 'gfanto/fzf-lsp.nvim'
@@ -421,13 +425,29 @@ let g:nvim_tree_icons = {
     \ }
 \ }
 
+"-- lightspeed
+lua <<EOF
+require'lightspeed'.setup{}
+EOF
 
-"-- vim-sneak
-map f <Plug>Sneak_f
-map F <Plug>Sneak_F
-map t <Plug>Sneak_t
-map T <Plug>Sneak_T
-"-- /vim-sneak
+
+"-- hlslens
+noremap <silent> n <Cmd>execute('normal! ' . v:count1 . 'n')<CR>
+            \<Cmd>lua require('hlslens').start()<CR>
+noremap <silent> N <Cmd>execute('normal! ' . v:count1 . 'N')<CR>
+            \<Cmd>lua require('hlslens').start()<CR>
+noremap * *<Cmd>lua require('hlslens').start()<CR>
+noremap # #<Cmd>lua require('hlslens').start()<CR>
+noremap g* g*<Cmd>lua require('hlslens').start()<CR>
+noremap g# g#<Cmd>lua require('hlslens').start()<CR>
+"--/ hlslens
+
+
+"-- vim-registers
+" let g:registers_return_symbol = "\n"
+" let g:registers_tab_symbol = "\t"
+" let g:registers_space_symbol = "."
+"--/ vim-registers
 
 
 "-- vim-terraform
@@ -466,8 +486,6 @@ set number         " Show current line number
 set relativenumber " Show relative line numbers
 set ignorecase
 set smartcase
-set nohlsearch
-set incsearch
 set signcolumn=yes
 
 

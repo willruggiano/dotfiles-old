@@ -210,3 +210,18 @@
 [submodule "nvim/plugins/vim-commentary"]
 	path = nvim/plugins/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
+[submodule "nvim/plugins/diffview.nvim"]
+	path = nvim/plugins/diffview.nvim
+	url = https://github.com/sindrets/diffview.nvim.git
+    branch = main
+[submodule "nvim/plugins/lightspeed.nvim"]
+	path = nvim/plugins/lightspeed.nvim
+	url = https://github.com/ggandor/lightspeed.nvim.git
+    branch = main
+[submodule "nvim/plugins/nvim-hlslens"]
+	path = nvim/plugins/nvim-hlslens
+	url = https://github.com/kevinhwang91/nvim-hlslens.git
+[submodule "nvim/plugins/registers.nvim"]
+	path = nvim/plugins/registers.nvim
+	url = https://github.com/tversteeg/registers.nvim.git
+    branch = main
