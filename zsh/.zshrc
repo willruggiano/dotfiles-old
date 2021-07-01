@@ -277,14 +277,22 @@ function _atload_pass() {
 }
 
 zinit wait lucid for \
-    from'git.zx2c4.com' as:program \
+    from'git.zx2c4.com' as:program if'[[ -z "$_ZSHRC_DISABLE_PASS" ]]' \
         atclone'cp src/completion/pass.zsh-completion _pass_completion; cp contrib/dmenu/passmenu $ZPFX/bin/' atpull'%atclone' atload'_atload_pass' \
         make'PREFIX=$ZPFX install' pick'$ZPFX/bin/pass' \
         password-store \
-    as:null make'PREFIX=$ZPFX install' roddhjav/pass-update \
-    as:null make'PREFIX=$ZPFX BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' palortoff/pass-extension-tail \
-    as:null make'PREFIX=$ZPFX BINDIR=$ZPFX/bin BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' rjekker/pass-extension-meta \
-    as:program from:gh-r bpick'*pass*' pick:docker-credential-pass nocompletions docker/docker-credential-helpers
+    as:null if'[[ -z "$_ZSHRC_DISABLE_PASS" ]]' \
+        make'PREFIX=$ZPFX install' \
+        roddhjav/pass-update \
+    as:null if'[[ -z "$_ZSHRC_DISABLE_PASS" ]]' \
+        make'PREFIX=$ZPFX BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' \
+        palortoff/pass-extension-tail \
+    as:null if'[[ -z "$_ZSHRC_DISABLE_PASS" ]]' \
+        make'PREFIX=$ZPFX BINDIR=$ZPFX/bin BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' \
+        rjekker/pass-extension-meta \
+    from:gh-r as:program if'[[ -z "$_ZSHRC_DISABLE_PASS" ]]' \
+        bpick'*pass*' pick:docker-credential-pass nocompletions \
+        docker/docker-credential-helpers
 
 if [[ -z "$_ZSHRC_DISABLE_EMSDK" ]]; then
     zinit ice wait lucid from:gh as:program pick:emsdk nocompletions
