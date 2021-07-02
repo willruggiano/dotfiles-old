@@ -1,2 +1,0 @@
-setlocal keywordprg=:vert\ help
-

@@ -203,7 +203,7 @@ set $mode_launcher Launch: [b]rowser [l]auncher [t]erminal
 bindsym Mod1+o mode "$mode_launcher"
 
 mode "$mode_launcher" {
-	bindsym b exec --no-startup-id qutebrowser; mode "default"
+	bindsym b exec --no-startup-id firefox; mode "default"
 	bindsym l exec --no-startup-id rofi -show run; mode "default"
 	bindsym t exec --no-startup-id alacritty; mode "default"
 	bindsym Enter mode "default"

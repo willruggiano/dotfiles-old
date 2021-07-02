@@ -41,6 +41,8 @@ zinit ice lucid \
     atload'zstyle ":completion:*:default" list-colors "${(s.:.)LS_COLORS}";'
 zinit light zpm-zsh/dircolors-material
 
+zinit pack:bgn for firefox-dev
+
 zinit wait lucid for \
     from:gh-r as:program bpick'*.tar.gz' pick'**/bin/gh' cli/cli \
     OMZL::git.zsh \
@@ -84,7 +86,7 @@ function git-turtle() {
 PS1="READY >" # provide a simple prompt till the theme loads
 
 _atload_starship() {
-    export STARSHIP_CONFIG=$HOME/.config/starship.toml
+    export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
     eval "$(starship init zsh)"
 }
 
@@ -106,7 +108,7 @@ _atload_fzf() {
     fi
 }
 
-export GO_VERSION="1.16.5"
+GO_VERSION="1.16.5"
 case "$OS" in
     Darwin)
         GOLANG_URL="https://golang.org/dl/go$GO_VERSION.darwin-amd64.tar.gz"
@@ -337,6 +339,14 @@ zinit light htop-dev/htop
 zinit ice wait lucid as:program from:gh-r pick:doctl nocompletions
 zinit light digitalocean/doctl
 
+LUA_VERSION='5.4.3'
+zinit wait lucid for \
+    id-as:lua/lua as:program from:gh nocompletions \
+        atclone"curl -R -O http://www.lua.org/ftp/lua-$LUA_VERSION.tar.gz && tar zxf lua-$LUA_VERSION.tar.gz" atpull'%atclone' \
+        make"-C lua-$LUA_VERSION all test install INSTALL_TOP=$ZPFX" \
+        zdharma/null
+        
+
 autoload -Uz compinit
 compinit
 
@@ -423,3 +433,5 @@ function gpg-reset-card() {
 
 [ -n "$_ZSHRC_AUTO_TMUX" ] && [ "$DISPLAY" ] && [ -z "$TMUX" ] && tmux new -A
 
+
+alias luamake=/home/bombadil/src/lua-language-server/3rd/luamake/luamake

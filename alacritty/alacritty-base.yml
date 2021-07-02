@@ -718,7 +718,10 @@ shell:
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-#key_bindings:
+key_bindings:
+  # To make vim work:
+  - { key: Return,    mods: Shift,                      chars: "\x1b[13;2u" }
+  - { key: Return,    mods: Control,                    chars: "\x1b[13;5u" }
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
