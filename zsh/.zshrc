@@ -101,7 +101,7 @@ zinit wait lucid for \
         atpull'%atclone' \
         llvm/llvm-project
 
-zinit ice wait lucid from:gh as:program ver:3.2 atclone'./autogen.sh && ./configure' atpull'%atclone' make pick:tmux
+zinit ice wait lucid if'[[ -z "$SSH_TTY" ]]' from:gh as:program ver:3.2 atclone'./autogen.sh && ./configure' atpull'%atclone' make pick:tmux
 zinit light tmux/tmux
 
 zinit ice wait:1 lucid from:gh as:program pick'bin/xpanes'
@@ -439,7 +439,9 @@ function gpg-reset-card() {
 # Source user-specific configuration.
 [[ -f $HOME/.user.zshrc ]] && source $HOME/.user.zshrc
 
-[ -n "$_ZSHRC_AUTO_TMUX" ] && [ "$DISPLAY" ] && [ -z "$TMUX" ] && tmux new -A
+function maybe_tmux() {
+    [[ -n "$_ZSHRC_AUTO_TMUX" ]] && [[ -z "$SSH_TTY" ]] && [[ "$DISPLAY" ]] && [[ -z "$TMUX" ]]
+}
 
+maybe_tmux && tmux new -A
 
-alias luamake=/home/bombadil/src/lua-language-server/3rd/luamake/luamake
