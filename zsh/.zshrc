@@ -93,6 +93,14 @@ _atload_starship() {
 zinit ice wait'!' lucid from:gh-r as:program atload"_atload_starship"
 zinit load starship/starship
 
+# Time for build tools!
+zinit wait lucid for \
+    as:program from:gh-r pick:ninja nocompletions ninja-build/ninja \
+    as:null from:gh has:cmake nocompletions \
+        atclone'cmake -S llvm -B build -G Ninja -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;libc;libcxx;libcxxabi;lld;lldb" -DCMAKE_INSTALL_PREFIX=$ZPFX -DCMAKE_BUILD_TYPE=Release && cmake --build build --target install --parallel $(nproc)' \
+        atpull'%atclone' \
+        llvm/llvm-project
+
 zinit ice wait lucid from:gh as:program ver:3.2 atclone'./autogen.sh && ./configure' atpull'%atclone' make pick:tmux
 zinit light tmux/tmux
 
