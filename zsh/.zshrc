@@ -97,7 +97,7 @@ zinit load starship/starship
 zinit wait lucid for \
     as:program from:gh-r pick:ninja nocompletions ninja-build/ninja \
     as:null from:gh has:cmake nocompletions \
-        atclone'cmake -S llvm -B build -G Ninja -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;libc;libcxx;libcxxabi;lld;lldb" -DCMAKE_INSTALL_PREFIX=$ZPFX -DCMAKE_BUILD_TYPE=Release && cmake --build build --target install --parallel $(nproc)' \
+        atclone'cmake -S llvm -B build -G Ninja -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld;lldb" -DCMAKE_INSTALL_PREFIX=$ZPFX -DCMAKE_BUILD_TYPE=Release && cmake --build build --target install --parallel $(nproc)' \
         atpull'%atclone' \
         llvm/llvm-project
 
@@ -352,7 +352,8 @@ zinit wait lucid for \
     id-as:lua/lua as:program from:gh nocompletions \
         atclone"curl -R -O http://www.lua.org/ftp/lua-$LUA_VERSION.tar.gz && tar zxf lua-$LUA_VERSION.tar.gz" atpull'%atclone' \
         make"-C lua-$LUA_VERSION all test install INSTALL_TOP=$ZPFX" \
-        zdharma/null
+        zdharma/null \
+    as:program from:gh-r nocompletions pick:stylua JohnnyMorganz/StyLua
         
 
 autoload -Uz compinit
