@@ -96,7 +96,7 @@ zinit load starship/starship
 # Time for build tools!
 zinit wait lucid for \
     as:program from:gh-r pick:ninja nocompletions ninja-build/ninja \
-    as:null from:gh has:cmake nocompletions \
+    as:null from:gh has:cmake ver'llvmorg-12.0.1' nocompletions \
         atclone'cmake -S llvm -B build -G Ninja -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld;lldb" -DCMAKE_INSTALL_PREFIX=$ZPFX -DCMAKE_BUILD_TYPE=Release && cmake --build build --target install --parallel $(nproc)' \
         atpull'%atclone' \
         llvm/llvm-project
