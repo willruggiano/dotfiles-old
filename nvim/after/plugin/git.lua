@@ -1,13 +1,13 @@
-require('colorbuddy')
+require "colorbuddy"
 
-local c = require('colorbuddy.color').colors
-local Group = require('colorbuddy.group').Group
+local c = require("colorbuddy.color").colors
+local Group = require("colorbuddy.group").Group
 
 Group.new("GitSignsAdd", c.green)
 Group.new("GitSignsChange", c.yellow)
 Group.new("GitSignsDelete", c.red)
 
-require('gitsigns').setup {
+require("gitsigns").setup {
   signs = {
     add = { hl = "GitSignsAdd", text = "│", numhl = "GitSignsAddNr" },
     change = { hl = "GitSignsChange", text = "│", numhl = "GitSignsChangeNr" },
@@ -34,13 +34,14 @@ require('gitsigns').setup {
   },
 }
 
-local neogit = require('neogit')
-neogit.setup {}
+local neogit = require "neogit"
 
 local nnoremap = vim.keymap.nnoremap
 
-nnoremap { '<leader>gs', neogit.open }
-nnoremap { '<leader>gc', function()
-    neogit.open { 'commit' }
-end }
-
+nnoremap { "<leader>gs", neogit.open }
+nnoremap {
+  "<leader>gc",
+  function()
+    neogit.open { "commit" }
+  end,
+}

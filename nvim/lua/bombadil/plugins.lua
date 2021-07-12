@@ -6,12 +6,7 @@ return require("packer").startup(function()
   local use_rocks = packer.use_rocks
 
   -- Packer
-  use {
-    "wbthomason/packer.nvim",
-    config = function()
-      require("packer.luarocks").setup_paths()
-    end,
-  }
+  use "wbthomason/packer.nvim"
 
   -- Autoloading for lua
   use "tjdevries/astronauta.nvim"
@@ -37,10 +32,19 @@ return require("packer").startup(function()
   }
 
   -- Git
-  use "TimUntersberger/neogit"
+  use {
+    "TimUntersberger/neogit",
+    requires = "sindrets/diffview.nvim",
+    config = function()
+      require("neogit").setup {
+        integrations = {
+          diffview = true,
+        },
+      }
+    end,
+  }
   use "lewis6991/gitsigns.nvim"
   use "rhysd/git-messenger.vim"
-  use "sindrets/diffview.nvim"
 
   -- Lsp, build-test-debug, etc
   use "cdelledonne/vim-cmake"
