@@ -1,11 +1,17 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require("packer").startup(function()
-  use = require("packer").use
-  use_rocks = require("packer").use_rocks
+  local packer = require "packer"
+  local use = packer.use
+  local use_rocks = packer.use_rocks
 
   -- Packer
-  use "wbthomason/packer.nvim"
+  use {
+    "wbthomason/packer.nvim",
+    config = function()
+      require("packer.luarocks").setup_paths()
+    end,
+  }
 
   -- Autoloading for lua
   use "tjdevries/astronauta.nvim"
@@ -40,7 +46,12 @@ return require("packer").startup(function()
   use "cdelledonne/vim-cmake"
   use "neovim/nvim-lspconfig"
   use "hrsh7th/nvim-compe"
-  use "puremourning/vimspector"
+  use {
+    "puremourning/vimspector",
+    setup = function()
+      vim.g.vimspector_enable_mappings = "HUMAN"
+    end,
+  }
   use "wbthomason/lsp-status.nvim"
   use "onsails/lspkind-nvim"
   use "glepnir/lspsaga.nvim"
