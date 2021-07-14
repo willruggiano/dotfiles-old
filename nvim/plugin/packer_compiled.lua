@@ -140,6 +140,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/bombadil/.local/share/nvim/site/pack/packer/start/lspsaga.nvim"
   },
+  ["lua-dev.nvim"] = {
+    loaded = true,
+    path = "/home/bombadil/.local/share/nvim/site/pack/packer/start/lua-dev.nvim"
+  },
   ["markdown-preview.nvim"] = {
     commands = { "MarkdownPreview" },
     loaded = false,
@@ -189,7 +193,7 @@ _G.packer_plugins = {
     path = "/home/bombadil/.local/share/nvim/site/pack/packer/start/nvim-terminal.lua"
   },
   ["nvim-tree.lua"] = {
-    config = { "\27LJ\2\n�\6\0\0\3\0\27\0?6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0)\0012\0=\1\4\0006\0\0\0009\0\1\0005\1\6\0=\1\5\0006\0\0\0009\0\1\0)\1\0\0=\1\a\0006\0\0\0009\0\1\0)\1\1\0=\1\b\0006\0\0\0009\0\1\0)\1\0\0=\1\t\0006\0\0\0009\0\1\0)\1\1\0=\1\n\0006\0\0\0009\0\1\0)\1\1\0=\1\v\0006\0\0\0009\0\1\0)\1\0\0=\1\f\0006\0\0\0009\0\1\0)\1\1\0=\1\r\0006\0\0\0009\0\1\0'\1\15\0=\1\14\0006\0\0\0009\0\1\0)\1\1\0=\1\16\0006\0\0\0009\0\1\0005\1\18\0=\1\17\0006\0\0\0009\0\1\0005\1\20\0005\2\21\0=\2\22\0015\2\23\0=\2\24\0015\2\25\0=\2\26\1=\1\19\0K\0\1\0\blsp\1\0\4\fwarning\b\nerror\b\thint\b\tinfo\b\vfolder\1\0\6\15empty_open\b\fsymlink\b\17symlink_open\b\nempty\b\topen\b\fdefault\b\bgit\1\0\a\runmerged\b\vstaged\b✓\fdeleted\b\fignored\b◌\14untracked\b★\frenamed\b➜\runstaged\b✗\1\0\2\fsymlink\b\fdefault\b\20nvim_tree_icons\1\0\3\ffolders\3\1\bgit\3\1\nfiles\3\1\25nvim_tree_show_icons\27nvim_tree_allow_resize\a:~#nvim_tree_root_folder_modifier\21nvim_tree_git_hl\28nvim_tree_hide_dotfiles\29nvim_tree_indent_markers\21nvim_tree_follow\27nvim_tree_quit_on_open\25nvim_tree_auto_close\24nvim_tree_auto_open\1\4\0\0\t.git\17node_modules\v.cache\21nvim_tree_ignore\20nvim_tree_width\tleft\19nvim_tree_side\6g\bvim\0" },
+    config = { "\27LJ\2\n�\6\0\0\3\0\27\0?6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0)\0012\0=\1\4\0006\0\0\0009\0\1\0005\1\6\0=\1\5\0006\0\0\0009\0\1\0)\1\0\0=\1\a\0006\0\0\0009\0\1\0)\1\1\0=\1\b\0006\0\0\0009\0\1\0)\1\0\0=\1\t\0006\0\0\0009\0\1\0)\1\1\0=\1\n\0006\0\0\0009\0\1\0)\1\1\0=\1\v\0006\0\0\0009\0\1\0)\1\0\0=\1\f\0006\0\0\0009\0\1\0)\1\1\0=\1\r\0006\0\0\0009\0\1\0'\1\15\0=\1\14\0006\0\0\0009\0\1\0)\1\1\0=\1\16\0006\0\0\0009\0\1\0005\1\18\0=\1\17\0006\0\0\0009\0\1\0005\1\20\0005\2\21\0=\2\22\0015\2\23\0=\2\24\0015\2\25\0=\2\26\1=\1\19\0K\0\1\0\blsp\1\0\4\nerror\b\thint\b\tinfo\b\fwarning\b\vfolder\1\0\6\fdefault\b\15empty_open\b\fsymlink\b\17symlink_open\b\nempty\b\topen\b\bgit\1\0\a\frenamed\b➜\runstaged\b✗\vstaged\b✓\fdeleted\b\runmerged\b\fignored\b◌\14untracked\b★\1\0\2\fsymlink\b\fdefault\b\20nvim_tree_icons\1\0\3\ffolders\3\1\bgit\3\1\nfiles\3\1\25nvim_tree_show_icons\27nvim_tree_allow_resize\a:~#nvim_tree_root_folder_modifier\21nvim_tree_git_hl\28nvim_tree_hide_dotfiles\29nvim_tree_indent_markers\21nvim_tree_follow\27nvim_tree_quit_on_open\25nvim_tree_auto_close\24nvim_tree_auto_open\1\4\0\0\t.git\17node_modules\v.cache\21nvim_tree_ignore\20nvim_tree_width\tleft\19nvim_tree_side\6g\bvim\0" },
     loaded = true,
     path = "/home/bombadil/.local/share/nvim/site/pack/packer/start/nvim-tree.lua"
   },
@@ -228,10 +232,6 @@ _G.packer_plugins = {
   ["popup.nvim"] = {
     loaded = true,
     path = "/home/bombadil/.local/share/nvim/site/pack/packer/start/popup.nvim"
-  },
-  ["registers.nvim"] = {
-    loaded = true,
-    path = "/home/bombadil/.local/share/nvim/site/pack/packer/start/registers.nvim"
   },
   ["sql.nvim"] = {
     loaded = true,
@@ -273,10 +273,18 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/bombadil/.local/share/nvim/site/pack/packer/start/telescope.nvim"
   },
+  ["tokyonight.nvim"] = {
+    loaded = true,
+    path = "/home/bombadil/.local/share/nvim/site/pack/packer/start/tokyonight.nvim"
+  },
   ["trouble.nvim"] = {
-    config = { "\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\14auto_fold\2\17auto_preview\1\nsetup\ftrouble\frequire\0" },
+    config = { "\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\17auto_preview\1\14auto_fold\2\nsetup\ftrouble\frequire\0" },
     loaded = true,
     path = "/home/bombadil/.local/share/nvim/site/pack/packer/start/trouble.nvim"
+  },
+  ["twilight.nvim"] = {
+    loaded = true,
+    path = "/home/bombadil/.local/share/nvim/site/pack/packer/start/twilight.nvim"
   },
   ["vim-bufmru"] = {
     loaded = true,
@@ -332,6 +340,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/bombadil/.local/share/nvim/site/pack/packer/start/which-key.nvim"
   },
+  ["zen-mode.nvim"] = {
+    loaded = true,
+    path = "/home/bombadil/.local/share/nvim/site/pack/packer/start/zen-mode.nvim"
+  },
   ["zinit-vim-syntax"] = {
     loaded = true,
     path = "/home/bombadil/.local/share/nvim/site/pack/packer/start/zinit-vim-syntax"
@@ -350,10 +362,6 @@ time([[packadd for vimspector]], false)
 time([[Config for which-key.nvim]], true)
 try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\0", "config", "which-key.nvim")
 time([[Config for which-key.nvim]], false)
--- Config for: nvim-tree.lua
-time([[Config for nvim-tree.lua]], true)
-try_loadstring("\27LJ\2\n�\6\0\0\3\0\27\0?6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0)\0012\0=\1\4\0006\0\0\0009\0\1\0005\1\6\0=\1\5\0006\0\0\0009\0\1\0)\1\0\0=\1\a\0006\0\0\0009\0\1\0)\1\1\0=\1\b\0006\0\0\0009\0\1\0)\1\0\0=\1\t\0006\0\0\0009\0\1\0)\1\1\0=\1\n\0006\0\0\0009\0\1\0)\1\1\0=\1\v\0006\0\0\0009\0\1\0)\1\0\0=\1\f\0006\0\0\0009\0\1\0)\1\1\0=\1\r\0006\0\0\0009\0\1\0'\1\15\0=\1\14\0006\0\0\0009\0\1\0)\1\1\0=\1\16\0006\0\0\0009\0\1\0005\1\18\0=\1\17\0006\0\0\0009\0\1\0005\1\20\0005\2\21\0=\2\22\0015\2\23\0=\2\24\0015\2\25\0=\2\26\1=\1\19\0K\0\1\0\blsp\1\0\4\fwarning\b\nerror\b\thint\b\tinfo\b\vfolder\1\0\6\15empty_open\b\fsymlink\b\17symlink_open\b\nempty\b\topen\b\fdefault\b\bgit\1\0\a\runmerged\b\vstaged\b✓\fdeleted\b\fignored\b◌\14untracked\b★\frenamed\b➜\runstaged\b✗\1\0\2\fsymlink\b\fdefault\b\20nvim_tree_icons\1\0\3\ffolders\3\1\bgit\3\1\nfiles\3\1\25nvim_tree_show_icons\27nvim_tree_allow_resize\a:~#nvim_tree_root_folder_modifier\21nvim_tree_git_hl\28nvim_tree_hide_dotfiles\29nvim_tree_indent_markers\21nvim_tree_follow\27nvim_tree_quit_on_open\25nvim_tree_auto_close\24nvim_tree_auto_open\1\4\0\0\t.git\17node_modules\v.cache\21nvim_tree_ignore\20nvim_tree_width\tleft\19nvim_tree_side\6g\bvim\0", "config", "nvim-tree.lua")
-time([[Config for nvim-tree.lua]], false)
 -- Config for: indent-blankline.nvim
 time([[Config for indent-blankline.nvim]], true)
 try_loadstring("\27LJ\2\nl\0\0\2\0\4\0\0056\0\0\0009\0\1\0005\1\3\0=\1\2\0K\0\1\0\1\6\0\0\14dashboard\thelp\bman\rNvimTree\rvimcmake&indent_blankline_filetype_exclude\6g\bvim\0", "config", "indent-blankline.nvim")
@@ -366,18 +374,22 @@ time([[Config for formatter.nvim]], false)
 time([[Config for dashboard-nvim]], true)
 try_loadstring("\27LJ\2\nG\0\0\2\0\4\0\0056\0\0\0009\0\1\0'\1\3\0=\1\2\0K\0\1\0\14telescope dashboard_default_executive\6g\bvim\0", "config", "dashboard-nvim")
 time([[Config for dashboard-nvim]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+try_loadstring("\27LJ\2\n�\6\0\0\3\0\27\0?6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0)\0012\0=\1\4\0006\0\0\0009\0\1\0005\1\6\0=\1\5\0006\0\0\0009\0\1\0)\1\0\0=\1\a\0006\0\0\0009\0\1\0)\1\1\0=\1\b\0006\0\0\0009\0\1\0)\1\0\0=\1\t\0006\0\0\0009\0\1\0)\1\1\0=\1\n\0006\0\0\0009\0\1\0)\1\1\0=\1\v\0006\0\0\0009\0\1\0)\1\0\0=\1\f\0006\0\0\0009\0\1\0)\1\1\0=\1\r\0006\0\0\0009\0\1\0'\1\15\0=\1\14\0006\0\0\0009\0\1\0)\1\1\0=\1\16\0006\0\0\0009\0\1\0005\1\18\0=\1\17\0006\0\0\0009\0\1\0005\1\20\0005\2\21\0=\2\22\0015\2\23\0=\2\24\0015\2\25\0=\2\26\1=\1\19\0K\0\1\0\blsp\1\0\4\nerror\b\thint\b\tinfo\b\fwarning\b\vfolder\1\0\6\fdefault\b\15empty_open\b\fsymlink\b\17symlink_open\b\nempty\b\topen\b\bgit\1\0\a\frenamed\b➜\runstaged\b✗\vstaged\b✓\fdeleted\b\runmerged\b\fignored\b◌\14untracked\b★\1\0\2\fsymlink\b\fdefault\b\20nvim_tree_icons\1\0\3\ffolders\3\1\bgit\3\1\nfiles\3\1\25nvim_tree_show_icons\27nvim_tree_allow_resize\a:~#nvim_tree_root_folder_modifier\21nvim_tree_git_hl\28nvim_tree_hide_dotfiles\29nvim_tree_indent_markers\21nvim_tree_follow\27nvim_tree_quit_on_open\25nvim_tree_auto_close\24nvim_tree_auto_open\1\4\0\0\t.git\17node_modules\v.cache\21nvim_tree_ignore\20nvim_tree_width\tleft\19nvim_tree_side\6g\bvim\0", "config", "nvim-tree.lua")
+time([[Config for nvim-tree.lua]], false)
 -- Config for: trouble.nvim
 time([[Config for trouble.nvim]], true)
-try_loadstring("\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\14auto_fold\2\17auto_preview\1\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
+try_loadstring("\27LJ\2\nU\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\17auto_preview\1\14auto_fold\2\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
 time([[Config for trouble.nvim]], false)
--- Config for: nvim-terminal.lua
-time([[Config for nvim-terminal.lua]], true)
-try_loadstring("\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rterminal\frequire\0", "config", "nvim-terminal.lua")
-time([[Config for nvim-terminal.lua]], false)
 -- Config for: neogit
 time([[Config for neogit]], true)
 try_loadstring("\27LJ\2\n]\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\17integrations\1\0\0\1\0\1\rdiffview\2\nsetup\vneogit\frequire\0", "config", "neogit")
 time([[Config for neogit]], false)
+-- Config for: nvim-terminal.lua
+time([[Config for nvim-terminal.lua]], true)
+try_loadstring("\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rterminal\frequire\0", "config", "nvim-terminal.lua")
+time([[Config for nvim-terminal.lua]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)

@@ -353,7 +353,10 @@ zinit wait lucid for \
         atclone"curl -R -O http://www.lua.org/ftp/lua-$LUA_VERSION.tar.gz && tar zxf lua-$LUA_VERSION.tar.gz" atpull'%atclone' \
         make"-C lua-$LUA_VERSION all test install INSTALL_TOP=$ZPFX" \
         zdharma/null \
-    as:program from:gh-r nocompletions pick:stylua JohnnyMorganz/StyLua
+    as:program from:gh-r nocompletions pick:stylua JohnnyMorganz/StyLua \
+    as:program from:gh pick'bin/**/lua-language-server' nocompletions \
+        atclone'(cd 3rd/luamake; ./compile/install.sh) && ./3rd/luamake/luamake rebuild' atpull'%atclone' \
+        sumneko/lua-language-server
         
 
 autoload -Uz compinit

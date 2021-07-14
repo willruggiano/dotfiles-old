@@ -73,6 +73,7 @@ return require("packer").startup(function()
       }
     end,
   }
+  use "folke/lua-dev.nvim"
 
   -- Text editing + manipulation
   use "tpope/vim-commentary"
@@ -138,7 +139,8 @@ return require("packer").startup(function()
   }
   use "liuchengxu/vista.vim"
   use "mildred/vim-bufmru"
-  use { "tversteeg/registers.nvim", branch = "main" }
+  use "folke/twilight.nvim"
+  use "folke/zen-mode.nvim"
 
   -- Colors
   use "norcalli/nvim-colorizer.lua"
@@ -151,6 +153,7 @@ return require("packer").startup(function()
       require("terminal").setup()
     end,
   }
+  use "folke/tokyonight.nvim"
 
   -- Utilities
   use "nvim-lua/plenary.nvim"
