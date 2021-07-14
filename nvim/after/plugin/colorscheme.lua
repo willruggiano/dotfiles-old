@@ -10,8 +10,8 @@ vim.g.material_italic_keywords = 0
 vim.g.material_italic_functions = 0
 vim.g.material_lsp_underline = 1
 
-require('material').set()
-vim.keymap.nnoremap { '<leader>mm', require('material.functions').toggle_style }
+-- require('material').set()
+-- vim.keymap.nnoremap { '<leader>mm', require('material.functions').toggle_style }
 
 vim.o.background = "dark"
 
@@ -37,7 +37,7 @@ vim.g.tokyonight_dark_sidebar = true
 vim.g.tokyonight_dark_float = true
 vim.g.tokyonight_colors = {}
 
--- require("tokyonight").colorscheme()
+require("tokyonight").colorscheme()
 
 -- require('colorbuddy').colorscheme = 'material'
 require('colorizer').setup()

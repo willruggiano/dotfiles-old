@@ -11,17 +11,31 @@ vim.lsp.handlers["textDocument/definition"] = function(_, _, result)
   end
 end
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  require("lsp_extensions.workspace.diagnostic").handler,
-  {
-    signs = {
-      severity_limit = "Error",
-    },
-    underline = {
-      severity_limit = "Warning",
-    },
-    virtual_text = true,
-  }
-)
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+  underline = true,
+  update_in_insert = false,
+  virtual_text = { spacing = 4, prefix = "●" },
+  severity_sort = true,
+})
+-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+--   require("lsp_extensions.workspace.diagnostic").handler,
+--   {
+--     signs = {
+--       severity_limit = "Error",
+--     },
+--     underline = {
+--       severity_limit = "Warning",
+--     },
+--     virtual_text = true,
+--   }
+-- )
 
 vim.lsp.handlers["textDocument/hover"] = require('lspsaga.hover').handler
+
+local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+
+for type, icon in pairs(signs) do
+  local hl = "LspDiagnosticsSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
+

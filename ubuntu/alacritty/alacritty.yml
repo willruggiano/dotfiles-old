@@ -1,5 +1,5 @@
 import:
-  - ~/.config/alacritty/alacritty-base.yml
+  - ~/dotfiles/alacritty/alacritty-base.yml
 
 font:
   size: 6.0
