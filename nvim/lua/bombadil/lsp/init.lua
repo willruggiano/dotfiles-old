@@ -54,7 +54,7 @@ local on_attach = function(client, bufnr)
   }, true)
 
   telescope_mapper("<space>wd", "lsp_document_symbols", { ignore_filename = true }, true)
-  telescope_mapper("<space>ww", "lsp_workspace_symbols", { ignore_filename = true }, true)
+  telescope_mapper("<space>ww", "lsp_dynamic_workspace_symbols", { ignore_filename = true }, true)
 
   telescope_mapper("<space>ca", "lsp_code_actions", nil, true)
 end

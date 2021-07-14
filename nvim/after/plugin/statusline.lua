@@ -25,10 +25,7 @@ local git_icon = subscribe.buf_autocmd("el_file_icon", "BufRead", function(_, bu
 end)
 
 local git_branch = subscribe.buf_autocmd("el_git_branch", "BufEnter", function(window, buffer)
-  local branch = extensions.git_branch(window, buffer)
-  if branch then
-    return " " .. extensions.git_icon() .. " " .. branch
-  end
+  return extensions.git_branch(window, buffer)
 end)
 
 local git_changes = subscribe.buf_autocmd("el_git_changes", "BufWritePost", function(window, buffer)

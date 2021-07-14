@@ -150,7 +150,6 @@ function M.edit_neovim()
 
   opts_with_preview = {
     prompt_title = "~ dotfiles ~",
-    shorten_path = false,
     cwd = "~/.config/nvim",
 
     layout_strategy = "flex",
@@ -188,8 +187,7 @@ end
 function M.find_nvim_source()
   require("telescope.builtin").find_files {
     prompt_title = "~ nvim ~",
-    shorten_path = false,
-    cwd = "~/build/neovim/",
+    cwd = "~/src/neovim/",
 
     layout_strategy = "horizontal",
     layout_config = {
@@ -201,7 +199,6 @@ end
 function M.sourcegraph_find()
   require("telescope.builtin").find_files {
     prompt_title = "~ sourcegraph ~",
-    shorten_path = false,
     cwd = "~/sourcegraph/",
 
     layout_strategy = "horizontal",
@@ -239,7 +236,6 @@ end
 
 --  require('telescope.builtin').find_files {
 --    prompt_title = "~ sourcegraph ~",
---    shorten_path = false,
 --    cwd = "~/wiki/sourcegraph/tips",
 --    width = .25,
 
@@ -252,10 +248,8 @@ end
 
 function M.edit_zsh()
   require("telescope.builtin").find_files {
-    shorten_path = false,
     cwd = "~/.config/zsh/",
     prompt = "~ dotfiles ~",
-    hidden = true,
 
     layout_strategy = "horizontal",
     layout_config = {
@@ -283,7 +277,6 @@ function M.git_files()
   local opts = themes.get_dropdown {
     winblend = 5,
     previewer = false,
-    shorten_path = false,
 
     cwd = path,
 
@@ -301,7 +294,6 @@ function M.buffer_git_files()
     winblend = 10,
     border = true,
     previewer = false,
-    shorten_path = false,
   })
 end
 
@@ -310,7 +302,6 @@ function M.lsp_code_actions()
     winblend = 10,
     border = true,
     previewer = false,
-    shorten_path = false,
   }
 
   require("telescope.builtin").lsp_code_actions(opts)
@@ -318,7 +309,7 @@ end
 
 function M.live_grep()
   require("telescope").extensions.fzf_writer.staged_grep {
-    shorten_path = true,
+    path_display = { "shorten" },
     previewer = false,
     fzf_separator = "|>",
   }
@@ -326,7 +317,7 @@ end
 
 function M.grep_prompt()
   require("telescope.builtin").grep_string {
-    shorten_path = true,
+    path_display = { "shorten" },
     search = vim.fn.input "Grep String > ",
   }
 end
@@ -338,7 +329,7 @@ function M.grep_last_search(opts)
   -- -> Subs out the search things
   local register = vim.fn.getreg("/"):gsub("\\<", ""):gsub("\\>", ""):gsub("\\C", "")
 
-  opts.shorten_path = true
+  opts.path_display = { "shorten" }
   opts.word_match = "-w"
   opts.search = register
 
@@ -371,7 +362,6 @@ end
 
 function M.buffers()
   require("telescope.builtin").buffers {
-    shorten_path = false,
   }
 end
 
@@ -380,7 +370,6 @@ function M.curbuf()
     winblend = 10,
     border = true,
     previewer = false,
-    shorten_path = false,
   }
   require("telescope.builtin").current_buffer_fuzzy_find(opts)
 end
@@ -460,7 +449,6 @@ function M.git_status()
     winblend = 10,
     border = true,
     previewer = false,
-    shorten_path = false,
   }
 
   -- Can change the git icons using this.
