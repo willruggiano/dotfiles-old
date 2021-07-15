@@ -101,8 +101,23 @@ zinit wait lucid for \
         atpull'%atclone' \
         llvm/llvm-project
 
-zinit ice wait lucid if'[[ -z "$SSH_TTY" ]]' from:gh as:program ver:3.2 atclone'./autogen.sh && ./configure' atpull'%atclone' make pick:tmux
-zinit light tmux/tmux
+case "$OS" in
+    Darwin)
+        zinit ice wait lucid as:program from:gh-r bpick'*macos*.dmg' pick'**/bin/cmake'
+        ;;
+    *)
+        zinit ice wait lucid as:program from:gh-r extract'!' bpick'*linux-x86*.tar.gz' pick'**/bin/cmake'
+        ;;
+esac
+zinit light Kitware/CMake
+
+zinit wait lucid for \
+    if'[[ -z "$SSH_TTY" ]]' from:gh as:program ver:3.2 \
+        atclone'./autogen.sh && ./configure' atpull'%atclone' make pick:tmux \
+        tmux/tmux \
+    if'[[ -z "$SSH_TTY" ]]' from:gh as:program \
+        atclone'cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$ZPFX .' atpull'%atclone' make \
+        GothenburgBitFactory/taskwarrior
 
 zinit ice wait:1 lucid from:gh as:program pick'bin/xpanes'
 zinit light greymd/tmux-xpanes
@@ -329,15 +344,6 @@ if [[ -z "$SSH_TTY" ]]; then
     esac
 fi
 
-case "$OS" in
-    Darwin)
-        zinit ice wait lucid as:program from:gh-r bpick'*macos*.dmg' pick'**/bin/cmake'
-        ;;
-    *)
-        zinit ice wait lucid as:program from:gh-r extract'!' bpick'*linux-x86*.tar.gz' pick'**/bin/cmake'
-        ;;
-esac
-zinit light Kitware/CMake
 
 zinit ice wait lucid as:program from:gh ver:3.0.5 \
     atclone'./autogen.sh && ./configure --prefix=$ZPFX' atpull'%atclone' \
