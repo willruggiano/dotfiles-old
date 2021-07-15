@@ -19,7 +19,8 @@ vim.g.cmake_jump_on_error = 0  -- Don't jump to the CMake window on build failur
 -- another preview window showing the file.
 vim.cmd([[
   augroup MyCmakeGroup
-    au  User CMakeBuildFailed    :cfirst
+    au  User CMakeBuildFailed    CMakeClose
+    au  User CMakeBuildFailed    TroubleToggle quickfix
     au! User CMakeBuildSucceeded CMakeClose
   augroup END
 ]])

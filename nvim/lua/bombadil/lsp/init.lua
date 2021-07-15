@@ -77,7 +77,6 @@ nvim_lsp.clangd.setup {
   cmd = {
     "clangd",
     "--background-index",
-    "--clang-tidy",
     "--header-insertion=iwyu",
     "--suggest-missing-includes",
   },
