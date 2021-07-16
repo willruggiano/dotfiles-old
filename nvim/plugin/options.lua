@@ -1,10 +1,10 @@
 local opt = vim.opt
 
 -- The pyenv virtualenv which has pynvim installed
-vim.g.python3_host_prog = '~/.pyenv/versions/neovim/bin/python'
+vim.g.python3_host_prog = "~/.pyenv/versions/neovim/bin/python"
 
 -- Set our font
-opt.guifont = 'JetBrainsMono-Regular:h11'
+opt.guifont = "JetBrainsMono-Regular:h11"
 
 -- Ignore compiled files
 opt.wildignore = "__pycache__"
@@ -37,7 +37,7 @@ opt.splitbelow = true -- Prefer windows splitting to the bottom
 opt.updatetime = 1000 -- Make updates happen faster
 opt.hlsearch = true -- I wouldn't use this without my DoNoHL function
 opt.scrolloff = 10 -- Make it so there are always ten lines below my cursor
-opt.signcolumn = 'yes'
+opt.signcolumn = "yes"
 
 -- Tabs
 opt.autoindent = true
@@ -71,15 +71,15 @@ opt.mouse = "n"
 --
 -- TODO: w, {v, b, l}
 opt.formatoptions = opt.formatoptions
-  - "a" -- Auto formatting is BAD.
-  - "t" -- Don't auto format my code. I got linters for that.
-  + "c" -- In general, I like it when comments respect textwidth
-  + "q" -- Allow formatting comments w/ gq
-  - "o" -- O and o, don't continue comments
-  + "r" -- But do continue when pressing enter.
-  + "n" -- Indent past the formatlistpat, not underneath it.
-  + "j" -- Auto-remove comments if possible.
-  - "2" -- I'm not in gradeschool anymore
+	- "a" -- Auto formatting is BAD.
+	- "t" -- Don't auto format my code. I got linters for that.
+	+ "c" -- In general, I like it when comments respect textwidth
+	+ "q" -- Allow formatting comments w/ gq
+	- "o" -- O and o, don't continue comments
+	+ "r" -- But do continue when pressing enter.
+	+ "n" -- Indent past the formatlistpat, not underneath it.
+	+ "j" -- Auto-remove comments if possible.
+	- "2" -- I'm not in gradeschool anymore
 
 -- set joinspaces
 opt.joinspaces = false -- Two spaces and grade school, we're done
@@ -96,8 +96,7 @@ opt.exrc = true
 opt.secure = true
 
 -- I like help,man,K to open in a vertical split
-vim.o.keywordprg = ':vert help'
+vim.o.keywordprg = ":vert help"
 
 -- Don't unload hidden buffers.
 vim.opt.hidden = true
-

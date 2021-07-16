@@ -29,3 +29,6 @@ tnoremap { '<esc><esc>', '<c-\\><c-n>' }
 -- Toggle hlsearch
 nnoremap { '<m-cr>', function() vim.v.hlsearch = not vim.v.hlsearch end }
 
+-- Silence!
+nnoremap { '<c-s>', '<cmd>update<cr>' }
+
