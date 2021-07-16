@@ -379,13 +379,6 @@ else
     echo 'fuck: not found; skipping set up'
 fi
 
-zinit ice lucid \
-    atclone'(( !${+commands[dircolors]} )) && local P=g; \
-        TERM=ansi ${P}dircolors -b dircolors >! colors.zsh' \
-    atpull'%atclone' pick"colors.zsh" nocompile'!' \
-    atload'zstyle ":completion:*:default" list-colors "${(s.:.)LS_COLORS}";'
-zinit light zpm-zsh/dircolors-material
-
 # Completion settings
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
