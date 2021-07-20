@@ -1,8 +1,8 @@
-local npairs = require('nvim-autopairs')
+local npairs = require "nvim-autopairs"
 
 npairs.setup {
-    check_ts = true,
-    disable_filetype = { 'vim' }
+  check_ts = true,
+  disable_filetype = { "vim" },
 }
 
 -- local endwise = require('nvim-autopairs.ts-rule').endwise

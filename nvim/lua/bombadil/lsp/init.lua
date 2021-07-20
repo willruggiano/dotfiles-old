@@ -107,8 +107,10 @@ nvim_lsp.pyright.setup {
   capabilities = updated_capabilities,
 }
 
+local lua_lang_server_root = vim.fn.expand "~/.zinit/plugins/sumneko---lua-language-server"
+
 local lua_lspconfig = {
-  cmd = { "lua-language-server" },
+  cmd = { lua_lang_server_root .. "/bin/Linux/lua-language-server", "-E", lua_lang_server_root .. "/main.lua" },
   on_init = on_init,
   on_attach = on_attach,
   capabilities = updated_capabilities,

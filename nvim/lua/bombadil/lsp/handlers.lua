@@ -17,7 +17,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
   virtual_text = {
     severity_limit = "Error",
     spacing = 4,
-    prefix = "●"
+    prefix = "●",
   },
   severity_sort = true,
 })
@@ -34,7 +34,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 --   }
 -- )
 
-vim.lsp.handlers["textDocument/hover"] = require('lspsaga.hover').handler
+vim.lsp.handlers["textDocument/hover"] = require("lspsaga.hover").handler
 
 local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
 
@@ -42,4 +42,3 @@ for type, icon in pairs(signs) do
   local hl = "LspDiagnosticsSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
-

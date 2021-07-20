@@ -3,32 +3,36 @@ local inoremap = vim.keymap.inoremap
 local tnoremap = vim.keymap.tnoremap
 
 -- Better pane navigation
-nnoremap { '<c-j>', '<c-w><c-j>' }
-nnoremap { '<c-k>', '<c-w><c-k>' }
-nnoremap { '<c-h>', '<c-w><c-h>' }
-nnoremap { '<c-l>', '<c-w><c-l>' }
+nnoremap { "<c-j>", "<c-w><c-j>" }
+nnoremap { "<c-k>", "<c-w><c-k>" }
+nnoremap { "<c-h>", "<c-w><c-h>" }
+nnoremap { "<c-l>", "<c-w><c-l>" }
 
 -- Scrolling
-nnoremap { '<up>', '<c-y>' }
-nnoremap { '<down>', '<c-e>' }
+nnoremap { "<up>", "<c-y>" }
+nnoremap { "<down>", "<c-e>" }
 
 -- Tab nagivation
-nnoremap { '<right>', 'gt' }
-nnoremap { '<left>', 'gT', }
+nnoremap { "<right>", "gt" }
+nnoremap { "<left>", "gT" }
 
 -- Opens line below or above current line
-inoremap { '<s-cr>', '<c-o>o' }
-inoremap { '<c-cr>', '<c-o>O' }
+inoremap { "<s-cr>", "<c-o>o" }
+inoremap { "<c-cr>", "<c-o>O" }
 
 -- Run the last command
-nnoremap { '<leader><leader>c', '<cmd><up>' }
+nnoremap { "<leader><leader>c", "<cmd><up>" }
 
 -- Make ESC leave terminal mode
-tnoremap { '<esc><esc>', '<c-\\><c-n>' }
+tnoremap { "<esc><esc>", "<c-\\><c-n>" }
 
 -- Toggle hlsearch
-nnoremap { '<m-cr>', function() vim.v.hlsearch = not vim.v.hlsearch end }
+nnoremap {
+  "<m-cr>",
+  function()
+    vim.v.hlsearch = not vim.v.hlsearch
+  end,
+}
 
 -- Silence!
-nnoremap { '<c-s>', '<cmd>update<cr>' }
-
+nnoremap { "<c-s>", "<cmd>update<cr>" }

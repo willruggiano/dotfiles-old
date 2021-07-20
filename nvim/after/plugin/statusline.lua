@@ -67,6 +67,10 @@ local minimal_status_line = function(_, buffer)
   end
 end
 
+local filename = function(_, buffer)
+  return vim.fn.fnamemodify(buffer.name, ":p:.")
+end
+
 require("el").setup {
   generator = function(window, buffer)
     local is_minimal = minimal_status_line(window, buffer)
@@ -77,7 +81,7 @@ require("el").setup {
       { " " },
       { sections.split, required = true },
       { git_icon },
-      { sections.maximum_width(builtin.responsive_file(140, 90), 0.40), required = true },
+      { sections.maximum_width(filename, 0.40), required = true },
       { sections.collapse_builtin { { " " }, { builtin.modified_flag } } },
       { sections.split, required = true },
       { show_current_func },
@@ -150,4 +154,3 @@ let s:right_sep = ' ❮❮ '
         let s:seperator.EndSeperate = ' '
         let s:seperator.emptySeperate1 = ''
 --]]
-

@@ -1,4 +1,3 @@
-local keymap = require('astronauta.keymap')
+local keymap = require "astronauta.keymap"
 
-keymap.nnoremap { '<leader>tt', '<cmd>NvimTreeToggle<cr>' }
-
+keymap.nnoremap { "<leader>tt", "<cmd>NvimTreeToggle<cr>" }

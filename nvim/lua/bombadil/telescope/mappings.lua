@@ -1,4 +1,4 @@
-require('telescope')
+require "telescope"
 
 TelescopeMapArgs = TelescopeMapArgs or {}
 

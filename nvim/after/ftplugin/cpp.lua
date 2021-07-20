@@ -1,6 +1,5 @@
-vim.bo.commentstring = '// %s'
+vim.bo.commentstring = "// %s"
 
-local keymap = require('astronauta.keymap')
+local keymap = require "astronauta.keymap"
 
-keymap.nnoremap { 'K', '<cmd>CppMan<cr>', buffer = true }
-
+keymap.nnoremap { "K", "<cmd>CppMan<cr>", buffer = true }

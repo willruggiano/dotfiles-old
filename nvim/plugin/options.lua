@@ -31,11 +31,11 @@ opt.ignorecase = true -- Ignore case when searching...
 opt.smartcase = true -- ... unless there is a capital letter in the query
 opt.hidden = true -- I like having buffers stay around
 opt.cursorline = true -- Highlight the current line
-opt.equalalways = false --  don't like my windows changing all the time
+opt.equalalways = true
 opt.splitright = true -- Prefer windows splitting to the right
 opt.splitbelow = true -- Prefer windows splitting to the bottom
 opt.updatetime = 1000 -- Make updates happen faster
-opt.hlsearch = true -- I wouldn't use this without my DoNoHL function
+opt.hlsearch = true
 opt.scrolloff = 10 -- Make it so there are always ten lines below my cursor
 opt.signcolumn = "yes"
 
@@ -71,15 +71,15 @@ opt.mouse = "n"
 --
 -- TODO: w, {v, b, l}
 opt.formatoptions = opt.formatoptions
-	- "a" -- Auto formatting is BAD.
-	- "t" -- Don't auto format my code. I got linters for that.
-	+ "c" -- In general, I like it when comments respect textwidth
-	+ "q" -- Allow formatting comments w/ gq
-	- "o" -- O and o, don't continue comments
-	+ "r" -- But do continue when pressing enter.
-	+ "n" -- Indent past the formatlistpat, not underneath it.
-	+ "j" -- Auto-remove comments if possible.
-	- "2" -- I'm not in gradeschool anymore
+  - "a" -- Auto formatting is BAD.
+  - "t" -- Don't auto format my code. I got linters for that.
+  + "c" -- In general, I like it when comments respect textwidth
+  + "q" -- Allow formatting comments w/ gq
+  - "o" -- O and o, don't continue comments
+  + "r" -- But do continue when pressing enter.
+  + "n" -- Indent past the formatlistpat, not underneath it.
+  + "j" -- Auto-remove comments if possible.
+  - "2" -- I'm not in gradeschool anymore
 
 -- set joinspaces
 opt.joinspaces = false -- Two spaces and grade school, we're done
@@ -97,6 +97,3 @@ opt.secure = true
 
 -- I like help,man,K to open in a vertical split
 vim.o.keywordprg = ":vert help"
-
--- Don't unload hidden buffers.
-vim.opt.hidden = true

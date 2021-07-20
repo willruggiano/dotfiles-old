@@ -37,11 +37,11 @@ end
 status.on_attach = function(client)
   nvim_status.on_attach(client)
 
-  vim.cmd([[
+  vim.cmd [[
     augroup MyLspStatusGroup
       autocmd CursorHold,BufEnter <buffer> lua require('lsp-status').update_current_function()
     augroup END
-  ]])
+  ]]
 end
 
 return status

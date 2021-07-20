@@ -5,19 +5,19 @@ end
 local should_reload = true
 local reloader = function()
   if should_reload then
-    RELOAD("plenary")
-    RELOAD("popup")
-    RELOAD("telescope")
+    RELOAD "plenary"
+    RELOAD "popup"
+    RELOAD "telescope"
   end
 end
 
 reloader()
 
-local actions = require('telescope.actions')
-local action_state = require('telescope.actions.state')
-local action_mt = require('telescope.actions.mt')
-local sorters = require('telescope.sorters')
-local themes = require('telescope.themes')
+local actions = require "telescope.actions"
+local action_state = require "telescope.actions.state"
+local action_mt = require "telescope.actions.mt"
+local sorters = require "telescope.sorters"
+local themes = require "telescope.themes"
 
 local set_prompt_to_entry_value = function(prompt_bufnr)
   local entry = action_state.get_selected_entry()
@@ -248,7 +248,7 @@ end
 
 function M.edit_zsh()
   require("telescope.builtin").find_files {
-    cwd = "~/.config/zsh/",
+    cwd = "~/dotfiles/zsh/",
     prompt = "~ dotfiles ~",
 
     layout_strategy = "horizontal",
@@ -362,6 +362,11 @@ end
 
 function M.buffers()
   require("telescope.builtin").buffers {
+    attach_mappings = function(_, map)
+      map("i", "<c-d>", actions.delete_buffer )
+      map("n", "<c-d>", actions.delete_buffer )
+      return true
+    end
   }
 end
 

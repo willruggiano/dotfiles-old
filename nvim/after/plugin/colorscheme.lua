@@ -40,4 +40,4 @@ vim.g.tokyonight_colors = {}
 require("tokyonight").colorscheme()
 
 -- require('colorbuddy').colorscheme = 'material'
-require('colorizer').setup()
+require("colorizer").setup()

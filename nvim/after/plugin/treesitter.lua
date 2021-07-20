@@ -17,8 +17,8 @@ end)()
 
 require("nvim-treesitter.configs").setup {
   autopairs = { enable = true },
-  
-  ensure_installed = { 'c', 'cpp', 'dockerfile', 'go', 'java', 'json', 'lua', 'python', 'rust', 'typescript', 'yaml' },
+
+  ensure_installed = { "c", "cpp", "dockerfile", "go", "java", "json", "lua", "python", "rust", "typescript", "yaml" },
 
   highlight = {
     enable = true,
@@ -133,11 +133,10 @@ require("nvim-treesitter.configs").setup {
 }
 
 vim.opt.foldlevelstart = 99
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 local nnoremap = vim.keymap.nnoremap
 
-nnoremap { '<space>tp', '<cmd>TSPlaygroundToggle<cr>' }
-nnoremap { '<space>th', '<cmd>TSHighlightCapturesUnderCursor<cr>' }
-
+nnoremap { "<space>tp", "<cmd>TSPlaygroundToggle<cr>" }
+nnoremap { "<space>th", "<cmd>TSHighlightCapturesUnderCursor<cr>" }

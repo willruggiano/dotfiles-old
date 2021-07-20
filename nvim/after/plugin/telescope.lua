@@ -1,6 +1,6 @@
-local map_tele = require('bombadil.telescope.mappings')
+local map_tele = require "bombadil.telescope.mappings"
 
-local sorters = require('telescope.sorters')
+local sorters = require "telescope.sorters"
 
 map_tele("<space>gw", "grep_string", {
   short_path = true,
@@ -36,9 +36,8 @@ map_tele("<space>fh", "help_tags")
 map_tele("<space>vo", "vim_options")
 map_tele("<space>gp", "grep_prompt")
 
-map_tele('<space>en', 'edit_neovim')
-map_tele('<space>ez', 'edit_zsh')
+map_tele("<space>en", "edit_neovim")
+map_tele("<space>ez", "edit_zsh")
 
 -- Telescope Meta
 map_tele("<space>fB", "builtin")
-

@@ -1,3 +1,3 @@
 local nnoremap = vim.keymap.nnoremap
 
-nnoremap { '<leader>f', '<cmd>Format<cr>', silent = true }
+nnoremap { "<leader>f", "<cmd>Format<cr>", silent = true }
