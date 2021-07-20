@@ -83,7 +83,7 @@ return require("packer").startup(function()
 
   -- Text editing + manipulation
   use "tpope/vim-commentary"
-  use "tpope/vim-surround"
+  -- use "tpope/vim-surround"
   use {
     "blackCauldron7/surround.nvim",
     config = function()
