@@ -15,8 +15,6 @@ reloader()
 
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
-local action_mt = require "telescope.actions.mt"
-local sorters = require "telescope.sorters"
 local themes = require "telescope.themes"
 
 local set_prompt_to_entry_value = function(prompt_bufnr)
@@ -93,7 +91,7 @@ require("telescope").setup {
       },
     },
 
-    borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+    borderchars = { "-", "│", "-", "│", "+", "+", "+", "+" },
 
     file_previewer = require("telescope.previewers").vim_buffer_cat.new,
     grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
@@ -307,9 +305,8 @@ function M.git_files()
     width = 0.5
   end
 
-  local opts = themes.get_dropdown {
+  local opts = themes.get_ivy {
     winblend = 5,
-    previewer = false,
 
     cwd = path,
 

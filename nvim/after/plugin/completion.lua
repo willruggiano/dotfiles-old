@@ -44,12 +44,9 @@ inoremap { "<c-e>", 'compe#close("<c-e>")', expr = true }
 _G.completion_confirm = function()
   if vim.fn.pumvisible() ~= 0 then
     if vim.fn.complete_info()["selected"] ~= -1 then
-      return vim.fn["compe#confirm"](t "<cr>")
+      return vim.fn["compe#confirm"](npairs.esc "<CR>")
     else
-      vim.defer_fn(function()
-        vim.fn["compe#confirm"] "<cr>"
-      end, 20)
-      return t "<c-n>"
+      return npairs.esc "<CR>"
     end
   else
     return npairs.autopairs_cr()
