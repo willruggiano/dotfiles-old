@@ -26,19 +26,36 @@ require("compe").setup {
 }
 
 require("nvim-autopairs.completion.compe").setup {
-  map_cr = true,
+  map_cr = false,
   map_complete = true,
 }
 
 local inoremap = vim.keymap.inoremap
 local snoremap = vim.keymap.snoremap
-
-inoremap { "<c-space>", "compe#complete()", expr = true }
-inoremap { "<c-e>", 'compe#close("<c-e>")', expr = true }
+local npairs = require "nvim-autopairs"
 
 local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
+
+inoremap { "<c-space>", "compe#complete()", expr = true }
+inoremap { "<c-e>", 'compe#close("<c-e>")', expr = true }
+
+_G.completion_confirm = function()
+  if vim.fn.pumvisible() ~= 0 then
+    if vim.fn.complete_info()["selected"] ~= -1 then
+      return vim.fn["compe#confirm"](t "<cr>")
+    else
+      vim.defer_fn(function()
+        vim.fn["compe#confirm"] "<cr>"
+      end, 20)
+      return t "<c-n>"
+    end
+  else
+    return npairs.autopairs_cr()
+  end
+end
+inoremap { "<cr>", "v:lua.completion_confirm()", expr = true }
 
 local check_back_space = function()
   local col = vim.fn.col "." - 1

@@ -361,13 +361,14 @@ function M.project_search()
 end
 
 function M.buffers()
-  require("telescope.builtin").buffers {
+  local opts = themes.get_ivy {
     attach_mappings = function(_, map)
-      map("i", "<c-d>", actions.delete_buffer )
-      map("n", "<c-d>", actions.delete_buffer )
+      map("i", "<c-d>", actions.delete_buffer)
+      map("n", "<c-d>", actions.delete_buffer)
       return true
-    end
+    end,
   }
+  require("telescope.builtin").buffers(opts)
 end
 
 function M.curbuf()
