@@ -114,10 +114,7 @@ zinit light Kitware/CMake
 zinit wait lucid for \
     if'[[ -z "$SSH_TTY" ]]' from:gh as:program ver:3.2 \
         atclone'./autogen.sh && ./configure' atpull'%atclone' make pick:tmux \
-        tmux/tmux \
-    if'[[ -z "$SSH_TTY" ]]' from:gh as:program \
-        atclone'cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$ZPFX .' atpull'%atclone' make \
-        GothenburgBitFactory/taskwarrior
+        tmux/tmux
 
 zinit ice wait:1 lucid from:gh as:program pick'bin/xpanes'
 zinit light greymd/tmux-xpanes
@@ -283,18 +280,8 @@ function _atload_nvim() {
     export EDITOR='nvim'
 }
 
-case "$OS" in
-    Darwin)
-        zinit ice wait from:gh-r ver:nightly as:program \
-            mv'nvim-* -> nvim' bpick'*macos*' pick'nvim/bin/nvim' \
-            atload'_atload_nvim'
-        ;;
-    *)
-        zinit ice wait lucid from:gh-r ver:nightly as:program \
-            mv'nvim-* -> nvim' bpick'*linux*' pick'nvim/bin/nvim' \
-            atload'_atload_nvim'
-        ;;
-esac
+zinit ice wait lucid as:program from:gh nocompletions \
+    make'CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=$ZPFX install'
 zinit light neovim/neovim
 
 function _atload_pass() {

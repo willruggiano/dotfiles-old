@@ -67,10 +67,6 @@ return require("packer").startup(function()
   use "glepnir/lspsaga.nvim"
   use "nvim-lua/lsp_extensions.nvim"
   use {
-    "tjdevries/nlua.nvim",
-    run = ":luafile ~/.local/share/nvim/site/pack/packer/start/nlua.nvim/scripts/download_sumneko.lua",
-  }
-  use {
     "folke/trouble.nvim",
     config = function()
       require("trouble").setup {

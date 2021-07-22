@@ -1,4 +1,4 @@
-local nvim_lsp = require "lspconfig"
+local lspconfig = require "lspconfig"
 local lspconfig_util = require "lspconfig.util"
 local nvim_status = require "lsp-status"
 
@@ -73,7 +73,7 @@ updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
   },
 }
 
-nvim_lsp.clangd.setup {
+lspconfig.clangd.setup {
   cmd = {
     "clangd",
     "--background-index",
@@ -95,13 +95,13 @@ nvim_lsp.clangd.setup {
   capabilities = updated_capabilities,
 }
 
-nvim_lsp.cmake.setup {
+lspconfig.cmake.setup {
   on_init = on_init,
   on_attach = on_attach,
   capabilities = updated_capabilities,
 }
 
-nvim_lsp.pyright.setup {
+lspconfig.pyright.setup {
   on_init = on_init,
   on_attach = on_attach,
   capabilities = updated_capabilities,
@@ -109,31 +109,31 @@ nvim_lsp.pyright.setup {
 
 local lua_lang_server_root = vim.fn.expand "~/.zinit/plugins/sumneko---lua-language-server"
 
-local lua_lspconfig = {
-  cmd = { lua_lang_server_root .. "/bin/Linux/lua-language-server", "-E", lua_lang_server_root .. "/main.lua" },
-  on_init = on_init,
-  on_attach = on_attach,
-  capabilities = updated_capabilities,
-  root_dir = function(fname)
-    if string.find(vim.fn.fnamemodify(fname, ":p"), "dotfiles/nvim") then
-      return vim.fn.expand "~/dotfiles/nvim"
-    end
+lspconfig.sumneko_lua.setup(require("lua-dev").setup {
+  lspconfig = {
+    cmd = { lua_lang_server_root .. "/bin/Linux/lua-language-server", "-E", lua_lang_server_root .. "/main.lua" },
+    on_init = on_init,
+    on_attach = on_attach,
+    capabilities = updated_capabilities,
+    root_dir = function(fname)
+      if string.find(vim.fn.fnamemodify(fname, ":p"), "dotfiles/nvim") then
+        return vim.fn.expand "~/dotfiles/nvim"
+      end
 
-    return lspconfig_util.find_git_ancestors(fname) or lspconfig_util.path.dirname(fname)
-  end,
-  globals = {
-    -- Colorbuddy
-    "Color",
-    "c",
-    "Group",
-    "g",
-    "s",
-    -- Custom (see bombadil.globals)
-    "RELOAD",
+      return lspconfig_util.find_git_ancestors(fname) or lspconfig_util.path.dirname(fname)
+    end,
+    globals = {
+      -- Colorbuddy
+      "Color",
+      "c",
+      "Group",
+      "g",
+      "s",
+      -- Custom (see bombadil.globals)
+      "RELOAD",
+    },
   },
-}
-
-nvim_lsp.sumneko_lua.setup(require("lua-dev").setup { lspconfig = lua_lspconfig })
+})
 
 -- Map :Format to vim.lsp.buf.formatting()
 vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
