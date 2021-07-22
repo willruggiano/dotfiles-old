@@ -148,7 +148,11 @@ return require("packer").startup(function()
   }
   use {
     "yamatsum/nvim-nonicons",
-    requires = { "kyazdani42/nvim-web-devicons" },
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function()
+      vim.g.override_nvim_web_devicons = true
+      require("nvim-nonicons").get("file")
+    end
   }
   use {
     "kyazdani42/nvim-tree.lua",
@@ -160,7 +164,6 @@ return require("packer").startup(function()
   use { "folke/zen-mode.nvim", requires = "folke/twilight.nvim" }
   use {
     "folke/todo-comments.nvim",
-    requires = "nvim-lua/plenary.nvim",
     config = function()
       require("todo-comments").setup {
         signs = false,

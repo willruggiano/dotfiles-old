@@ -16,11 +16,14 @@ return function()
     git = 1,
     folders = 1,
     files = 1,
+    folder_arrows = 1,
   }
 
+  local icons = require "nvim-nonicons"
+
   vim.g.nvim_tree_icons = {
-    default = "",
-    symlink = "",
+    default = icons.get "file",
+    symlink = icons.get "file-symlink-file",
     git = {
       unstaged = "✗",
       staged = "✓",
@@ -31,12 +34,14 @@ return function()
       ignored = "◌",
     },
     folder = {
-      default = "",
-      open = "",
-      empty = "",
-      empty_open = "",
-      symlink = "",
-      symlink_open = "",
+      default = icons.get "file-directory",
+      open = icons.get "file-directory-outline",
+      symlink = icons.get "file-symlink-file",
+      symlink_open = icons.get "file-symlink-file",
+      empty = icons.get "file-directory-outline",
+      empty_open = icons.get "file-directory-outline",
+      arrow_open = icons.get "chevron-down",
+      arrow_closed = icons.get "chevron-right",
     },
     lsp = {
       hint = "",
