@@ -48,7 +48,7 @@ set $right l
 floating_modifier Mod1
 
 # start a terminal
-bindsym Mod1+Return exec alacritty
+bindsym Mod1+Return exec kitty
 
 # kill focused window
 bindsym Mod1+Shift+q kill
@@ -205,7 +205,7 @@ bindsym Mod1+o mode "$mode_launcher"
 mode "$mode_launcher" {
 	bindsym b exec --no-startup-id firefox; mode "default"
 	bindsym l exec --no-startup-id rofi -show run; mode "default"
-	bindsym t exec --no-startup-id alacritty; mode "default"
+	bindsym t exec --no-startup-id kitty; mode "default"
 	bindsym Enter mode "default"
 	bindsym Escape mode "default"
 	bindsym Mod1+o mode "default"

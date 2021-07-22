@@ -38,6 +38,7 @@ map_tele("<space>gp", "grep_prompt")
 
 map_tele("<space>en", "edit_neovim")
 map_tele("<space>ez", "edit_zsh")
+map_tele("<space>ed", "edit_dotfiles")
 
 -- Telescope Meta
 map_tele("<space>fB", "builtin")
