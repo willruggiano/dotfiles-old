@@ -41,10 +41,10 @@ zinit ice lucid \
     atload'zstyle ":completion:*:default" list-colors "${(s.:.)LS_COLORS}";'
 zinit light zpm-zsh/dircolors-material
 
-zinit pack:bgn for firefox-dev
+zinit pack:bgn for if'[[ -z "$SSH_TTY" ]]' firefox-dev
 
 zinit wait lucid for \
-    from:gh-r as:program bpick'*.tar.gz' pick'**/bin/gh' cli/cli \
+    from:gh-r bpick'*.tar.gz' sbin'**/bin/gh' cli/cli \
     OMZL::git.zsh \
     atload"unalias grv" OMZP::git \
     as:program from:gh make'install prefix=$ZPFX' pick'$ZPFX/bin/git-flow' nvie/gitflow
@@ -87,15 +87,14 @@ PS1="READY >" # provide a simple prompt till the theme loads
 
 _atload_starship() {
     export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
-    eval "$(starship init zsh)"
 }
 
-zinit ice wait'!' lucid from:gh-r as:program atload"_atload_starship"
+zinit ice wait'!' lucid from:gh-r atclone'./starship init zsh > init.zsh && ./starship completions zsh > _starship' atpull'%atclone' atload'_atload_starship' src'init.zsh' sbin:starship
 zinit load starship/starship
 
 # Time for build tools!
 zinit wait lucid for \
-    as:program from:gh-r pick:ninja nocompletions ninja-build/ninja \
+    from:gh-r sbin:ninja nocompletions ninja-build/ninja \
     as:null from:gh has:cmake ver'llvmorg-12.0.1' nocompletions \
         atclone'cmake -S llvm -B build -G Ninja -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld;lldb" -DCMAKE_INSTALL_PREFIX=$ZPFX -DCMAKE_BUILD_TYPE=Release && cmake --build build --target install --parallel $(nproc)' \
         atpull'%atclone' \
@@ -103,21 +102,20 @@ zinit wait lucid for \
 
 case "$OS" in
     Darwin)
-        zinit ice wait lucid as:program from:gh-r bpick'*macos*.dmg' pick'**/bin/cmake'
+        zinit ice wait lucid from:gh-r bpick'*macos*.dmg' sbin'**/bin/cmake'
         ;;
     *)
-        zinit ice wait lucid as:program from:gh-r extract'!' bpick'*linux-x86*.tar.gz' pick'**/bin/cmake'
+        zinit ice wait lucid from:gh-r extract'!' bpick'*linux-x86*.tar.gz' sbin'**/bin/cmake'
         ;;
 esac
 zinit light Kitware/CMake
 
 zinit wait lucid for \
-    if'[[ -z "$SSH_TTY" ]]' from:gh as:program ver:3.2 \
-        atclone'./autogen.sh && ./configure' atpull'%atclone' make pick:tmux \
-        tmux/tmux
-
-zinit ice wait:1 lucid from:gh as:program pick'bin/xpanes'
-zinit light greymd/tmux-xpanes
+    if'[[ -z "$SSH_TTY" ]]' from:gh ver:3.2 \
+        atclone'./autogen.sh && ./configure' atpull'%atclone' make sbin:tmux \
+        tmux/tmux \
+    if'[[ -z "$SSH_TTY" ]]' from:gh sbin:bin/xpanes \
+        greymd/tmux-xpanes
 
 _atload_fzf() {
     if [ ! -z $TMUX ]; then
@@ -138,17 +136,17 @@ case "$OS" in
         ;;
 esac
 zinit wait lucid for \
-    as:program pick'**/bin/(go|gofmt)' extract'!' "$GOLANG_URL" \
-    as:program from:gh pick:'bin/(fzf|fzf-tmux)' \
+    as:null sbin'**/bin/(go|gofmt)' extract'!' "$GOLANG_URL" \
+    from:gh sbin:'bin/(fzf|fzf-tmux)' \
         atclone'./install --bin && cp shell/completion.zsh _fzf' atpull'%atclone' atload'_atload_fzf' \
 	    junegunn/fzf
 
 case "$OS" in
     Darwin)
-        zinit ice wait lucid from:gh-r as:program pick:sad
+        zinit ice wait lucid from:gh-r sbin:sad
         ;;
     *)
-        zinit ice wait lucid from:gh-r as:program bpick'*linux*.zip' pick:sad
+        zinit ice wait lucid from:gh-r bpick'*linux*.zip' sbin:sad
         ;;
 esac
 zinit light ms-jpq/sad
@@ -156,7 +154,7 @@ zinit light ms-jpq/sad
 zinit ice wait lucid
 zinit light hlissner/zsh-autopair
 
-zinit ice wait:2 lucid from:gh-r as:program mv'delta* -> delta' pick'delta/delta'
+zinit ice wait:2 lucid from:gh-r mv'delta* -> delta' sbin'delta/delta'
 zinit light dandavison/delta
 
 _atload_exa() {
@@ -166,7 +164,7 @@ _atload_exa() {
     alias lla='exa -a -l'
 }
 
-zinit ice wait lucid from:gh-r as:program atload'_atload_exa' pick'bin/exa'
+zinit ice wait lucid from:gh-r atpull'cp -vf man/exa.1 $ZPFX/man/man1 && cp -vf completions/exa.zsh _exa' atclone'%atpull' atload'_atload_exa' sbin'bin/exa'
 zinit light ogham/exa
 
 _atload_bat() {
@@ -179,13 +177,13 @@ _atload_bat() {
     alias cat='bat'
 }
 
-zinit ice wait lucid from:gh-r as:program atload'_atload_bat' mv'bat* -> bat' pick:bat/bat
+zinit ice wait lucid from:gh-r atclone'cp -vf bat/bat.1 $ZPFX/man/man1 && cp -vf bat/autocomplete/bat.zsh _bat' atpull'%atclone' atload'_atload_bat' sbin:bat/bat
 zinit light @sharkdp/bat
 
 _atload_fd() {
 }
 
-zinit ice wait lucid from:gh-r as:program atload'_atload_fd' mv'fd* -> fd' pick:fd/fd nocompletions
+zinit ice wait lucid from:gh-r atclone'cp -vf fd/fd.1 $ZPFX/man/man1 && cp -vf fd/autocomplete/_fd _fd' atpull'%atclone' atload'_atload_fd' sbin:fd/fd
 zinit light @sharkdp/fd
 
 _atload_ripgrep() {
@@ -195,14 +193,14 @@ _atload_ripgrep() {
     alias fgrep='rg --color=auto'
 }  
 
-zinit ice wait lucid from"gh-r" as"program" atload"_atload_ripgrep" mv"ripgrep* -> rg" pick"rg/rg" nocompletions
+zinit ice wait lucid from:gh-r atclone'cp -vf rg/doc/rg.1 $ZPFX/man/man1 && cp -vf rg/complete/_rg _rg' atpull'%atclone' atload'_atload_ripgrep' sbin'rg/rg'
 zinit light BurntSushi/ripgrep
 
 _atload_yq() {
     eval "$(yq shell-completion zsh)"
 }
 
-zinit ice wait:4 lucid from:gh-r as:program atload'_atload_yq' mv'yq* -> yq' pick:yq
+zinit ice wait:4 lucid from:gh-r atload'_atload_yq' mv'yq* -> yq' sbin:yq
 zinit light mikefarah/yq
 
 _atload_pyenv() {
@@ -215,7 +213,7 @@ _atload_pyenv_virtualenv() {
 }
 
 zinit wait lucid for \
-    from:gh as:command pick:bin/pyenv atinit'export PYENV_ROOT="$PWD"; ln -sf $PYENV_ROOT $HOME/.pyenv' atclone'src/configure' atpull'%atclone' make'-C src' atload'_atload_pyenv' pyenv/pyenv \
+    from:gh sbin:bin/pyenv atinit'export PYENV_ROOT="$PWD"; ln -sf $PYENV_ROOT $HOME/.pyenv' atclone'src/configure' atpull'%atclone' make'-C src' atload'_atload_pyenv' pyenv/pyenv \
     from:gh as:null atinit'ln -sf ~/.zinit/plugins/pyenv---pyenv-virtualenv $(pyenv root)/plugins/pyenv-virtualenv' atload'_atload_pyenv_virtualenv' pyenv/pyenv-virtualenv
 
 _atload_rbenv() {
@@ -280,7 +278,7 @@ function _atload_nvim() {
     export EDITOR='nvim'
 }
 
-zinit ice wait lucid as:program from:gh nocompletions \
+zinit ice wait lucid from:gh nocompletions \
     make'CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=$ZPFX install'
 zinit light neovim/neovim
 
@@ -302,12 +300,12 @@ zinit wait lucid for \
     as:null if'[[ -z "$_ZSHRC_DISABLE_PASS" ]]' \
         make'PREFIX=$ZPFX BINDIR=$ZPFX/bin BASHCOMPDIR=$ZPFX/share/bash-completion/completions install' \
         rjekker/pass-extension-meta \
-    from:gh-r as:program if'[[ -z "$_ZSHRC_DISABLE_PASS" ]]' \
-        bpick'*pass*' pick:docker-credential-pass nocompletions \
+    from:gh-r if'[[ -z "$_ZSHRC_DISABLE_PASS" ]]' \
+        bpick'*pass*' sbin:docker-credential-pass nocompletions \
         docker/docker-credential-helpers
 
 if [[ -z "$_ZSHRC_DISABLE_EMSDK" ]]; then
-    zinit ice wait lucid from:gh as:program pick:emsdk nocompletions
+    zinit ice wait lucid as:null from:gh sbin:emsdk nocompletions
     zinit light emscripten-core/emsdk
 fi
 
@@ -325,7 +323,7 @@ if [[ -z "$SSH_TTY" ]]; then
                     nocompletions \
                     mpv-player/mpv-build \
                 as:completion 'https://github.com/mpv-player/mpv/blob/master/etc/_mpv.zsh' \
-                as:program pick:ff2mpv atclone'./install.sh' atpull'%atclone' nocompletions \
+                sbin:ff2mpv atclone'./install.sh' atpull'%atclone' nocompletions \
                     woodruffw/ff2mpv
             ;;
     esac
@@ -337,17 +335,17 @@ zinit ice wait lucid as:program from:gh ver:3.0.5 \
     make'install' pick'$ZPFX/bin/htop' nocompletions
 zinit light htop-dev/htop
 
-zinit ice wait lucid as:program from:gh-r pick:doctl nocompletions
+zinit ice wait lucid from:gh-r sbin:doctl nocompletions
 zinit light digitalocean/doctl
 
 LUA_VERSION='5.4.3'
 zinit wait lucid for \
-    id-as:lua/lua as:program from:gh nocompletions \
+    id-as:lua/lua from:gh nocompletions \
         atclone"curl -R -O http://www.lua.org/ftp/lua-$LUA_VERSION.tar.gz && tar zxf lua-$LUA_VERSION.tar.gz" atpull'%atclone' \
         make"-C lua-$LUA_VERSION all test install INSTALL_TOP=$ZPFX" \
         zdharma/null \
-    as:program from:gh-r nocompletions pick:stylua JohnnyMorganz/StyLua \
-    as:program from:gh pick'bin/**/lua-language-server' nocompletions \
+    from:gh-r nocompletions sbin:stylua JohnnyMorganz/StyLua \
+    from:gh sbin'bin/**/lua-language-server' nocompletions \
         atclone'(cd 3rd/luamake; ./compile/install.sh) && ./3rd/luamake/luamake rebuild' atpull'%atclone' \
         sumneko/lua-language-server
         
