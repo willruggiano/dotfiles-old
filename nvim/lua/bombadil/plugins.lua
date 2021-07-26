@@ -45,6 +45,7 @@ return require("packer").startup(function()
   }
   use "lewis6991/gitsigns.nvim"
   use "rhysd/git-messenger.vim"
+  use "tpope/vim-fugitive"
 
   -- Lsp, build-test-debug, etc
   use "cdelledonne/vim-cmake"
