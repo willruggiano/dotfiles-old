@@ -81,6 +81,10 @@ opt.formatoptions = opt.formatoptions
   + "j" -- Auto-remove comments if possible.
   - "2" -- I'm not in gradeschool anymore
 
+opt.shortmess = opt.shortmess
+  + "a" -- Turn on all of the abbreviations
+  + "F" -- Don't show the file info when editing a file
+
 -- set joinspaces
 opt.joinspaces = false -- Two spaces and grade school, we're done
 

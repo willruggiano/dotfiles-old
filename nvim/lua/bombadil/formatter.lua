@@ -7,7 +7,12 @@ local function prettier()
 end
 
 local function clangformat()
-  return { exe = "clang-format", args = { "-assume-filename=" .. vim.fn.expand "%:t" }, stdin = true }
+  return {
+    exe = "clang-format",
+    args = { "--assume-filename=" .. vim.fn.expand "%:t", },
+    cwd = vim.fn.expand "%:p:h",
+    stdin = true,
+  }
 end
 
 local function rustfmt()
@@ -27,11 +32,11 @@ local function latexindent()
 end
 
 local function cmake_format()
-  return { exe = "cmake-format", args = { vim.fn.expand "%:t" }, stdin = false }
+  return { exe = "cmake-format", args = { vim.fn.expand "%:t" }, cwd = vim.fn.expand "%:p:h", stdin = false }
 end
 
 local function stylua()
-  return { exe = "stylua", args = { "--search-parent-directories", "-" }, stdin = true }
+  return { exe = "stylua", args = { "--search-parent-directories", "-" }, cwd = vim.fn.expand "%:p:h", stdin = true }
 end
 
 return {

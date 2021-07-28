@@ -44,10 +44,11 @@ zinit light zpm-zsh/dircolors-material
 zinit pack:bgn for if'[[ -z "$SSH_TTY" ]]' firefox-dev
 
 zinit wait lucid for \
-    from:gh-r bpick'*.tar.gz' sbin'**/bin/gh' cli/cli \
+    as:null from:gh-r bpick'*.tar.gz' sbin'**/bin/gh' cli/cli \
     OMZL::git.zsh \
     atload"unalias grv" OMZP::git \
-    as:program from:gh make'install prefix=$ZPFX' pick'$ZPFX/bin/git-flow' nvie/gitflow
+    as:null from:gh make'install prefix=$ZPFX' nvie/gitflow \
+    as:null from:gh make'install PREFIX=$ZPFX' Fakerr/git-recall
 
 function die() {
     echo "$@"
