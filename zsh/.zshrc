@@ -119,8 +119,9 @@ _atload_rust() {
     export RUSTUP_HOME=$PWD/rustup
 }
 
-zinit ice wait lucid rustup id-as'rust' as'null' sbin'bin/*' atload'_atload_rust'
-zinit light zdharma/null
+zinit wait lucid for \
+    id-as'rust/rustup' as:null sbin'bin/*' atload'_atload_rust' light-mode zdharma/null \
+    as:completion 'https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/rust/_rust'
 
 if [[ -z "$SSH_TTY" ]]; then
     zinit wait lucid for \
@@ -128,7 +129,7 @@ if [[ -z "$SSH_TTY" ]]; then
             atclone'./autogen.sh && ./configure --prefix $ZPFX' atpull'%atclone' make \
             tmux/tmux \
         as:null sbin:bin/xpanes greymd/tmux-xpanes \
-        id-as'tmuxinator/tmuxinator' gem'!tmuxinator' zdharma/null \
+        id-as'tmuxinator/tmuxinator' gem'!tmuxinator' light-mode zdharma/null \
         as:completion atclone'cp -vf **/tmuxinator.zsh _tmuxinator' atpull'%atclone' 'https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/completion/tmuxinator.zsh'
 fi
 
@@ -350,7 +351,7 @@ zinit wait lucid for \
     id-as:lua/lua from:gh nocompletions \
         atclone"curl -R -O http://www.lua.org/ftp/lua-$LUA_VERSION.tar.gz && tar zxf lua-$LUA_VERSION.tar.gz" atpull'%atclone' \
         make"-C lua-$LUA_VERSION all test install INSTALL_TOP=$ZPFX" \
-        zdharma/null \
+        light-mode zdharma/null \
     from:gh-r nocompletions sbin:stylua JohnnyMorganz/StyLua \
     from:gh sbin'bin/**/lua-language-server' nocompletions \
         atclone'(cd 3rd/luamake; ./compile/install.sh) && ./3rd/luamake/luamake rebuild' atpull'%atclone' \
