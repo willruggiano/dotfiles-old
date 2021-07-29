@@ -120,7 +120,7 @@ _atload_rust() {
 }
 
 zinit wait lucid for \
-    id-as'rust/rustup' as:null sbin'bin/*' atload'_atload_rust' light-mode zdharma/null \
+    rustup id-as'rust/rustup' as:null sbin'bin/*' atload'_atload_rust' light-mode zdharma/null \
     as:completion 'https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/rust/_rust'
 
 if [[ -z "$SSH_TTY" ]]; then
