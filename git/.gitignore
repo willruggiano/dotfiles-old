@@ -22,3 +22,6 @@ node_modules
 .idea
 .project
 
+# Vim session files
+Session.vim
+

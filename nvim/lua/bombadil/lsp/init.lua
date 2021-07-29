@@ -120,7 +120,7 @@ lspconfig.sumneko_lua.setup(require("lua-dev").setup {
         return vim.fn.expand "~/dotfiles/nvim"
       end
 
-      return lspconfig_util.find_git_ancestors(fname) or lspconfig_util.path.dirname(fname)
+      return lspconfig_util.find_git_ancestor(fname) or lspconfig_util.path.dirname(fname)
     end,
     globals = {
       -- Colorbuddy
