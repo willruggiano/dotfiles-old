@@ -49,7 +49,7 @@ zinit wait lucid for \
     atload"unalias grv" OMZP::git \
     as:null from:gh make'install prefix=$ZPFX' nvie/gitflow \
     as:null from:gh make'install PREFIX=$ZPFX' Fakerr/git-recall \
-    as:null from:gh \
+    as:null from:gh has'asciidoc' \
         atclone'make install prefix=$ZPFX && make install-release-doc prefix=$ZPFX && cp -vf contrib/tig-completion.zsh _tig' atpull'%atclone' \
         jonas/tig
 
@@ -114,12 +114,23 @@ case "$OS" in
 esac
 zinit light Kitware/CMake
 
-zinit wait lucid for \
-    as:null if'[[ -z "$SSH_TTY" ]]' from:gh ver'3.2a' \
-        atclone'./autogen.sh && ./configure --prefix $ZPFX' atpull'%atclone' make sbin:tmux \
-        tmux/tmux \
-    as:null if'[[ -z "$SSH_TTY" ]]' from:gh sbin:bin/xpanes \
-        greymd/tmux-xpanes
+_atload_rust() {
+    [[ ! -f ${ZINIT[COMPLETIONS_DIR]}/_cargo ]] && zi creinstall rust
+    export RUSTUP_HOME=$PWD/rustup
+}
+
+zinit ice wait lucid rustup id-as'rust' as'null' sbin'bin/*' atload'_atload_rust'
+zinit light zdharma/null
+
+if [[ -z "$SSH_TTY" ]]; then
+    zinit wait lucid for \
+        as:null ver'3.2a' sbin:tmux \
+            atclone'./autogen.sh && ./configure --prefix $ZPFX' atpull'%atclone' make \
+            tmux/tmux \
+        as:null sbin:bin/xpanes greymd/tmux-xpanes \
+        id-as'tmuxinator/tmuxinator' gem'!tmuxinator' zdharma/null \
+        as:completion atclone'cp -vf **/tmuxinator.zsh _tmuxinator' atpull'%atclone' 'https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/completion/tmuxinator.zsh'
+fi
 
 _atload_fzf() {
     if [ ! -z $TMUX ]; then
@@ -239,17 +250,6 @@ zinit wait lucid for \
     from:gh as:null atclone'PREFIX=$ZPFX ./install.sh' atpull'%atclone' rbenv/ruby-build
 
 zinit wait lucid for \
-    id-as'tmuxinator/tmuxinator' gem'!tmuxinator' zdharma/null \
-    as:completion 'https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/completion/tmuxinator.zsh'
-
-zinit wait lucid for \
-    id-as'rust/rustup' \
-        atclone'curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path; rustup completions zsh > _rustup' atpull'%atclone' \
-        zdharma/null \
-    as:completion id-as'rust/cargo' atclone'rustup completions zsh cargo > _cargo' atpull'%atclone' zdharma/null \
-    as:completion OMZP::rust/_rust
-
-zinit wait lucid for \
     OMZP::dircycle \
     OMZP::gradle \
     OMZP::jenv \
@@ -264,16 +264,8 @@ zinit wait lucid for \
     OMZP::urltools \
     OMZP::zsh_reload
 
-zinit ice wait lucid
-case "$OS" in
-    Linux)
-        zinit light OMZP::ubuntu
-        ;;
-esac
-
-#
 zinit load mattberther/zsh-nodenv
-#
+
 zinit wait lucid for \
  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
     zdharma/fast-syntax-highlighting \
@@ -281,7 +273,7 @@ zinit wait lucid for \
     zsh-users/zsh-completions \
  atload"!_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions
-#
+
 zinit ice depth=1
 zinit load jeffreytse/zsh-vi-mode
 
