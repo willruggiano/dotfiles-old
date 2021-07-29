@@ -48,7 +48,10 @@ zinit wait lucid for \
     OMZL::git.zsh \
     atload"unalias grv" OMZP::git \
     as:null from:gh make'install prefix=$ZPFX' nvie/gitflow \
-    as:null from:gh make'install PREFIX=$ZPFX' Fakerr/git-recall
+    as:null from:gh make'install PREFIX=$ZPFX' Fakerr/git-recall \
+    as:null from:gh \
+        atclone'make install prefix=$ZPFX && make install-release-doc prefix=$ZPFX && cp -vf contrib/tig-completion.zsh _tig' atpull'%atclone' \
+        jonas/tig
 
 function die() {
     echo "$@"
@@ -96,7 +99,7 @@ zinit load starship/starship
 # Time for build tools!
 zinit wait lucid for \
     from:gh-r sbin:ninja nocompletions ninja-build/ninja \
-    as:null from:gh has:cmake ver'llvmorg-12.0.1' nocompletions \
+    as:null from:gh if'[[ "$OS" != Darwin ]]' has:cmake ver'llvmorg-12.0.1' nocompletions \
         atclone'cmake -S llvm -B build -G Ninja -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld;lldb" -DCMAKE_INSTALL_PREFIX=$ZPFX -DCMAKE_BUILD_TYPE=Release && cmake --build build --target install --parallel $(nproc)' \
         atpull'%atclone' \
         llvm/llvm-project
@@ -112,10 +115,10 @@ esac
 zinit light Kitware/CMake
 
 zinit wait lucid for \
-    if'[[ -z "$SSH_TTY" ]]' from:gh ver:3.2 \
-        atclone'./autogen.sh && ./configure' atpull'%atclone' make sbin:tmux \
+    as:null if'[[ -z "$SSH_TTY" ]]' from:gh ver'3.2a' \
+        atclone'./autogen.sh && ./configure --prefix $ZPFX' atpull'%atclone' make sbin:tmux \
         tmux/tmux \
-    if'[[ -z "$SSH_TTY" ]]' from:gh sbin:bin/xpanes \
+    as:null if'[[ -z "$SSH_TTY" ]]' from:gh sbin:bin/xpanes \
         greymd/tmux-xpanes
 
 _atload_fzf() {
@@ -138,9 +141,12 @@ case "$OS" in
 esac
 zinit wait lucid for \
     as:null sbin'**/bin/(go|gofmt)' extract'!' "$GOLANG_URL" \
-    from:gh sbin:'bin/(fzf|fzf-tmux)' \
-        atclone'./install --bin && cp shell/completion.zsh _fzf' atpull'%atclone' atload'_atload_fzf' \
-	    junegunn/fzf
+    OMZP::golang \
+    sbin'bin/(fzf|fzf-tmux)' src'shell/key-bindings.zsh' \
+        atclone'./install --bin && cp -vf shell/completion.zsh _fzf' atpull'%atclone' atload'_atload_fzf' \
+	    junegunn/fzf \
+    nocompletions urbainvaes/fzf-marks \
+    nocompletions Aloxaf/fzf-tab
 
 case "$OS" in
     Darwin)
@@ -165,7 +171,8 @@ _atload_exa() {
     alias lla='exa -a -l'
 }
 
-zinit ice wait lucid from:gh-r atpull'cp -vf man/exa.1 $ZPFX/man/man1 && cp -vf completions/exa.zsh _exa' atclone'%atpull' atload'_atload_exa' sbin'bin/exa'
+zinit ice wait lucid from:gh-r sbin'bin/exa' \
+    atpull'cp -vf man/exa.1 $ZPFX/man/man1 && cp -vf completions/exa.zsh _exa' atclone'%atpull' atload'_atload_exa'
 zinit light ogham/exa
 
 _atload_bat() {
@@ -178,13 +185,15 @@ _atload_bat() {
     alias cat='bat'
 }
 
-zinit ice wait lucid from:gh-r atclone'cp -vf bat/bat.1 $ZPFX/man/man1 && cp -vf bat/autocomplete/bat.zsh _bat' atpull'%atclone' atload'_atload_bat' sbin:bat/bat
+zinit ice wait lucid from:gh-r sbin'**/bat' \
+    atclone'cp -vf **/bat.1 $ZPFX/man/man1 && cp -vf **/autocomplete/bat.zsh _bat' atpull'%atclone' atload'_atload_bat'
 zinit light @sharkdp/bat
 
 _atload_fd() {
 }
 
-zinit ice wait lucid from:gh-r atclone'cp -vf fd/fd.1 $ZPFX/man/man1 && cp -vf fd/autocomplete/_fd _fd' atpull'%atclone' atload'_atload_fd' sbin:fd/fd
+zinit ice wait lucid from:gh-r sbin'**/fd' \
+    atclone'cp -vf **/fd.1 $ZPFX/man/man1 && cp -vf **/autocomplete/_fd _fd' atpull'%atclone' atload'_atload_fd'
 zinit light @sharkdp/fd
 
 _atload_ripgrep() {
@@ -194,7 +203,8 @@ _atload_ripgrep() {
     alias fgrep='rg --color=auto'
 }  
 
-zinit ice wait lucid from:gh-r atclone'cp -vf rg/doc/rg.1 $ZPFX/man/man1 && cp -vf rg/complete/_rg _rg' atpull'%atclone' atload'_atload_ripgrep' sbin'rg/rg'
+zinit ice wait lucid from:gh-r sbin'**/rg' \
+    atclone'cp -vf **/doc/rg.1 $ZPFX/man/man1 && cp -vf **/complete/_rg _rg' atpull'%atclone' atload'_atload_ripgrep'
 zinit light BurntSushi/ripgrep
 
 _atload_yq() {
@@ -229,13 +239,18 @@ zinit wait lucid for \
     from:gh as:null atclone'PREFIX=$ZPFX ./install.sh' atpull'%atclone' rbenv/ruby-build
 
 zinit wait lucid for \
-    as:completion OMZP::cargo/_cargo \
-    as:completion OMZP::rust/_rust \
-    as:completion OMZP::rustup/_rustup
+    id-as'tmuxinator/tmuxinator' gem'!tmuxinator' zdharma/null \
+    as:completion 'https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/completion/tmuxinator.zsh'
+
+zinit wait lucid for \
+    id-as'rust/rustup' \
+        atclone'curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path; rustup completions zsh > _rustup' atpull'%atclone' \
+        zdharma/null \
+    as:completion id-as'rust/cargo' atclone'rustup completions zsh cargo > _cargo' atpull'%atclone' zdharma/null \
+    as:completion OMZP::rust/_rust
 
 zinit wait lucid for \
     OMZP::dircycle \
-    OMZP::golang \
     OMZP::gradle \
     OMZP::jenv \
     OMZP::jsontools \
@@ -243,13 +258,19 @@ zinit wait lucid for \
     OMZP::node \
     OMZP::npm \
     OMZP::python \
-    as:completion OMZP::ripgrep/_ripgrep \
     OMZP::rsync \
     OMZP::safe-paste \
     OMZP::sudo \
-    OMZP::ubuntu \
     OMZP::urltools \
     OMZP::zsh_reload
+
+zinit ice wait lucid
+case "$OS" in
+    Linux)
+        zinit light OMZP::ubuntu
+        ;;
+esac
+
 #
 zinit load mattberther/zsh-nodenv
 #
@@ -263,11 +284,6 @@ zinit wait lucid for \
 #
 zinit ice depth=1
 zinit load jeffreytse/zsh-vi-mode
-#
-zinit wait lucid for \
-    urbainvaes/fzf-marks \
-    'https://github.com/junegunn/fzf/tree/master/shell/completion.zsh' \
-    'https://github.com/junegunn/fzf/tree/master/shell/key-bindings.zsh'
 
 zinit wait lucid for \
     OMZP::git \
@@ -319,9 +335,7 @@ if [[ -z "$SSH_TTY" ]]; then
             # N.B. Requires lua5.1 (package manager) and youtube-dl (pip)
             # Qutebrowser will need: update-alternatives --install /usr/local/bin/mpv mpv $ZPFX/bin/mpv 100
             zinit wait lucid for \
-                as:program pick'$ZPFX/bin/mpv' \
-                    atclone'PREFIX=$ZPFX ./rebuild -j$(nproc)' atpull'%atclone' \
-                    nocompletions \
+                as:null atclone'PREFIX=$ZPFX ./rebuild -j$(nproc)' atpull'%atclone' nocompletions \
                     mpv-player/mpv-build \
                 as:completion 'https://github.com/mpv-player/mpv/blob/master/etc/_mpv.zsh' \
                 sbin:ff2mpv atclone'./install.sh' atpull'%atclone' nocompletions \
@@ -355,9 +369,6 @@ autoload -Uz compinit
 compinit
 
 zinit cdreplay -q
-
-zinit ice wait lucid
-zinit light Aloxaf/fzf-tab
 
 if command -v fuck > /dev/null; then
     eval "$(thefuck --alias)"
@@ -427,10 +438,4 @@ function gpg-reset-card() {
 
 # Source user-specific configuration.
 [[ -f $HOME/.user.zshrc ]] && source $HOME/.user.zshrc
-
-function maybe_tmux() {
-    [[ -n "$_ZSHRC_AUTO_TMUX" ]] && [[ -z "$SSH_TTY" ]] && [[ "$DISPLAY" ]] && [[ -z "$TMUX" ]]
-}
-
-maybe_tmux && tmux new -A
 
