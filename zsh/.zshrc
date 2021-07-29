@@ -115,7 +115,7 @@ esac
 zinit light Kitware/CMake
 
 _atload_rust() {
-    [[ ! -f ${ZINIT[COMPLETIONS_DIR]}/_cargo ]] && zi creinstall rust
+    [[ ! -f ${ZINIT[COMPLETIONS_DIR]}/_cargo ]] && zi creinstall rust/rustup
     export RUSTUP_HOME=$PWD/rustup
 }
 
