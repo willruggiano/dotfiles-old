@@ -187,7 +187,10 @@ return require("packer").startup(function()
   use "doums/darcula"
 
   -- Utilities
-  use "nvim-lua/plenary.nvim"
+  use {
+    "nvim-lua/plenary.nvim",
+    rocks = "inspect"
+  }
   use "nvim-lua/popup.nvim"
   use "tpope/vim-eunuch"
   use "tpope/vim-repeat"
