@@ -44,7 +44,13 @@ return require("packer").startup(function()
     end,
   }
   use "lewis6991/gitsigns.nvim"
-  use "rhysd/git-messenger.vim"
+  use {
+    "rhysd/git-messenger.vim",
+    setup = function()
+      vim.g.git_messenger_no_default_mappings = 1
+    end
+  }
+
   use "tpope/vim-fugitive"
 
   -- Lsp, build-test-debug, etc

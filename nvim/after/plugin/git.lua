@@ -40,6 +40,10 @@ require("which-key").register {
     n = { "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'", expr = true, "next" },
     p = { "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'", expr = true, "previous" },
   },
+  ["<space>tg"] = {
+    name = "git",
+    m = { "<plug>(git-messenger)", "messenger" }
+  }
 }
 
 local neogit = require "neogit"

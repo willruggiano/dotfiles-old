@@ -136,7 +136,12 @@ vim.opt.foldlevelstart = 99
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
-local nnoremap = vim.keymap.nnoremap
+local wk = require "which-key"
 
-nnoremap { "<space>tp", "<cmd>TSPlaygroundToggle<cr>" }
-nnoremap { "<space>th", "<cmd>TSHighlightCapturesUnderCursor<cr>" }
+wk.register({
+  ["<leader>t"] = {
+    name = "treesitter",
+    h = { "<cmd>TSHighlightCapturesUnderCursor<cr>", "captures" },
+    p = { "<cmd>TSPlaygroundToggle<cr>", "playground" },
+  },
+})

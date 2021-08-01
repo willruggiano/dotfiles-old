@@ -1,7 +1,7 @@
 local wk = require("which-key")
 
 wk.register({
-  ["<leader>t"] = {
+  ["<space>t"] = {
     name = "toggle",
     o = { require("symbols-outline").toggle_outline, "outline" }
   }

@@ -1,3 +1,5 @@
-local keymap = require "astronauta.keymap"
+local wk = require "which-key"
 
-keymap.nnoremap { "<leader>tt", "<cmd>NvimTreeToggle<cr>" }
+wk.register({
+  ["<space>tt"] = { "<cmd>NvimTreeToggle<cr>", "tree" }
+})
