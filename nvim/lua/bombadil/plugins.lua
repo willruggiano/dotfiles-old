@@ -158,12 +158,17 @@ return require("packer").startup(function()
     requires = "kyazdani42/nvim-web-devicons",
     config = function()
       vim.g.override_nvim_web_devicons = true
-      require("nvim-nonicons").get("file")
-    end
+      require("nvim-nonicons").get "file"
+    end,
   }
   use {
-    "kyazdani42/nvim-tree.lua",
-    config = require "bombadil.tree",
+    -- "kyazdani42/nvim-tree.lua",
+    -- setup = require "bombadil.tree",
+    -- cmd = "NvimTreeToggle"
+    "ms-jpq/chadtree",
+    cmd = "CHADopen",
+    setup = require "bombadil.tree",
+    run = ":CHADdeps"
   }
   use "liuchengxu/vista.vim"
   use "simrat39/symbols-outline.nvim"
@@ -195,7 +200,7 @@ return require("packer").startup(function()
   -- Utilities
   use {
     "nvim-lua/plenary.nvim",
-    rocks = "inspect"
+    rocks = "inspect",
   }
   use "nvim-lua/popup.nvim"
   use "tpope/vim-eunuch"

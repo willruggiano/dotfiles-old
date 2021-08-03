@@ -1,4 +1,10 @@
 return function()
+  vim.g.chadtree_settings = {
+    theme = {
+      text_colour_set = "nord",
+    },
+  }
+  --[[
   vim.g.nvim_tree_side = "left"
   vim.g.nvim_tree_width = 50
   vim.g.nvim_tree_ignore = { ".git", "node_modules", ".cache" }
@@ -50,4 +56,5 @@ return function()
       error = "",
     },
   }
+--]]
 end

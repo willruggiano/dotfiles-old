@@ -219,11 +219,7 @@ zinit ice wait lucid from:gh-r sbin'**/rg' \
     atclone'cp -vf **/doc/rg.1 $ZPFX/man/man1 && cp -vf **/complete/_rg _rg' atpull'%atclone' atload'_atload_ripgrep'
 zinit light BurntSushi/ripgrep
 
-_atload_yq() {
-    eval "$(yq shell-completion zsh)"
-}
-
-zinit ice wait:4 lucid from:gh-r atload'_atload_yq' mv'yq* -> yq' sbin:yq
+zinit ice wait:4 lucid from:gh-r mv'yq* -> yq' sbin:yq atclone'yq shell-completion zsh > _yq'
 zinit light mikefarah/yq
 
 _atload_pyenv() {
@@ -331,7 +327,7 @@ if [[ -z "$SSH_TTY" ]]; then
                 as:null atclone'PREFIX=$ZPFX ./rebuild -j$(nproc)' atpull'%atclone' nocompletions \
                     mpv-player/mpv-build \
                 as:completion 'https://github.com/mpv-player/mpv/blob/master/etc/_mpv.zsh' \
-                sbin:ff2mpv atclone'./install.sh' atpull'%atclone' nocompletions \
+                as:null sbin:ff2mpv atclone'./install.sh' atpull'%atclone' nocompletions \
                     woodruffw/ff2mpv
             ;;
     esac
