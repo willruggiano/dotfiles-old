@@ -2,6 +2,7 @@ vim.opt.completeopt = { "menuone", "noselect" }
 
 -- Don't show the dumb matching stuff
 vim.opt.shortmess:append "c"
+vim.opt.pumheight = 20
 
 require("compe").setup {
   enabled = true,
@@ -22,6 +23,7 @@ require("compe").setup {
     nvim_lsp = true,
     nvim_lua = true,
     luasnip = true,
+    spell = true
   },
 }
 

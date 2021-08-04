@@ -4,14 +4,11 @@
 --     Debug/
 --     Release/
 --   ...
+
+-- cdelledone/vim-cmake
 vim.g.cmake_default_config = "Debug"
 vim.g.cmake_build_dir_location = "build"
-
--- TODO: Change this to try to detect whether the existing options already contain the
--- export-compile-commands option.
-local cmake_generate_options = vim.g.cmake_generate_options
-table.insert(cmake_generate_options, "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON")
-vim.g.cmake_generate_options = cmake_generate_options
+vim.g.cmake_link_compile_commands = 1
 
 vim.g.cmake_jump_on_error = 0 -- Don't jump to the CMake window on build failure
 -- TODO: Even better would be to open a Telescope prompt based on the quickfix list with preview
