@@ -42,8 +42,8 @@ require("which-key").register {
   },
   ["<space>tg"] = {
     name = "git",
-    m = { "<plug>(git-messenger)", "messenger" }
-  }
+    m = { "<plug>(git-messenger)", "messenger" },
+  },
 }
 
 local neogit = require "neogit"

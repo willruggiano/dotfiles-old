@@ -34,11 +34,6 @@ zinit light-mode for \
 # Most themes use this option
 setopt promptsubst
 
-zinit ice lucid \
-    atclone'(( !${+commands[dircolors]} )) && local P=g; \
-        TERM=ansi ${P}dircolors -b dircolors >! colors.zsh' \
-    atpull'%atclone' pick"colors.zsh" nocompile'!' \
-    atload'zstyle ":completion:*:default" list-colors "${(s.:.)LS_COLORS}";'
 zinit light zpm-zsh/dircolors-material
 
 zinit pack:bgn for if'[[ -z "$SSH_TTY" ]]' firefox-dev

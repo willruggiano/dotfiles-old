@@ -48,7 +48,7 @@ return require("packer").startup(function()
     "rhysd/git-messenger.vim",
     setup = function()
       vim.g.git_messenger_no_default_mappings = 1
-    end
+    end,
   }
 
   use "tpope/vim-fugitive"
@@ -129,6 +129,7 @@ return require("packer").startup(function()
     "lukas-reineke/indent-blankline.nvim",
     config = function()
       vim.g.indent_blankline_filetype_exclude = {
+        "CHADTree",
         "dashboard",
         "help",
         "man",
@@ -166,9 +167,9 @@ return require("packer").startup(function()
     -- setup = require "bombadil.tree",
     -- cmd = "NvimTreeToggle"
     "ms-jpq/chadtree",
-    cmd = "CHADopen",
+    cmd = { "CHADopen", "CHADhelp" },
     setup = require "bombadil.tree",
-    run = ":CHADdeps"
+    run = ":CHADdeps",
   }
   use "liuchengxu/vista.vim"
   use "simrat39/symbols-outline.nvim"

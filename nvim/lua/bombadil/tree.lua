@@ -1,7 +1,7 @@
 return function()
   vim.g.chadtree_settings = {
     theme = {
-      text_colour_set = "nord",
+      text_colour_set = "env",
     },
   }
   --[[
