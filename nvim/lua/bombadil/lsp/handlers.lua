@@ -1,3 +1,5 @@
+local icons = require "nvim-nonicons"
+
 vim.lsp.handlers["textDocument/definition"] = function(_, _, result)
   if not result or vim.tbl_isempty(result) then
     print "[LSP] Could not find definition"
@@ -17,26 +19,19 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
   virtual_text = {
     severity_limit = "Error",
     spacing = 4,
-    prefix = "●",
+    prefix = icons.get "dot-fill",
   },
   severity_sort = true,
 })
--- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
---   require("lsp_extensions.workspace.diagnostic").handler,
---   {
---     signs = {
---       severity_limit = "Error",
---     },
---     underline = {
---       severity_limit = "Warning",
---     },
---     virtual_text = true,
---   }
--- )
 
 vim.lsp.handlers["textDocument/hover"] = require("lspsaga.hover").handler
 
-local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+local signs = {
+  Error = icons.get "circle-slash",
+  Warning = icons.get "alert",
+  Hint = icons.get "light-bulb",
+  Information = icons.get "info",
+}
 
 for type, icon in pairs(signs) do
   local hl = "LspDiagnosticsSign" .. type

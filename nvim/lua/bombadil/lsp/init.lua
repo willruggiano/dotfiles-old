@@ -108,10 +108,11 @@ lspconfig.pyright.setup {
 }
 
 local lua_lang_server_root = vim.fn.expand "~/.zinit/plugins/sumneko---lua-language-server"
+local lua_lang_server_exe = vim.fn.expand "~/.zinit/polaris/bin/lua-language-server"
 
 lspconfig.sumneko_lua.setup(require("lua-dev").setup {
   lspconfig = {
-    cmd = { lua_lang_server_root .. "/bin/Linux/lua-language-server", "-E", lua_lang_server_root .. "/main.lua" },
+    cmd = { lua_lang_server_exe, "-E", lua_lang_server_root .. "/main.lua" },
     on_init = on_init,
     on_attach = on_attach,
     capabilities = updated_capabilities,

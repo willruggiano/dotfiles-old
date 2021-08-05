@@ -1,4 +1,5 @@
 local nvim_status = require "lsp-status"
+local icons = require "nvim-nonicons"
 
 local status = {}
 
@@ -23,11 +24,11 @@ status.activate = function()
   nvim_status.config {
     select_symbol = status.select_symbol,
 
-    indicator_errors = "",
-    indicator_warnings = "",
-    indicator_info = "🛈",
-    indicator_hint = "!",
-    indicator_ok = "",
+    indicator_errors = icons.get "circle-slash",
+    indicator_warnings = icons.get "alert",
+    indicator_info = icons.get "info",
+    indicator_hint = icons.get "light-bulb",
+    indicator_ok = icons.get "check",
     spinner_frames = { "⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷" },
   }
 

@@ -54,10 +54,6 @@ local ws_diagnostic_counts = function(_, buffer)
 end
 
 local show_current_func = function(window, buffer)
-  if buffer.filetype == "lua" then
-    return ""
-  end
-
   return lsp_statusline.current_function(window, buffer)
 end
 
