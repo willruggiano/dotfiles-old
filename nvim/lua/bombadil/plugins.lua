@@ -161,11 +161,7 @@ return require("packer").startup(function()
   use { "folke/zen-mode.nvim", requires = "folke/twilight.nvim" }
   use {
     "folke/todo-comments.nvim",
-    config = function()
-      require("todo-comments").setup {
-        signs = false,
-      }
-    end,
+    config = require "bombadil.config.todo",
   }
 
   -- Colors
