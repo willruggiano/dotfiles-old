@@ -138,10 +138,10 @@ vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 local wk = require "which-key"
 
-wk.register({
+wk.register {
   ["<leader>t"] = {
     name = "treesitter",
     h = { "<cmd>TSHighlightCapturesUnderCursor<cr>", "captures" },
     p = { "<cmd>TSPlaygroundToggle<cr>", "playground" },
   },
-})
+}

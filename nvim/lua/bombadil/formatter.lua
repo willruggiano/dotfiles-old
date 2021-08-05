@@ -9,7 +9,7 @@ end
 local function clangformat()
   return {
     exe = "clang-format",
-    args = { "--assume-filename=" .. vim.fn.expand "%:t", },
+    args = { "--assume-filename=" .. vim.fn.expand "%:t" },
     cwd = vim.fn.expand "%:p:h",
     stdin = true,
   }

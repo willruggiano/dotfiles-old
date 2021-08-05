@@ -1,5 +1,5 @@
 P = function(v)
-  local inspect = require("inspect")
+  local inspect = require "inspect"
   print(inspect(v))
   return v
 end

@@ -25,7 +25,6 @@ return require("packer").startup(function()
   use "kshenoy/vim-signature"
 
   -- Grep
-  use "kevinhwang91/nvim-hlslens"
   use {
     "mg979/vim-visual-multi",
     branch = "master",
@@ -86,7 +85,6 @@ return require("packer").startup(function()
 
   -- Text editing + manipulation
   use "tpope/vim-commentary"
-  -- use "tpope/vim-surround"
   use {
     "blackCauldron7/surround.nvim",
     config = function()
@@ -148,12 +146,7 @@ return require("packer").startup(function()
   }
 
   -- Visual stuff; sidebars, explorers, etc
-  use {
-    "glepnir/dashboard-nvim",
-    config = function()
-      vim.g.dashboard_default_executive = "telescope"
-    end,
-  }
+  use "tpope/vim-vinegar"
   use {
     "yamatsum/nvim-nonicons",
     requires = "kyazdani42/nvim-web-devicons",
@@ -161,15 +154,6 @@ return require("packer").startup(function()
       vim.g.override_nvim_web_devicons = true
       require("nvim-nonicons").get "file"
     end,
-  }
-  use {
-    -- "kyazdani42/nvim-tree.lua",
-    -- setup = require "bombadil.tree",
-    -- cmd = "NvimTreeToggle"
-    "ms-jpq/chadtree",
-    cmd = { "CHADopen", "CHADhelp" },
-    setup = require "bombadil.tree",
-    run = ":CHADdeps",
   }
   use "liuchengxu/vista.vim"
   use "simrat39/symbols-outline.nvim"

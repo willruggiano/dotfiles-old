@@ -36,3 +36,6 @@ nnoremap {
 
 -- Silence!
 nnoremap { "<c-s>", "<cmd>update<cr>" }
+
+-- Does anyone even use macros?
+nnoremap { "q", "<c-w>q" }
