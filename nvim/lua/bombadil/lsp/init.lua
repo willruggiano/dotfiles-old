@@ -44,17 +44,18 @@ local on_attach = function(client, bufnr)
     buffer = 0,
   }
 
-  telescope_mapper("gr", "lsp_references", {
-    layout_strategy = "vertical",
+  local opts = require("telescope.themes").get_ivy {
+    winblend = 5,
     layout_config = {
-      prompt_position = "top",
+      width = 0.25,
     },
-    sorting_strategy = "ascending",
     ignore_filename = true,
-  }, true)
+  }
 
-  telescope_mapper("<space>wd", "lsp_document_symbols", { ignore_filename = true }, true)
-  telescope_mapper("<space>ww", "lsp_dynamic_workspace_symbols", { ignore_filename = true }, true)
+  telescope_mapper("gr", "lsp_references", opts, true)
+
+  telescope_mapper("<space>wd", "lsp_document_symbols", opts, true)
+  telescope_mapper("<space>ww", "lsp_dynamic_workspace_symbols", opts, true)
 
   telescope_mapper("<space>ca", "lsp_code_actions", nil, true)
 end
