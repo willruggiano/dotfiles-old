@@ -84,7 +84,7 @@ return require("packer").startup(function()
   use "folke/lua-dev.nvim"
 
   -- Text editing + manipulation
-  use "tpope/vim-commentary"
+  use "b3nj5m1n/kommentary"
   use {
     "blackCauldron7/surround.nvim",
     config = function()
