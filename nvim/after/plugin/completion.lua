@@ -24,6 +24,12 @@ require("compe").setup {
     nvim_lua = true,
     luasnip = true,
     spell = true,
+    tabnine = {
+      priority = 9999,
+      sort = false,
+      show_prediction_strength = true,
+      ignore_pattern = "",
+    },
   },
 }
 

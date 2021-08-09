@@ -18,7 +18,20 @@ end)()
 require("nvim-treesitter.configs").setup {
   autopairs = { enable = true },
 
-  ensure_installed = { "c", "cpp", "dockerfile", "go", "java", "json", "lua", "python", "rust", "typescript", "yaml" },
+  ensure_installed = {
+    "c",
+    "cpp",
+    "dockerfile",
+    "go",
+    "html",
+    "java",
+    "json",
+    "lua",
+    "python",
+    "rust",
+    "typescript",
+    "yaml",
+  },
 
   highlight = {
     enable = true,

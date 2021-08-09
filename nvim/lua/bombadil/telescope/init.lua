@@ -117,19 +117,14 @@ require("telescope").setup {
   },
 }
 
--- Load the fzy native extension at the start.
+pcall(require("telescope").load_extension, "arecibo")
 pcall(require("telescope").load_extension, "cheat")
--- pcall(require("telescope").load_extension, "arecibo")
--- pcall(require("telescope").load_extension, "flutter")
-
--- pcall(require("telescope").load_extension, "fzy_native")
 pcall(require("telescope").load_extension, "fzf")
+pcall(require("telescope").load_extension, "git_worktree")
 
 if vim.fn.executable "gh" == 1 then
   pcall(require("telescope").load_extension, "gh")
-  -- pcall(require("telescope").load_extension, "octo")
 end
-pcall(require("telescope").load_extension, "git_worktree")
 
 if pcall(require("telescope").load_extension, "frecency") then
   require "bombadil.telescope.frecency"

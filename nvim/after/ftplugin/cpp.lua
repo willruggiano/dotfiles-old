@@ -1,5 +1,13 @@
-vim.bo.commentstring = "// %s"
+local wk = require "which-key"
 
-local keymap = require "astronauta.keymap"
-
-keymap.nnoremap { "K", "<cmd>CppMan<cr>", buffer = true }
+wk.register({
+  ["<space>r"] = {
+    v = {
+      name = "vimspector",
+      ["<tab>"] = { require("telescope").extensions.vimspector.configurations, "configuration" },
+      ["<cr>"] = { "<Plug>VimspectorContinue", "start" },
+    },
+  },
+}, {
+  buffer = 0,
+})

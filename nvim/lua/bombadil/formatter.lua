@@ -50,4 +50,5 @@ return {
   python = { isort, yapf },
   rust = { rustfmt },
   tex = { latexindent },
+  yaml = { prettier },
 }

@@ -63,6 +63,11 @@ return require("packer").startup(function()
     },
   }
   use {
+    "tzachar/compe-tabnine",
+    requires = "hrsh7th/nvim-compe",
+    run = "./install.sh",
+  }
+  use {
     "puremourning/vimspector",
     setup = function()
       vim.g.vimspector_enable_mappings = "HUMAN"
@@ -203,4 +208,9 @@ return require("packer").startup(function()
   use "nvim-telescope/telescope-symbols.nvim"
   use "nvim-telescope/telescope-frecency.nvim"
   use { "nvim-telescope/telescope-cheat.nvim", requires = "tami5/sql.nvim" }
+  use {
+    "nvim-telescope/telescope-arecibo.nvim",
+    rocks = { "openssl", "lua-http-parser" },
+  }
+  use "nvim-telescope/telescope-vimspector.nvim"
 end)
