@@ -175,6 +175,7 @@ return require("packer").startup(function()
       require "bombadil.config.lir"
     end,
     requires = { "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", "yamatsum/nvim-nonicons" },
+    rocks = { "inspect", "luafilesystem" },
   }
   use { "tamago324/lir-git-status.nvim", requires = "tamago324/lir.nvim" }
 

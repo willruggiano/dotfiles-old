@@ -9,6 +9,8 @@ require("nvim-web-devicons").setup {
 }
 
 local actions = require "lir.actions"
+local clipboard_actions = require "lir.clipboard.actions"
+local mark_actions = require "lir.mark.actions"
 local lir = require "lir"
 local lir_utils = require "lir.utils"
 local lvim = require "lir.vim"
@@ -35,7 +37,6 @@ custom_actions.new = function()
   local path = Path:new(ctx.dir .. name)
   if path:exists() then
     lir_utils.error "Pathname already exists"
-    -- cursor jump
     local ln = ctx:indexof(name)
     if ln then
       vim.cmd(tostring(ln))
@@ -43,12 +44,11 @@ custom_actions.new = function()
     return
   end
 
-  local pathsep = "/" -- TODO: Could be more portable here.
+  local pathsep = Path.path.sep
   if name:sub(-#pathsep) == pathsep then
     path:mkdir()
   else
-    -- TODO: Doesn't seem like parent creation works.
-    path:touch()
+    path:touch { parents = true }
   end
   actions.reload()
 
@@ -60,27 +60,106 @@ custom_actions.new = function()
   end)
 end
 
+local fsize = function(bytes)
+  -- TODO: Human-readable
+  return bytes .. "b"
+end
+
+local username = function(uid)
+  -- TODO: Convert uid to username
+  return uid
+end
+
+local strftime = function(dt)
+  -- TODO: posix-long-iso =: greater than six months -> year instead of time
+  return os.date("%d %b %H:%M", dt)
+end
+
+local fname = function(path)
+  -- TODO: show link target
+  return vim.fn.fnamemodify(path, ":t")
+end
+
+local fs_stat = function(path)
+  local lfs = require "lfs"
+  local res = lfs.attributes(path)
+  local attrs = {}
+
+  attrs.permissions = res.permissions
+  attrs.size = fsize(res.size)
+  attrs.user = username(res.uid)
+  attrs.mtime = strftime(res.modification)
+  attrs.name = fname(path)
+
+  return attrs
+end
+
 custom_actions.stat = function()
-  print "not yet!"
+  local ctx = get_context()
+  local path = ctx.dir .. ctx:current_value()
+  local attrs = fs_stat(path)
+  print(attrs.permissions .. " " .. attrs.size .. " " .. attrs.user .. " " .. attrs.mtime .. " " .. attrs.name)
+end
+
+custom_actions.yank_basename = function()
+  local ctx = get_context()
+  local path = ctx:current_value()
+  vim.fn.setreg(vim.v.register, path)
+  print(path)
+end
+
+custom_actions.yank_path = function()
+  local ctx = get_context()
+  local path = ctx.dir .. ctx:current_value()
+  vim.fn.setreg(vim.v.register, path)
+  print(path)
+end
+
+custom_actions.toggle_mark_down = function()
+  mark_actions.toggle_mark()
+  vim.cmd "normal! j"
+end
+
+custom_actions.toggle_mark_up = function()
+  mark_actions.toggle_mark()
+  vim.cmd "normal! k"
+end
+
+custom_actions.clear_marks = function()
+  local ctx = get_context()
+  for _, f in ipairs(ctx:get_marked_items()) do
+    f.marked = false
+  end
+  actions.reload()
 end
 
 lir.setup {
   show_hidden_files = true,
   devicons_enable = true,
-
   float = { winblend = 15 },
+  hide_cursor = true,
 
   mappings = {
     ["<cr>"] = actions.edit,
-    ["<tab>"] = custom_actions.select,
-    v = custom_actions.vsplit,
-    s = custom_actions.split,
+    ["<c-v>"] = actions.vsplit,
+    ["<c-s>"] = actions.split,
+
+    ["<tab>"] = custom_actions.toggle_mark_down,
+    ["<s-tab>"] = custom_actions.toggle_mark_up,
+    S = custom_actions.clear_marks,
 
     ["-"] = custom_actions.up,
+    q = actions.quit,
+
     a = custom_actions.new,
     r = actions.rename,
-    y = actions.yank_path,
+    y = custom_actions.yank_path,
+    Y = custom_actions.yank_basename,
+
     d = actions.delete,
+    c = clipboard_actions.copy,
+    x = clipboard_actions.cut,
+    p = clipboard_actions.paste,
 
     ["."] = actions.toggle_show_hidden,
     K = custom_actions.stat,
