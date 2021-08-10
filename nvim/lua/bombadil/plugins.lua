@@ -168,6 +168,50 @@ return require("packer").startup(function()
     "folke/todo-comments.nvim",
     config = require "bombadil.config.todo",
   }
+  -- TODO: Try out lir!
+  use {
+    "tamago324/lir.nvim",
+    disable = true,
+    config = function()
+      local icons = require "nvim-nonicons"
+      require("nvim-web-devicons").setup {
+        lir_folder_icon = {
+          icons = icons.get "file",
+          color = "#7ebae4",
+          name = "LirFolderNode",
+        },
+      }
+
+      local actions = require "lir.actions"
+      local lir = require "lir"
+
+      lir.setup {
+        show_hidden_files = true,
+        devicons_enable = true,
+
+        float = { winblend = 15 },
+
+        mappings = {
+          ["<cr>"] = actions.edit,
+          ["-"] = actions.up,
+          ["K"] = actions.mkdir,
+          ["N"] = actions.newfile,
+          ["R"] = actions.rename,
+          ["Y"] = actions.yank_path,
+          ["D"] = actions.delete,
+          ["."] = actions.toggle_show_hidden,
+        },
+      }
+
+      require("lir.git_status").setup {
+        show_ignored = false,
+      }
+
+      vim.keymap.nnoremap { "-", ":e %:h<cr>" }
+    end,
+    requires = { "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", "yamatsum/nvim-nonicons" },
+  }
+  use { "tamago324/lir-git-status.nvim", requires = "tamago324/lir.nvim" }
 
   -- Colors
   use "norcalli/nvim-colorizer.lua"

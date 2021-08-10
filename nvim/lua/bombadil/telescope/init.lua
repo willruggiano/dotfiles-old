@@ -378,11 +378,10 @@ function M.installed_plugins()
 end
 
 function M.project_search()
-  require("telescope.builtin").find_files {
-    previewer = false,
-    layout_strategy = "vertical",
-    cwd = require("nvim_lsp.util").root_pattern ".git"(vim.fn.expand "%:p"),
+  local opts = themes.get_ivy {
+    cwd = require("lspconfig.util").root_pattern ".git"(vim.fn.expand "%:p"),
   }
+  require("telescope.builtin").find_files(opts)
 end
 
 function M.buffers()
