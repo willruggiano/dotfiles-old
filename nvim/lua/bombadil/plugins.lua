@@ -151,7 +151,6 @@ return require("packer").startup(function()
   }
 
   -- Visual stuff; sidebars, explorers, etc
-  use "tpope/vim-vinegar"
   use {
     "yamatsum/nvim-nonicons",
     requires = "kyazdani42/nvim-web-devicons",
@@ -166,48 +165,14 @@ return require("packer").startup(function()
   use { "folke/zen-mode.nvim", requires = "folke/twilight.nvim" }
   use {
     "folke/todo-comments.nvim",
-    config = require "bombadil.config.todo",
+    config = function()
+      require "bombadil.config.todo"
+    end,
   }
-  -- TODO: Try out lir!
   use {
     "tamago324/lir.nvim",
-    disable = true,
     config = function()
-      local icons = require "nvim-nonicons"
-      require("nvim-web-devicons").setup {
-        lir_folder_icon = {
-          icons = icons.get "file",
-          color = "#7ebae4",
-          name = "LirFolderNode",
-        },
-      }
-
-      local actions = require "lir.actions"
-      local lir = require "lir"
-
-      lir.setup {
-        show_hidden_files = true,
-        devicons_enable = true,
-
-        float = { winblend = 15 },
-
-        mappings = {
-          ["<cr>"] = actions.edit,
-          ["-"] = actions.up,
-          ["K"] = actions.mkdir,
-          ["N"] = actions.newfile,
-          ["R"] = actions.rename,
-          ["Y"] = actions.yank_path,
-          ["D"] = actions.delete,
-          ["."] = actions.toggle_show_hidden,
-        },
-      }
-
-      require("lir.git_status").setup {
-        show_ignored = false,
-      }
-
-      vim.keymap.nnoremap { "-", ":e %:h<cr>" }
+      require "bombadil.config.lir"
     end,
     requires = { "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", "yamatsum/nvim-nonicons" },
   }
