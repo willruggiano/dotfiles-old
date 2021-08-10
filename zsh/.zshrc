@@ -208,7 +208,7 @@ _atload_ripgrep() {
     alias grep='rg --color=auto'
     alias egrep='rg --color=auto'
     alias fgrep='rg --color=auto'
-}  
+}
 
 zinit ice wait lucid from:gh-r sbin'**/rg' \
     atclone'cp -vf **/doc/rg.1 $ZPFX/man/man1 && cp -vf **/complete/_rg _rg' atpull'%atclone' atload'_atload_ripgrep'
@@ -280,7 +280,8 @@ function _atload_nvim() {
 }
 
 zinit ice wait lucid from:gh nocompletions \
-    make'CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=$ZPFX install'
+    make'CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=$ZPFX install' \
+    atload'_atload_nvim'
 zinit light neovim/neovim
 
 function _atload_pass() {
@@ -347,7 +348,9 @@ zinit wait lucid for \
     from:gh sbin'bin/**/lua-language-server' nocompletions \
         atclone'(cd 3rd/luamake; ./compile/install.sh) && ./3rd/luamake/luamake rebuild' atpull'%atclone' \
         sumneko/lua-language-server
-        
+
+zinit ice wait lucid from:gh-r as:null sbin'**/mmv' nocompletions
+zinit light itchyny/mmv
 
 autoload -Uz compinit
 compinit
@@ -422,4 +425,3 @@ function gpg-reset-card() {
 
 # Source user-specific configuration.
 [[ -f $HOME/.user.zshrc ]] && source $HOME/.user.zshrc
-
