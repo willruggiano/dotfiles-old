@@ -24,8 +24,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
   severity_sort = true,
 })
 
-vim.lsp.handlers["textDocument/hover"] = require("lspsaga.hover").handler
-
 local signs = {
   Error = icons.get "circle-slash",
   Warning = icons.get "alert",

@@ -5,6 +5,18 @@ return require("packer").startup(function()
   local use = packer.use
   local use_rocks = packer.use_rocks
 
+  local local_use = function(opts)
+    if type(opts) == "string" then
+      local path = "~/dev/" .. opts
+      opts = { path }
+    elseif type(opts) == "table" then
+      local path = "~/dev/" .. opts[1]
+      opts[1] = path
+    end
+
+    use(opts)
+  end
+
   -- Packer
   use "wbthomason/packer.nvim"
 
@@ -18,13 +30,15 @@ return require("packer").startup(function()
       require("which-key").setup {}
     end,
   }
-  use "rizzatti/dash.vim"
+  local_use "help.nvim"
+  local_use {
+    "make.nvim",
+    config = function() end,
+  }
 
-  -- Movement
+  -- Movement, selection, search, etc
   use "ggandor/lightspeed.nvim"
   use "kshenoy/vim-signature"
-
-  -- Grep
   use {
     "mg979/vim-visual-multi",
     branch = "master",
@@ -75,7 +89,7 @@ return require("packer").startup(function()
   }
   use "wbthomason/lsp-status.nvim"
   use "onsails/lspkind-nvim"
-  use "glepnir/lspsaga.nvim"
+  -- use "glepnir/lspsaga.nvim"
   use "nvim-lua/lsp_extensions.nvim"
   use {
     "folke/trouble.nvim",
@@ -122,11 +136,6 @@ return require("packer").startup(function()
     },
   }
   use "hashivim/vim-terraform"
-  use {
-    "iamcco/markdown-preview.nvim",
-    run = "cd app && yarn install",
-    cmd = "MarkdownPreview",
-  }
   use "kevinoid/vim-jsonc"
   use {
     "lukas-reineke/indent-blankline.nvim",
@@ -141,7 +150,6 @@ return require("packer").startup(function()
       }
     end,
   }
-  -- use 'RRethy/vim-illuminate'
   use "zinit-zsh/zinit-vim-syntax"
   use {
     "kevinhwang91/nvim-bqf",
@@ -149,6 +157,7 @@ return require("packer").startup(function()
       require("bqf").enable()
     end,
   }
+  use "plasticboy/vim-markdown"
 
   -- Visual stuff; sidebars, explorers, etc
   use {
@@ -191,7 +200,7 @@ return require("packer").startup(function()
     end,
   }
   use "folke/tokyonight.nvim"
-  use "doums/darcula"
+  -- use "doums/darcula"
 
   -- Utilities
   use {
@@ -205,6 +214,13 @@ return require("packer").startup(function()
     "antoinemadec/FixCursorHold.nvim",
     run = function()
       vim.g.curshold_updatime = 1000
+    end,
+  }
+  use "milisims/nvim-luaref"
+  use {
+    "nacro90/numb.nvim",
+    config = function()
+      require("numb").setup()
     end,
   }
 
