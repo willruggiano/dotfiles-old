@@ -47,6 +47,7 @@ return {
   javascript = { prettier },
   json = { prettier },
   lua = { stylua },
+  markdown = { prettier },
   python = { isort, yapf },
   rust = { rustfmt },
   tex = { latexindent },

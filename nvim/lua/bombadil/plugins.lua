@@ -31,7 +31,7 @@ return require("packer").startup(function()
     end,
   }
   local_use {
-    "help.nvim",
+    "K.nvim",
     requires = "MunifTanjim/nui.nvim",
   }
   local_use {
@@ -233,6 +233,7 @@ return require("packer").startup(function()
       require("terminal").setup()
     end,
   }
+  -- use "akinsho/nvim-toggleterm.lua"
   use {
     "numtostr/FTerm.nvim",
     config = function()
