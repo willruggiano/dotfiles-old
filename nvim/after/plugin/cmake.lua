@@ -15,9 +15,12 @@ vim.g.cmake_jump_on_error = 0 -- Don't jump to the CMake window on build failure
 -- windows showing the error message (and context, e.g. the warnings, "included from ..."s, etc) and
 -- another preview window showing the file.
 vim.cmd [[
+  function! OnCMakeBuildFailure()
+    execute 'CMakeClose'
+    execute 'copen'
+  endfunction
   augroup MyCmakeGroup
-    au  User CMakeBuildFailed    CMakeClose
-    au  User CMakeBuildFailed    TroubleToggle quickfix
+    au  User CMakeBuildFailed    call OnCMakeBuildFailure()
     au! User CMakeBuildSucceeded CMakeClose
   augroup END
 ]]

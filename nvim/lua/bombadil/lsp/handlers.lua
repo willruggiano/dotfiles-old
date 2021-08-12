@@ -13,16 +13,19 @@ vim.lsp.handlers["textDocument/definition"] = function(_, _, result)
   end
 end
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-  underline = true,
-  update_in_insert = true,
-  virtual_text = {
-    severity_limit = "Error",
-    spacing = 4,
-    prefix = icons.get "dot-fill",
-  },
-  severity_sort = true,
-})
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  require("lsp_extensions.workspace.diagnostic").handler,
+  {
+    underline = true,
+    update_in_insert = true,
+    virtual_text = {
+      severity_limit = "Error",
+      spacing = 4,
+      prefix = icons.get "dot-fill",
+    },
+    severity_sort = true,
+  }
+)
 
 local signs = {
   Error = icons.get "circle-slash",

@@ -30,7 +30,10 @@ return require("packer").startup(function()
       require("which-key").setup {}
     end,
   }
-  local_use "help.nvim"
+  local_use {
+    "help.nvim",
+    requires = "MunifTanjim/nui.nvim",
+  }
   local_use {
     "make.nvim",
     config = function() end,
@@ -107,8 +110,22 @@ return require("packer").startup(function()
   use {
     "blackCauldron7/surround.nvim",
     config = function()
-      vim.g.surround_mappings_style = "surround"
-      require("surround").setup {}
+      require("surround").setup {
+        mappings_style = "surround",
+        pairs = {
+          nestable = {
+            { "(", ")" },
+            { "[", "]" },
+            { "{", "}" },
+            { "<", ">" },
+          },
+          linear = {
+            { "'", "'" },
+            { "`", "`" },
+            { '"', '"' },
+          },
+        },
+      }
     end,
   }
   use "windwp/nvim-autopairs"
@@ -140,13 +157,18 @@ return require("packer").startup(function()
   use {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
-      vim.g.indent_blankline_filetype_exclude = {
-        "CHADTree",
-        "dashboard",
-        "help",
-        "man",
-        "NvimTree",
-        "vimcmake",
+      require("indent_blankline").setup {
+        buftype_exclude = {
+          "quickfix",
+          "prompt",
+          "terminal",
+        },
+        filetype_exclude = {
+          "help",
+          "man",
+          "TelescopePrompt",
+          "vimcmake",
+        },
       }
     end,
   }
@@ -186,6 +208,15 @@ return require("packer").startup(function()
     requires = { "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", "yamatsum/nvim-nonicons" },
     rocks = { "inspect", "luafilesystem" },
   }
+  use {
+    "kevinhwang91/rnvimr",
+    disable = true,
+    setup = function()
+      vim.g.rnvimr_enable_ex = 1
+      vim.g.rnvimr_enable_picker = 1
+    end,
+    cmd = "RnvimrToggle",
+  }
   use { "tamago324/lir-git-status.nvim", requires = "tamago324/lir.nvim" }
 
   -- Colors
@@ -193,21 +224,40 @@ return require("packer").startup(function()
   use "tjdevries/colorbuddy.nvim"
   use "marko-cerovac/material.nvim"
   use { "tjdevries/express_line.nvim" }
+  use "folke/tokyonight.nvim"
+
+  -- Terminal integration
   use {
     "norcalli/nvim-terminal.lua",
     config = function()
       require("terminal").setup()
     end,
   }
-  use "folke/tokyonight.nvim"
-  -- use "doums/darcula"
+  use {
+    "numtostr/FTerm.nvim",
+    config = function()
+      require("FTerm").setup {
+        dimensions = {
+          height = 0.8,
+          width = 0.8,
+          x = 0.5,
+          y = 0.5,
+        },
+        border = "single",
+      }
+    end,
+    requires = "norcalli/nvim-terminal.lua",
+  }
+  use {
+    "pianocomposer321/consolation.nvim",
+    disable = true, -- TODO: Try this out!
+  }
 
   -- Utilities
   use {
     "nvim-lua/plenary.nvim",
     rocks = "inspect",
   }
-  use "nvim-lua/popup.nvim"
   use "tpope/vim-eunuch"
   use "tpope/vim-repeat"
   use {
@@ -232,11 +282,32 @@ return require("packer").startup(function()
   use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
   use "nvim-telescope/telescope-github.nvim"
   use "nvim-telescope/telescope-symbols.nvim"
-  use "nvim-telescope/telescope-frecency.nvim"
-  use { "nvim-telescope/telescope-cheat.nvim", requires = "tami5/sql.nvim" }
+  use {
+    "nvim-telescope/telescope-frecency.nvim",
+    requires = { "tami5/sql.nvim", "nvim-telescope/telescope.nvim" },
+  }
   use {
     "nvim-telescope/telescope-arecibo.nvim",
     rocks = { "openssl", "lua-http-parser" },
   }
   use "nvim-telescope/telescope-vimspector.nvim"
+
+  -- Fzf
+  use {
+    "ibhagwan/fzf-lua",
+    config = function()
+      require("fzf-lua").setup {
+        winopts = {
+          win_height = 0.3,
+          win_width = 1,
+          win_row = 1,
+          win_col = 0.5,
+        },
+      }
+    end,
+    requires = {
+      "vijaymarupudi/nvim-fzf",
+      "kyazdani42/nvim-web-devicons",
+    },
+  }
 end)

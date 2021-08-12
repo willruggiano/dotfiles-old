@@ -110,8 +110,11 @@ require("telescope").setup {
     },
 
     frecency = {
+      show_scores = true,
       workspaces = {
-        ["conf"] = "~/dotfiles",
+        dot = vim.fn.expand "~/dotfiles",
+        conf = vim.fn.expand "~/.config",
+        work = vim.fn.expand "~/workspaces",
       },
     },
   },

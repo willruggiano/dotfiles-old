@@ -1,7 +1,6 @@
 local icons = require "nvim-nonicons"
 
 require("todo-comments").setup {
-  signs = true,
   keywords = {
     FIX = {
       icon = icons.get "bug",
@@ -19,7 +18,12 @@ require("todo-comments").setup {
       icon = icons.get "stopwatch",
     },
     NOTE = {
+      alt = { "N.B." },
       icon = icons.get "comment",
     },
   },
+  search = {
+    pattern = [[\b(KEYWORDS):?]],
+  },
+  signs = true,
 }

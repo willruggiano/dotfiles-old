@@ -5,6 +5,9 @@ PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 
+# Nix package manager -- which I've really liked so far!
+[[ -e ~/.nix-profile/etc/profile.d/nix.sh ]] && source ~/.nix-profile/etc/profile.d/nix.sh
+
 [[ -f $HOME/.user.before.zshrc ]] && source $HOME/.user.before.zshrc
 
 ### Added by Zinit's installer
@@ -351,6 +354,16 @@ zinit wait lucid for \
 
 zinit ice wait lucid from:gh-r as:null sbin'**/mmv' nocompletions
 zinit light itchyny/mmv
+
+case "$OS" in
+    Darwin)
+        zinit ice wait lucid from:gh-r as:null sbin'**/glow' nocompletions
+        ;;
+    *)
+        zinit ice wait lucid from:gh-r as:null bpick'*linux_x86_64*' sbin'**/glow' nocompletions
+        ;;
+esac
+zinit light charmbracelet/glow
 
 autoload -Uz compinit
 compinit
