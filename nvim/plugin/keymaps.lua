@@ -24,7 +24,7 @@ inoremap { "<c-cr>", "<c-o>O" }
 nnoremap { "<leader><leader>c", "<cmd><up>" }
 
 -- Make ESC leave terminal mode
-tnoremap { "<esc><esc>", "<c-\\><c-n>" }
+tnoremap { "<esc>", "<c-\\><c-n>" }
 
 -- Toggle hlsearch
 nnoremap {

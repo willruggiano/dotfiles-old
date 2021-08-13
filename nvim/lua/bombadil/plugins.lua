@@ -160,12 +160,15 @@ return require("packer").startup(function()
       require("indent_blankline").setup {
         buftype_exclude = {
           "quickfix",
+          "help",
           "prompt",
           "terminal",
         },
         filetype_exclude = {
-          "help",
           "man",
+          "NeogitStatus",
+          "NeogitCommitView",
+          "NeogitLogView",
           "TelescopePrompt",
           "vimcmake",
         },
@@ -233,9 +236,15 @@ return require("packer").startup(function()
       require("terminal").setup()
     end,
   }
-  -- use "akinsho/nvim-toggleterm.lua"
+  use {
+    "akinsho/nvim-toggleterm.lua",
+    config = function()
+      require("toggleterm").setup()
+    end,
+  }
   use {
     "numtostr/FTerm.nvim",
+    disable = true,
     config = function()
       require("FTerm").setup {
         dimensions = {
