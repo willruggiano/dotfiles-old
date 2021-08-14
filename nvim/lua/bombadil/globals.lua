@@ -12,3 +12,6 @@ if pcall(require, "plenary") then
     return require(name)
   end
 end
+
+-- User-specific global options
+vim.g.bombadil = {}
