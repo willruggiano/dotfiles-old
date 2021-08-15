@@ -302,6 +302,13 @@ return require("packer").startup(function()
       require("numb").setup()
     end,
   }
+  use {
+    "ThePrimeagen/harpoon",
+    config = function()
+      require "bombadil.config.harpoon"
+    end,
+    requires = "nvim-lua/popup.nvim"
+  }
 
   -- Telescope, et al
   use "nvim-telescope/telescope.nvim"

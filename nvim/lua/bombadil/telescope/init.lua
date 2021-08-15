@@ -112,9 +112,11 @@ require("telescope").setup {
     frecency = {
       show_scores = true,
       workspaces = {
-        dot = vim.fn.expand "~/dotfiles",
-        conf = vim.fn.expand "~/.config",
-        work = vim.fn.expand "~/workspaces",
+        ["dev"] = vim.fn.expand "~/dev",
+        ["dot"] = vim.fn.expand "~/dotfiles",
+        ["conf"] = vim.fn.expand "~/.config",
+        ["src"] = vim.fn.expand "~/src",
+        ["work"] = vim.fn.expand "~/workspaces",
       },
     },
   },
@@ -225,56 +227,6 @@ function M.find_nvim_source()
   }
 end
 
-function M.sourcegraph_find()
-  require("telescope.builtin").find_files {
-    prompt_title = "~ sourcegraph ~",
-    cwd = "~/sourcegraph/",
-
-    layout_strategy = "horizontal",
-    layout_config = {
-      width = 0.25,
-      preview_width = 0.65,
-    },
-  }
-end
-
-function M.sourcegraph_about_find()
-  require("telescope.builtin").find_files {
-    prompt_tiles = [[\ Sourcegraph About: Files /]],
-    cwd = "~/sourcegraph/about/handbook/",
-
-    sorter = require("telescope").extensions.fzy_native.native_fzy_sorter(),
-  }
-end
-
-function M.sourcegraph_about_grep()
-  require("telescope.builtin").live_grep {
-    prompt_tiles = [[\ Sourcegraph About: Files /]],
-    cwd = "~/sourcegraph/about/",
-
-    -- sorter = require('telescope').extensions.fzy_native.native_fzy_sorter(),
-  }
-end
-
--- TODO: Should work on a wiki at some point....
---function M.sourcegraph_tips()
---  -- TODO: Can make this optionally fuzzy find over the contents as well
---  --    if we want to start getting fancier
---  --
---  --    Could even make it do that _only_ when doing something like ";" or similar.
-
---  require('telescope.builtin').find_files {
---    prompt_title = "~ sourcegraph ~",
---    cwd = "~/wiki/sourcegraph/tips",
---    width = .25,
-
---    layout_strategy = 'horizontal',
---    layout_config = {
---      preview_width = 0.65,
---    },
---  }
---end
-
 function M.edit_zsh()
   require("telescope.builtin").find_files {
     cwd = "~/dotfiles/zsh/",
@@ -353,8 +305,6 @@ end
 function M.grep_last_search(opts)
   opts = opts or {}
 
-  -- \<getreg\>\C
-  -- -> Subs out the search things
   local register = vim.fn.getreg("/"):gsub("\\<", ""):gsub("\\>", ""):gsub("\\C", "")
 
   opts.path_display = { "shorten" }
