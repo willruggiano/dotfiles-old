@@ -141,6 +141,7 @@ return require("packer").startup(function()
             { "'", "'" },
             { "`", "`" },
             { '"', '"' },
+            { "*", "*" },
           },
         },
       }
