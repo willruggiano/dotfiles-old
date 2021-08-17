@@ -3,7 +3,6 @@ vim.cmd [[packadd packer.nvim]]
 return require("packer").startup(function()
   local packer = require "packer"
   local use = packer.use
-  local use_rocks = packer.use_rocks
 
   local local_use = function(opts)
     if type(opts) == "string" then
@@ -178,6 +177,7 @@ return require("packer").startup(function()
         },
         filetype_exclude = {
           "man",
+          "packer",
           "NeogitStatus",
           "NeogitCommitView",
           "NeogitLogView",
@@ -195,6 +195,7 @@ return require("packer").startup(function()
     end,
   }
   use "plasticboy/vim-markdown"
+  use "LnL7/vim-nix"
 
   -- Visual stuff; sidebars, explorers, etc
   use {
@@ -223,15 +224,6 @@ return require("packer").startup(function()
     requires = { "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", "yamatsum/nvim-nonicons" },
     rocks = { "inspect", "luafilesystem" },
   }
-  use {
-    "kevinhwang91/rnvimr",
-    disable = true,
-    setup = function()
-      vim.g.rnvimr_enable_ex = 1
-      vim.g.rnvimr_enable_picker = 1
-    end,
-    cmd = "RnvimrToggle",
-  }
   use { "tamago324/lir-git-status.nvim", requires = "tamago324/lir.nvim" }
 
   -- Colors
@@ -254,32 +246,9 @@ return require("packer").startup(function()
       require("toggleterm").setup()
     end,
   }
-  use {
-    "numtostr/FTerm.nvim",
-    disable = true,
-    config = function()
-      require("FTerm").setup {
-        dimensions = {
-          height = 0.8,
-          width = 0.8,
-          x = 0.5,
-          y = 0.5,
-        },
-        border = "single",
-      }
-    end,
-    requires = "norcalli/nvim-terminal.lua",
-  }
-  use {
-    "pianocomposer321/consolation.nvim",
-    disable = true, -- TODO: Try this out!
-  }
 
   -- Utilities
-  use {
-    "nvim-lua/plenary.nvim",
-    rocks = "inspect",
-  }
+  use "nvim-lua/plenary.nvim"
   use "tpope/vim-eunuch"
   use "tpope/vim-repeat"
   use {

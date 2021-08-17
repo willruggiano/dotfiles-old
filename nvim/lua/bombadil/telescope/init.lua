@@ -142,7 +142,7 @@ function M.edit_neovim()
 
   opts_with_preview = {
     prompt_title = "~ dotfiles ~",
-    cwd = "~/.config/nvim",
+    cwd = "~/dotfiles/nvim",
 
     layout_strategy = "flex",
     layout_config = {

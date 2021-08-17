@@ -39,6 +39,10 @@ local function stylua()
   return { exe = "stylua", args = { "--search-parent-directories", "-" }, cwd = vim.fn.expand "%:p:h", stdin = true }
 end
 
+local function nixfmt()
+  return { exe = "nixpkgs-fmt", stdin = true }
+end
+
 return {
   c = { clangformat },
   cmake = { cmake_format },
@@ -48,6 +52,7 @@ return {
   json = { prettier },
   lua = { stylua },
   markdown = { prettier },
+  nix = { nixfmt },
   python = { isort, yapf },
   rust = { rustfmt },
   tex = { latexindent },

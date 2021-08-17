@@ -1,6 +1,5 @@
 P = function(v)
-  local inspect = require "inspect"
-  print(inspect(v))
+  print(vim.inspect(v))
   return v
 end
 
