@@ -6,7 +6,8 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       <nixos-hardware/system76>
       <nixos-hardware/common/cpu/intel>
       <nixos-hardware/common/pc/laptop/ssd>
@@ -39,49 +40,9 @@
 
   home-manager.useGlobalPkgs = true;
 
-  # Enable the X11 windowing system.
-  services.xserver = {
-    enable = true;
-    xkbOptions = "ctrl:nocaps";
-
-    desktopManager = {
-      xterm.enable = false;
-    };
-    displayManager = {
-      defaultSession = "none+i3";
-    };
-    windowManager.i3 = {
-      enable = true;
-      package = pkgs.i3-gaps;
-      extraPackages = with pkgs; [
-        dmenu
-        i3status
-        i3lock
-      ];
-    };
-  };
-
-
-  # Enable the GNOME Desktop Environment.
-  # services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.desktopManager.gnome.enable = true;
-  
-
-  # Configure keymap in X11
-  # services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.bombadil = {
     description = "Will Ruggiano";
     isNormalUser = true;
@@ -90,32 +51,53 @@
     shell = pkgs.zsh;
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    # wget
-    # firefox
-  ];
+  environment = {
+    pathsToLink = [ "/share/zsh" ];
+    systemPackages = with pkgs; [
+      vim
+    ];
+  };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  services = {
+    pcscd.enable = true;
 
-  # List services that you want to enable:
+    xserver = {
+      enable = true;
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+      layout = "us";
+      xkbOptions = "ctrl:nocaps";
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+      desktopManager = {
+        xterm.enable = false;
+      };
+      displayManager = {
+        defaultSession = "none+i3";
+        lightdm.enable = true;
+        autoLogin = {
+          enable = true;
+          user = "bombadil";
+        };
+      };
+      windowManager = {
+        i3 = {
+          enable = true;
+          package = pkgs.i3-gaps;
+          extraPackages = with pkgs; [
+            dmenu
+            i3status-rust
+            i3lock
+            rofi
+          ];
+        };
+      };
+    };
+  };
+
+  security.pam.yubico = {
+    enable = true;
+    debug = true;
+    mode = "challenge-response";
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -126,4 +108,3 @@
   system.stateVersion = "21.05"; # Did you read the comment?
 
 }
-

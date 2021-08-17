@@ -30,18 +30,23 @@ in
 
       # Utilities
       awscli2
+      cryptsetup
       curl
       delta
       fd
       git
       gitflow
       jq
+      paperkey
+      pinentry-curses
       pre-commit
       ranger
       ripgrep
       tree
       unzip
+      wget
       yq
+      yubikey-manager
 
       # X11
       xclip
@@ -75,6 +80,10 @@ in
   };
 
   xdg.configFile = {
+    i3 = {
+      source = (dirs.configs + /i3);
+    };
+
     nvim = {
       source = (dirs.configs + /nvim);
       recursive = true;
@@ -137,6 +146,11 @@ in
       core = {
         pager = "delta";
       };
+      credential = {
+        "https://github.com" = {
+          helper = "!gh auth git-credential";
+        };
+      };
       delta = {
         features = "side-by-side line-numbers decorations";
         whitespace-error-style = "22 reverse";
@@ -165,6 +179,58 @@ in
 
   programs.htop = {
     enable = true;
+  };
+
+  programs.i3status-rust = {
+    enable = true;
+    bars = {
+      default = {
+        blocks = [
+          {
+            block = "disk_space";
+            path = "/";
+            alias = "/";
+            info_type = "available";
+            unit = "GB";
+            interval = 60;
+            warning = 20.0;
+            alert = 10.0;
+          }
+          {
+            block = "memory";
+            display_type = "memory";
+            format_mem = "{mem_used_percents}";
+            format_swap = "{swap_used_percents}";
+          }
+          {
+            block = "cpu";
+            interval = 1;
+          }
+          {
+            block = "load";
+            interval = 1;
+            format = "{1m}";
+          }
+          { block = "sound"; }
+          {
+            block = "time";
+            interval = 60;
+            format = "%a %d/%m %R";
+          }
+        ];
+        settings = {
+          theme = {
+            name = "solarized-dark";
+            overrides = {
+              idle_bg = "#123456";
+              idle_fg = "#abcdef";
+            };
+          };
+        };
+        icons = "awesome5";
+        theme = "gruvbox-dark";
+      };
+    };
   };
 
   programs.kitty = {
@@ -309,12 +375,16 @@ in
 
   programs.zsh = {
     enable = true;
+    enableAutosuggestions = true;
+    # enableSyntaxHighlighting = true;
+    # defaultKeymap = "vim";
   };
 
   services.gpg-agent = {
     enable = true;
     defaultCacheTtl = 1800;
     enableSshSupport = true;
+    pinentryFlavor = "curses";
   };
 
   services.keybase = {

@@ -193,7 +193,7 @@ bindsym Mod1+r mode "resize"
 # finds out, if available)
 bar {
 	position bottom
-    status_command i3status
+    status_command i3status-rs ~/.config/i3status-rust/config-default.toml
 }
 
 # use rofi as our launcher
