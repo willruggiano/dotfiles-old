@@ -34,28 +34,6 @@ return require("packer").startup(function()
     "K.nvim",
     requires = "MunifTanjim/nui.nvim",
   }
-  local_use {
-    "make.nvim",
-    config = function()
-      local cwd = vim.fn.getcwd()
-      require("make").setup {
-        exe = "cmake",
-        source_dir = cwd,
-        binary_dir = cwd .. "/build/Debug",
-        build_type = "Debug",
-        build_target = "all",
-        build_parallelism = 16,
-        generator = "Ninja",
-        open_quickfix_on_error = true,
-        window = {
-          winblend = 15,
-          percentage = 0.9,
-        },
-      }
-    end,
-    requires = "nvim-lua/plenary.nvim",
-    rocks = "luafilesystem",
-  }
 
   -- Movement, selection, search, etc
   use "ggandor/lightspeed.nvim"
@@ -88,7 +66,29 @@ return require("packer").startup(function()
   use "tpope/vim-fugitive"
 
   -- Lsp, build-test-debug, etc
-  use "cdelledonne/vim-cmake"
+  local_use {
+    "make.nvim",
+    config = function()
+      local cwd = vim.fn.getcwd()
+      require("make").setup {
+        exe = "cmake",
+        source_dir = cwd,
+        binary_dir = cwd .. "/build/Debug",
+        build_type = "Debug",
+        -- TODO: Pre project configuration!
+        build_target = "test_cgx_xpa",
+        build_parallelism = 16,
+        generator = "Ninja",
+        open_quickfix_on_error = true,
+        window = {
+          winblend = 15,
+          percentage = 0.9,
+        },
+      }
+    end,
+    requires = { "nvim-lua/plenary.nvim", "rcarriga/nvim-notify" },
+    rocks = "luafilesystem",
+  }
   use "neovim/nvim-lspconfig"
   use {
     "hrsh7th/nvim-compe",
@@ -96,11 +96,6 @@ return require("packer").startup(function()
       "L3MON4D3/LuaSnip",
       "rafamadriz/friendly-snippets",
     },
-  }
-  use {
-    "tzachar/compe-tabnine",
-    requires = "hrsh7th/nvim-compe",
-    run = "./install.sh",
   }
   use {
     "puremourning/vimspector",
@@ -307,7 +302,7 @@ return require("packer").startup(function()
     config = function()
       require "bombadil.config.harpoon"
     end,
-    requires = "nvim-lua/popup.nvim"
+    requires = "nvim-lua/popup.nvim",
   }
 
   -- Telescope, et al
