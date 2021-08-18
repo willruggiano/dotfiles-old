@@ -136,5 +136,11 @@ lspconfig.sumneko_lua.setup(require("lua-dev").setup {
   },
 })
 
+lspconfig.rnix.setup {
+  on_init = on_init,
+  on_attach = on_attach,
+  capabilities = updated_capabilities,
+}
+
 -- Map :Format to vim.lsp.buf.formatting()
 vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]

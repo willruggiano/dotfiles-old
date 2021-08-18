@@ -15,4 +15,4 @@ vim.cmd [[runtime plugin/astronauta.vim]]
 require "bombadil.lsp"
 
 -- Source local configuration via .nvimrc.lua
--- require("bombadil.localrc").load()
+require("bombadil.localrc").load()

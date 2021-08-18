@@ -7,7 +7,12 @@ let
   unstable = import <unstable> { };
 
   colorscheme = "tokyonight";
-  font = "JetBrainsMono";
+  nerdfonts = (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ];});
+  font = {
+    package = nerdfonts;
+    name = "JetBrainMono";
+    size = 12;
+  };
 
   dirs = {
     configs = ../../dotfiles;
@@ -21,7 +26,8 @@ in
 
     packages = with pkgs; [
       # Fonts
-      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+      font-awesome_5
+      nerdfonts
 
       # Languages
       (python39.withPackages (
@@ -34,22 +40,24 @@ in
       curl
       delta
       fd
+      file
       git
       gitflow
+      git-crypt
       jq
       paperkey
       pinentry-curses
       pre-commit
       ranger
       ripgrep
-      tree
+      speedtest-cli
+      thefuck
+      tig
       unzip
       wget
+      xclip
       yq
       yubikey-manager
-
-      # X11
-      xclip
     ];
 
     sessionVariables = {
@@ -74,11 +82,6 @@ in
 
   fonts.fontconfig.enable = true;
 
-  programs.home-manager = {
-    enable = true;
-    path = "...";
-  };
-
   xdg.configFile = {
     i3 = {
       source = (dirs.configs + /i3);
@@ -94,6 +97,11 @@ in
     };
   };
 
+  programs.home-manager = {
+    enable = true;
+    path = "...";
+  };
+
   programs.bat = {
     enable = true;
     config = {
@@ -106,9 +114,13 @@ in
     browsers = [ "firefox" ];
   };
 
+  programs.command-not-found = {
+    enable = true;
+  };
+
   programs.exa = {
     enable = true;
-    enableAliases = true;
+    enableAliases = false;
   };
 
   programs.firefox = {
@@ -124,9 +136,24 @@ in
 
   programs.fzf = {
     enable = true;
-    defaultCommand = "fd --type f";
+    defaultCommand = "rg --files --hidden --glob \"!.git\" --no-ignore ";
+    defaultOptions = [
+      "--no-mouse"
+      "--height 50%"
+      "-1"
+      "--reverse"
+      "--multi"
+      "--preview='[[ \\$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2>/dev/null | head -30\'"
+      "--preview-window='right:hidden:wrap'"
+      "--bind='f3:execute(bat --style=numbers {} || less -f {}),ctrl-p:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept'"
+    ];
     changeDirWidgetCommand = "fd --type d";
+    changeDirWidgetOptions = [ "--preview 'bat {}'" ];
     fileWidgetCommand = "fd --type f";
+    fileWidgetOptions = [
+      "--select-1"
+      "--exit-0"
+    ];
   };
 
   programs.gh = {
@@ -154,6 +181,9 @@ in
       delta = {
         features = "side-by-side line-numbers decorations";
         whitespace-error-style = "22 reverse";
+      };
+      init = {
+        defaultBranch = "main";
       };
       interactive = {
         diffFilter = "delta --color-only";
@@ -187,20 +217,16 @@ in
       default = {
         blocks = [
           {
-            block = "disk_space";
-            path = "/";
-            alias = "/";
-            info_type = "available";
-            unit = "GB";
-            interval = 60;
-            warning = 20.0;
-            alert = 10.0;
+            block = "speedtest";
+            interval = 1800;
+            format = "{ping}{speed_down}{speed_up}";
           }
           {
-            block = "memory";
-            display_type = "memory";
-            format_mem = "{mem_used_percents}";
-            format_swap = "{swap_used_percents}";
+            block = "disk_space";
+            path = "/";
+            info_type = "used";
+            unit = "GB";
+            format = "{icon} {used}/{total} ({available} free)";
           }
           {
             block = "cpu";
@@ -215,20 +241,11 @@ in
           {
             block = "time";
             interval = 60;
-            format = "%a %d/%m %R";
+            format = "%a %m/%d %R";
           }
         ];
-        settings = {
-          theme = {
-            name = "solarized-dark";
-            overrides = {
-              idle_bg = "#123456";
-              idle_fg = "#abcdef";
-            };
-          };
-        };
         icons = "awesome5";
-        theme = "gruvbox-dark";
+        theme = "plain";
       };
     };
   };
@@ -237,19 +254,20 @@ in
     enable = true;
 
     settings = {
-      font_family = "JetBrainsMono Nerd Font";
-      bold_font = "JetBrainsMono Nerd Font Bold";
-      bold_italic_font = "JetBrainsMono Nerd Font Bold Italic";
-      italic_font = "JetBrainsMono Nerd Font Italic";
-      sync_to_monitor = "no";
+      include = "${dirs.configs}/kitty/kitty_tokyonight_storm.conf";
+
       disable_ligatures = "never";
-
-      enable_audio_bell = "no";
-
-      include = "~/dotfiles/kitty/kitty_tokyonight_storm.conf";
       dynamic_background_opacity = true;
-
+      enable_audio_bell = "no";
+      scrollback_pager = "${pkgs.neovim-nightly}/bin/nvim -c \"set nonumber nolist showtabline=0 foldcolumn=0\" -c \"autocmd TermOpen * normal G\" -c \"silent write /tmp/kitty_scrollback_buffer | te cat /tmp/kitty_scrollback_buffer - \"";
       symbol_map = "U+f101-U+f208 nonicons";
+      sync_to_monitor = "no";
+    };
+
+    font = font;
+
+    keybindings = {
+      "ctrl+space" = "show_scrollback";
     };
   };
 
@@ -278,13 +296,13 @@ in
       gcc11
       gcc11Stdenv
       gnumake
-      luajitPackages.luafilesystem
       ninja
       nixpkgs-fmt
       nodePackages.prettier
       openssl
       python-language-server
       ripgrep
+      rnix-lsp
       rustfmt
       unstable.stylua
       sumneko-lua-language-server
@@ -293,9 +311,15 @@ in
     ];
   };
 
+  programs.nix-index = {
+    enable = true;
+    enableBashIntegration = false;
+    enableZshIntegration = false;
+  };
+
   programs.password-store = {
     enable = true;
-    package = pkgs.pass.withExtensions (exts: [ exts.pass-update ]);
+    package = pkgs.pass.withExtensions (exts: [ exts.pass-audit exts.pass-update ]);
   };
 
   programs.rofi = {
@@ -376,8 +400,177 @@ in
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
-    # enableSyntaxHighlighting = true;
-    # defaultKeymap = "vim";
+    enableCompletion = true;
+
+    dotDir = ".config/zsh";
+
+    plugins = with pkgs; [
+      {
+        name = "fast-syntax-highlighting";
+        src = fetchFromGitHub {
+          owner = "zdharma";
+          repo = "fast-syntax-highlighting";
+          rev = "817916dfa907d179f0d46d8de355e883cf67bd97";
+          sha256 = "0m102makrfz1ibxq8rx77nngjyhdqrm8hsrr9342zzhq1nf4wxxc";
+        };
+      }
+      {
+        name = "magic-enter";
+        src = fetchFromGitHub {
+          owner = "ohmyzsh";
+          repo = "ohmyzsh";
+          rev = "7a4f4ad91e1f937b36a54703984b958abe9da4b8";
+          sha256 = "1p43x3sx54h4vgbaa4iz3j1yj4d0qcnxlcq9c2z4q6j7021gjbvi";
+        };
+        file = "plugins/magic-enter/magic-enter.plugin.zsh";
+      }
+      {
+        name = "zsh-autopair";
+        src = fetchFromGitHub {
+          owner = "hlissner";
+          repo = "zsh-autopair";
+          rev = "9d003fc02dbaa6db06e6b12e8c271398478e0b5d";
+          sha256 = "0s4xj7yv75lpbcwl4s8rgsaa72b41vy6nhhc5ndl7lirb9nl61l7";
+        };
+      }
+      {
+        name = "fzf-marks";
+        src = fetchFromGitHub {
+          owner = "urbainvaes";
+          repo = "fzf-marks";
+          rev = "f5c986657bfee0a135fd14277eea857d58ea8cdc";
+          sha256 = "11n33kx1v9mdgklhz7mkr673vln27nl02lyscybgc29fchwxfn8k";
+        };
+      }
+      {
+        name = "fzf-tab";
+        src = fetchFromGitHub {
+          owner = "Aloxaf";
+          repo = "fzf-tab";
+          rev = "89a33154707c09789177a893e5a8ebbb131d5d3d";
+          sha256 = "1g8011ldrghbw5ibchsp0p93r31cwyx2r1z5xplksd779jw79wdx";
+        };
+      }
+      {
+        name = "material-colors";
+        src = fetchFromGitHub {
+          owner = "zpm-zsh";
+          repo = "material-colors";
+          rev = "47cbf2d955220cddc4d3e3845999f22ef270c90a";
+          sha256 = "1g2dwl9siihcc0ixidfbsw99ywv2xd3v68kq270j2g3l1j2z59zn";
+        };
+      }
+      {
+        name = "clipboard";
+        src = fetchFromGitHub {
+          owner = "ohmyzsh";
+          repo = "ohmyzsh";
+          rev = "7a4f4ad91e1f937b36a54703984b958abe9da4b8";
+          sha256 = "1p43x3sx54h4vgbaa4iz3j1yj4d0qcnxlcq9c2z4q6j7021gjbvi";
+        };
+        file = "lib/clipboard.zsh";
+      }
+      {
+        name = "forgit";
+        src = fetchFromGitHub {
+          owner = "wfxr";
+          repo = "forgit";
+          rev = "9f3a4239205b638b8c535220bfec0b1fbca2d620";
+          sha256 = "1w29ryc4l9pz60xbcwk0czxnhmjjh8xa6amh60whcapbsm174ssz";
+        };
+      }
+    ];
+
+    initExtra = ''
+      eval $(thefuck --alias)
+
+      # Completion settings
+      zstyle ':completion:*' verbose yes
+      zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
+      zstyle ':completion:*:default' menu select=2
+      zstyle ':completion:*:messages' format '%F{YELLOW}%d'$DEFAULT
+      zstyle ':completion:*:warnings' format '%F{RED}No matches for:%F{YELLOW} %d'$DEFAULT
+      zstyle ':completion:*:options' description 'yes'
+      zstyle ':completion:*:descriptions' format '[%d]'
+      zstyle ':completion:*:git-checkout:*' sort false
+      zstyle ':completion:*' group-name ""
+      zstyle ':completion:*' list-separator '-->'
+      zstyle ':completion:*:manuals' separate-sections true
+      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+      zstyle ':prompt:pure:git:stash' show yes
+
+      autoload colors
+      colors
+
+      setopt hist_ignore_dups
+      setopt hist_find_no_dups
+      setopt share_history
+      setopt noauto_cd
+      setopt auto_pushd
+      setopt pushd_ignore_dups
+      setopt pushd_to_home
+      setopt auto_param_slash
+      setopt auto_param_keys
+      setopt extended_glob
+
+      function encrypt() {
+          local out="$1.$(date +%s).enc"
+          gpg --encrypt --armor --output $out -r wmruggiano@gmail.com "$1" && echo "$1 -> $out"
+      }
+      
+      function decrypt() {
+          local out=$(echo "$1" | rev | cut -c16- | rev)
+          gpg --decrypt --output $out "$1" && echo "$1 -> $out"
+      }
+      
+      function gpg-reset-card() {
+          gpg-connect-agent "scd serialno" "learn --force" /bye
+      }
+
+      function git-turtle() {
+          local n=""
+          local branch=""
+          local dryrun=false
+          for a in "$@"; do
+          case "$a" in
+              -n)
+                  shift; n="$1"; shift
+                  ;;
+              -b)
+                  shift; branch="$1"; shift
+                  ;;
+              --dryrun)
+                  shift; dryrun=true
+                  ;;
+          esac
+          done
+          [[ -z $n ]] || [[ -z $branch ]] && die '-n and -b|--branch are required'
+          local git_reset="git reset --keep HEAD~$n"
+          local git_check="git checkout -t -b $branch"
+          local git_pick="git cherry-pick ..HEAD@{2}"
+          if $dryrun; then
+              echo "+ $git_reset"
+              echo "+ $git_check"
+              echo "+ $git_pick"
+          else
+              eval "$git_reset && $git_check && $git_pick"
+          fi
+      }
+    '';
+
+    shellAliases = with pkgs; {
+      bat = "${bat}/bin/bat --paging=never";
+      batp = "${bat}/bin/bat --paging=auto";
+      cat = "${bat}/bin/bat";
+      grep = "${ripgrep}/bin/rg --color=auto";
+      hm = "home-manager";
+      ls = "${exa}/bin/exa -F";
+      la = "${exa}/bin/exa -a";
+      ll = "${exa}/bin/exa -l";
+      lla = "${exa}/bin/exa -al";
+      lt = "${exa}/bin/exa --tree";
+      tree = "${exa}/bin/exa --tree";
+    };
   };
 
   services.gpg-agent = {

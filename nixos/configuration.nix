@@ -5,6 +5,13 @@
 { config, pkgs, ... }:
 
 {
+  nix = {
+    package = pkgs.nixUnstable;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+
   imports =
     [
       # Include the results of the hardware scan.
@@ -21,8 +28,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.hostName = "mothership"; # Define your hostname.
+  networking.hostId = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
 
   # Set your time zone.
   time.timeZone = "America/Denver";
@@ -66,6 +73,15 @@
 
       layout = "us";
       xkbOptions = "ctrl:nocaps";
+
+      libinput = {
+        touchpad = {
+          clickMethod = "none";
+          disableWhileTyping = true;
+          naturalScrolling = true;
+          tapping = false;
+        };
+      };
 
       desktopManager = {
         xterm.enable = false;

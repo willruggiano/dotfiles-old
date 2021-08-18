@@ -4,7 +4,7 @@ local opt = vim.opt
 -- vim.g.python3_host_prog = vim.fn.expand "~/.pyenv/versions/neovim/bin/python"
 
 -- Set our font
-opt.guifont = "JetBrainsMono-Regular:h11"
+-- opt.guifont = "JetBrainsMono-Regular:h11"
 
 -- Ignore compiled files
 opt.wildignore = "__pycache__"
