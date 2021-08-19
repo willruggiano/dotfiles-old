@@ -188,6 +188,16 @@ in
       interactive = {
         diffFilter = "delta --color-only";
       };
+      merge.tool = "nvim";
+      mergetool = {
+        keepBackup = false;
+        nvim = {
+          cmd = "nvim -f -c \"Gdiffsplit!\" $MERGED";
+        };
+      };
+      user = {
+        signingkey = "79303BEC95097CB6";
+      };
     };
     aliases = {
       dag = "log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order";
@@ -309,6 +319,11 @@ in
       tree-sitter
       yapf
     ];
+    extraConfig = ''
+      lua <<EOF
+      ${(import (dirs.configs + "/nvim/init.lua.nix"))}
+      EOF
+    '';
   };
 
   programs.nix-index = {
