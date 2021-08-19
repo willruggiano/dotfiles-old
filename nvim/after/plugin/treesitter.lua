@@ -15,24 +15,19 @@ local swap_next, swap_prev = (function()
   return n, p
 end)()
 
+local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
+
+parser_configs.markdown = {
+  install_info = {
+    url = "https://github.com/ikatyang/tree-sitter-markdown",
+    files = { "src/parser.c" },
+  },
+}
+
 require("nvim-treesitter.configs").setup {
   autopairs = { enable = true },
 
-  ensure_installed = {
-    "c",
-    "cpp",
-    "dockerfile",
-    "go",
-    "html",
-    "java",
-    "json",
-    "lua",
-    "nix",
-    "python",
-    "rust",
-    "typescript",
-    "yaml",
-  },
+  ensure_installed = "maintained",
 
   highlight = {
     enable = true,
