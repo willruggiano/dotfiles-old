@@ -108,11 +108,11 @@ lspconfig.pyright.setup {
   capabilities = updated_capabilities,
 }
 
-local sumneko = require "bombadil.lsp.sumneko"
+local sumneko_cmd = require "bombadil.lsp.sumneko"
 
 lspconfig.sumneko_lua.setup(require("lua-dev").setup {
   lspconfig = {
-    cmd = { sumneko.bin, "-E", sumneko.main },
+    cmd = { sumneko_cmd },
     on_init = on_init,
     on_attach = on_attach,
     capabilities = updated_capabilities,

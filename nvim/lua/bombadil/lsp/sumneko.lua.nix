@@ -2,8 +2,6 @@ let
   pkgs = import <nixpkgs> { };
 in
 ''
-  return {
-    bin = "${pkgs.sumneko-lua-language-server}/bin/lua-language-server",
-    main = "${pkgs.sumneko-lua-language-server}/extra/main.lua"
-  }
+  -- NOTE: This command is a wrapper that includes the -E /path/to/main.lua
+  return "${pkgs.sumneko-lua-language-server}/bin/lua-language-server"
 ''
