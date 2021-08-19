@@ -102,7 +102,6 @@ return require("packer").startup(function()
   }
   use "wbthomason/lsp-status.nvim"
   use "onsails/lspkind-nvim"
-  -- use "glepnir/lspsaga.nvim"
   use "nvim-lua/lsp_extensions.nvim"
   use {
     "folke/trouble.nvim",
@@ -114,6 +113,13 @@ return require("packer").startup(function()
     end,
   }
   use "folke/lua-dev.nvim"
+  use {
+    "ThePrimeagen/refactoring.nvim",
+    config = function()
+      require("refactoring").setup()
+    end,
+    requires = { "nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter" },
+  }
 
   -- Text editing + manipulation
   use "b3nj5m1n/kommentary"
