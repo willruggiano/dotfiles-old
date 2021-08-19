@@ -80,13 +80,11 @@ return require("packer").startup(function()
         build_parallelism = 16,
         generator = "Ninja",
         open_quickfix_on_error = true,
-        window = {
-          winblend = 15,
-          percentage = 0.9,
-        },
+        -- TODO: Move these to per project configuration.
+        cmake_arguments = { "-DBUILD_ALL=ON" },
       }
     end,
-    requires = { "nvim-lua/plenary.nvim", "rcarriga/nvim-notify" },
+    requires = { "akinsho/nvim-toggleterm.lua", "nvim-lua/plenary.nvim", "rcarriga/nvim-notify" },
     rocks = "luafilesystem",
   }
   use "neovim/nvim-lspconfig"

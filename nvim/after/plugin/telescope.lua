@@ -1,4 +1,5 @@
 local map_tele = require "bombadil.telescope.mappings"
+local nnoremap = vim.keymap.nnoremap
 
 local sorters = require "telescope.sorters"
 
@@ -42,3 +43,11 @@ map_tele("<space>ed", "edit_dotfiles")
 
 -- Telescope Meta
 map_tele("<space>fB", "builtin")
+
+-- Packer
+nnoremap {
+  "<space>fP",
+  function()
+    require("telescope").extensions.packer.plugins()
+  end,
+}
