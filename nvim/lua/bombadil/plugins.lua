@@ -209,8 +209,8 @@ return require("packer").startup(function()
     requires = "kyazdani42/nvim-web-devicons",
     config = function()
       vim.g.override_nvim_web_devicons = true
-      require("nvim-nonicons").get "file"
-    end,
+      require "nvim-nonicons"
+    end
   }
   use "liuchengxu/vista.vim"
   use "simrat39/symbols-outline.nvim"
@@ -227,7 +227,7 @@ return require("packer").startup(function()
     config = function()
       require "bombadil.config.lir"
     end,
-    requires = { "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", "yamatsum/nvim-nonicons" },
+    requires = { "nvim-lua/plenary.nvim", "yamatsum/nvim-nonicons" },
     rocks = { "inspect", "luafilesystem" },
   }
   use { "tamago324/lir-git-status.nvim", requires = "tamago324/lir.nvim" }
@@ -311,7 +311,6 @@ return require("packer").startup(function()
     end,
     requires = {
       "vijaymarupudi/nvim-fzf",
-      "kyazdani42/nvim-web-devicons",
     },
   }
 end)

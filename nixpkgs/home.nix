@@ -7,15 +7,15 @@ let
   unstable = import <unstable> { };
 
   colorscheme = "tokyonight";
-  nerdfonts = (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ];});
+  nerdfonts = pkgs.nerdfonts;
   font = {
     package = nerdfonts;
-    name = "JetBrainMono";
+    name = "JetBrainsMono";
     size = 12;
   };
 
   dirs = {
-    configs = ../../dotfiles;
+    configs = ../../dotfiles-old;
   };
 in
 {
@@ -249,6 +249,11 @@ in
           }
           { block = "sound"; }
           {
+            block = "battery";
+            interval = 10;
+            format = "{percentage} {time}";
+          }
+          {
             block = "time";
             interval = 60;
             format = "%a %m/%d %R";
@@ -266,19 +271,19 @@ in
     settings = {
       include = "${dirs.configs}/kitty/kitty_tokyonight_storm.conf";
 
+      bold_font = "auto";
+      bold_italic_font = "auto";
+      italic_font = "auto";
+
       disable_ligatures = "never";
-      dynamic_background_opacity = true;
+      # dynamic_background_opacity = true;
       enable_audio_bell = "no";
-      scrollback_pager = "${pkgs.neovim-nightly}/bin/nvim -c \"set nonumber nolist showtabline=0 foldcolumn=0\" -c \"autocmd TermOpen * normal G\" -c \"silent write /tmp/kitty_scrollback_buffer | te cat /tmp/kitty_scrollback_buffer - \"";
+      # scrollback_pager = "${pkgs.neovim-nightly}/bin/nvim -c \"set nonumber nolist showtabline=0 foldcolumn=0\" -c \"autocmd TermOpen * normal G\" -c \"silent write /tmp/kitty_scrollback_buffer | te cat /tmp/kitty_scrollback_buffer - \"";
       symbol_map = "U+f101-U+f208 nonicons";
       sync_to_monitor = "no";
     };
 
     font = font;
-
-    keybindings = {
-      "ctrl+space" = "show_scrollback";
-    };
   };
 
   programs.mpv = {
