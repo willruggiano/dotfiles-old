@@ -75,13 +75,9 @@ return require("packer").startup(function()
         source_dir = cwd,
         binary_dir = cwd .. "/build/Debug",
         build_type = "Debug",
-        -- TODO: Pre project configuration!
-        build_target = "test_cgx_xpa",
         build_parallelism = 16,
         generator = "Ninja",
         open_quickfix_on_error = true,
-        -- TODO: Move these to per project configuration.
-        cmake_arguments = { "-DBUILD_ALL=ON" },
       }
     end,
     requires = { "akinsho/nvim-toggleterm.lua", "nvim-lua/plenary.nvim", "rcarriga/nvim-notify" },
@@ -195,6 +191,7 @@ return require("packer").startup(function()
     end,
   }
   use "plasticboy/vim-markdown"
+  use "LnL7/vim-nix"
 
   -- Visual stuff; sidebars, explorers, etc
   use {
@@ -218,6 +215,8 @@ return require("packer").startup(function()
   use {
     "tamago324/lir.nvim",
     config = function()
+      -- Disable netrw in favor of lir.nvim
+      vim.g.loaded_netrw = true
       require "bombadil.config.lir"
     end,
     requires = { "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", "yamatsum/nvim-nonicons" },
@@ -233,6 +232,15 @@ return require("packer").startup(function()
     cmd = "RnvimrToggle",
   }
   use { "tamago324/lir-git-status.nvim", requires = "tamago324/lir.nvim" }
+  use {
+    "gelguy/wilder.nvim",
+    config = function()
+      require "bombadil.config.wild"
+    end,
+    requires = { "romgrk/fzy-lua-native" },
+    rocks = "pcre2",
+  }
+  use "famiu/bufdelete.nvim"
 
   -- Colors
   use "norcalli/nvim-colorizer.lua"

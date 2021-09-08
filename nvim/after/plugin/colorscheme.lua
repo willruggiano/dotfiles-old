@@ -2,7 +2,7 @@
 --   return
 -- end
 
-vim.opt.termguicolors = true
+vim.opt.termguicolors = false
 
 vim.g.material_style = "palenight"
 vim.g.material_italic_comments = 1

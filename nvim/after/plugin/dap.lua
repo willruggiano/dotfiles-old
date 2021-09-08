@@ -43,3 +43,9 @@ wk.register {
     },
   },
 }
+
+SetDapTarget = function(target)
+  vim.g.dap_target = target
+end
+
+vim.cmd "command! -nargs=1 SetDebugTarget lua SetDapTarget(<f-args>)"

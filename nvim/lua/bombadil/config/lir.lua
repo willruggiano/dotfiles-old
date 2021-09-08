@@ -133,6 +133,26 @@ custom_actions.clear_marks = function()
   actions.reload()
 end
 
+-- TODO: This could delete multiple buffers if there are multiple buffers open for the same
+-- filename.
+custom_actions.delete = function()
+  local bdelete = require("bufdelete").bufdelete
+  local delete = actions.delete
+  local ctx = get_context()
+  local fname = ctx:current_value()
+  for _, b in ipairs(vim.api.nvim_list_bufs()) do
+    local bname = vim.fn.bufname(b)
+    if bname:sub(-#fname) == fname then
+      if vim.api.nvim_buf_is_loaded(b) then
+        bdelete(b, true)
+      else
+        vim.api.nvim_buf_delete(b, { force = true })
+      end
+    end
+  end
+  delete()
+end
+
 lir.setup {
   show_hidden_files = true,
   devicons_enable = true,
@@ -156,7 +176,7 @@ lir.setup {
     y = custom_actions.yank_path,
     Y = custom_actions.yank_basename,
 
-    d = actions.delete,
+    d = custom_actions.delete,
     c = clipboard_actions.copy,
     x = clipboard_actions.cut,
     p = clipboard_actions.paste,

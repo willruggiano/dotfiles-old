@@ -19,7 +19,7 @@ wk.register({
     },
     x = {
       function()
-        vim.fn["vimspector#Reset()"]()
+        vim.fn["vimspector#Reset"]()
       end,
       "kill",
     },
