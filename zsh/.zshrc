@@ -269,9 +269,6 @@ zinit wait lucid for \
  atload"!_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions
 
-zinit ice depth=1
-zinit load jeffreytse/zsh-vi-mode
-
 zinit wait lucid for \
     OMZP::git \
     OMZP::git-extras \
