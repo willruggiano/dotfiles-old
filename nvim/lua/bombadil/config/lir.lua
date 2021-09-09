@@ -141,11 +141,7 @@ custom_actions.delete = function()
   for _, b in ipairs(vim.api.nvim_list_bufs()) do
     local bname = vim.fn.bufname(b)
     if bname:sub(-#fname) == fname then
-      if vim.api.nvim_buf_is_loaded(b) then
-        bdelete(b, true)
-      else
-        vim.api.nvim_buf_delete(b, { force = true })
-      end
+      require("bombadil.lib.buffer").delete_buffer(b)
     end
   end
   delete()
