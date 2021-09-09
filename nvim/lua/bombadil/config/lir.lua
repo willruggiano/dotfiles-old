@@ -1,13 +1,3 @@
-local icons = require "nvim-nonicons"
-
-require("nvim-web-devicons").setup {
-  lir_folder_icon = {
-    icons = icons.get "file",
-    color = "#7ebae4",
-    name = "LirFolderNode",
-  },
-}
-
 local actions = require "lir.actions"
 local clipboard_actions = require "lir.clipboard.actions"
 local mark_actions = require "lir.mark.actions"
@@ -19,6 +9,14 @@ local Path = require "plenary.path"
 local get_context = lvim.get_context
 
 local custom_actions = {}
+
+require("nvim-web-devicons").set_icon {
+  lir_folder_icon = {
+    icon = require("nvim-nonicons").get "file-directory",
+    color = "#7ebae4",
+    name = "LirFolderNode",
+  },
+}
 
 custom_actions.up = function()
   local up = actions.up

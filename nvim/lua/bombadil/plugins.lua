@@ -195,12 +195,13 @@ return require("packer").startup(function()
 
   -- Visual stuff; sidebars, explorers, etc
   use {
-    "yamatsum/nvim-nonicons",
-    requires = "kyazdani42/nvim-web-devicons",
+    "kyazdani42/nvim-web-devicons",
     config = function()
       vim.g.override_nvim_web_devicons = true
-      require("nvim-nonicons").get "file"
+      require "nvim-nonicons"
     end,
+    module = { "nvim-web-devicons", "nvim-nonicons" },
+    requires = "yamatsum/nvim-nonicons",
   }
   use "liuchengxu/vista.vim"
   use "simrat39/symbols-outline.nvim"
