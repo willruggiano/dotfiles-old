@@ -1,5 +1,5 @@
 local map_tele = require "bombadil.telescope.mappings"
-local nnoremap = vim.keymap.nnoremap
+local wk = require "which-key"
 
 local sorters = require "telescope.sorters"
 
@@ -44,10 +44,28 @@ map_tele("<space>ed", "edit_dotfiles")
 -- Telescope Meta
 map_tele("<space>fB", "builtin")
 
--- Packer
-nnoremap {
-  "<space>fP",
-  function()
-    require("telescope").extensions.packer.plugins()
-  end,
+wk.register {
+  -- Git
+  ["<leader>gw"] = {
+    name = "worktree",
+    c = {
+      function()
+        require("telescope").extensions.git_worktree.create_git_worktree()
+      end,
+      "create",
+    },
+    l = {
+      function()
+        require("telescope").extensions.git_worktree.git_worktrees()
+      end,
+      "list",
+    },
+  },
+  -- Packer
+  ["<space>fP"] = {
+    function()
+      require("telescope").extensions.packer.plugins()
+    end,
+    "packer",
+  },
 }

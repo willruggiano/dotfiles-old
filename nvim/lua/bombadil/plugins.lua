@@ -62,8 +62,8 @@ return require("packer").startup(function()
       vim.g.git_messenger_no_default_mappings = 1
     end,
   }
-
   use "tpope/vim-fugitive"
+  use "ThePrimeagen/git-worktree.nvim"
 
   -- Lsp, build-test-debug, etc
   local_use {
@@ -200,7 +200,6 @@ return require("packer").startup(function()
       vim.g.override_nvim_web_devicons = true
       require "nvim-nonicons"
     end,
-    module = { "nvim-web-devicons", "nvim-nonicons" },
     requires = "yamatsum/nvim-nonicons",
   }
   use "liuchengxu/vista.vim"

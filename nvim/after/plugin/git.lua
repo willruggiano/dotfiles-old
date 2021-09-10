@@ -60,3 +60,26 @@ require("which-key").register {
     },
   },
 }
+
+local worktree = require "git-worktree"
+local Job = require "plenary.job"
+
+worktree.on_tree_change(function(op, metadata)
+  if op == worktree.Operations.Create then
+    if vim.fn.filereadable ".gitmodules" == 1 then
+      Job
+        :new({
+          command = "git",
+          args = { "submodule", "update", "--init" },
+          cwd = metadata.path,
+          on_start = function(...)
+            print "Updating submodules..."
+          end,
+          on_exit = function()
+            print "Done updating submodules."
+          end,
+        })
+        :start()
+    end
+  end
+end)
