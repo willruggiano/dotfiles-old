@@ -21,3 +21,5 @@ function! s:wilder_init() abort
       \ ],
       \ }))
 endfunction
+
+autocmd BufWritePre * lua vim.fn.mkdir(vim.fn.expand("%:p:h"), "p")
