@@ -99,7 +99,6 @@ return require("packer").startup(function()
   }
   use "wbthomason/lsp-status.nvim"
   use "onsails/lspkind-nvim"
-  -- use "glepnir/lspsaga.nvim"
   use "nvim-lua/lsp_extensions.nvim"
   use {
     "folke/trouble.nvim",
