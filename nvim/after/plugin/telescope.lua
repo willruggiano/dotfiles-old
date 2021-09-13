@@ -50,6 +50,7 @@ wk.register {
     name = "worktree",
     c = {
       function()
+        -- TODO: I don't like having to manually specify the path to the worktree.
         require("telescope").extensions.git_worktree.create_git_worktree()
       end,
       "create",
