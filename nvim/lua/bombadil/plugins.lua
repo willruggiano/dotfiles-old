@@ -204,7 +204,6 @@ return require("packer").startup(function()
   }
   use "liuchengxu/vista.vim"
   use "simrat39/symbols-outline.nvim"
-  use "mildred/vim-bufmru"
   use { "folke/zen-mode.nvim", requires = "folke/twilight.nvim" }
   use {
     "folke/todo-comments.nvim",
