@@ -147,6 +147,15 @@ custom_actions.delete = function()
   delete()
 end
 
+custom_actions.quit = function()
+  if vim.w.lir_file_quit_on_edit then
+    actions.quit()
+  else
+    -- Then the lir window is the last one
+    vim.cmd "q"
+  end
+end
+
 lir.setup {
   show_hidden_files = true,
   devicons_enable = true,
@@ -163,7 +172,7 @@ lir.setup {
     S = custom_actions.clear_marks,
 
     ["-"] = custom_actions.up,
-    q = actions.quit,
+    q = custom_actions.quit,
 
     a = custom_actions.new,
     r = actions.rename,
