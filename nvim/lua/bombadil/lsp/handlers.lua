@@ -14,7 +14,12 @@ local jump_to_location = function(location)
     end
   end
 
-  return vim.lsp.util.jump_to_location(location)
+  if vim.lsp.util.jump_to_location(location) then
+    vim.cmd "normal! zz"
+    return true
+  else
+    return false
+  end
 end
 
 vim.lsp.handlers["textDocument/definition"] = function(_, result)
