@@ -20,7 +20,7 @@ nnoremap { "<up>", "<c-y>" }
 nnoremap { "<down>", "<c-e>" }
 -- Tab navigation
 nnoremap { "<right>", "gt" }
-nnoremap { "<lef>", "gT" }
+nnoremap { "<left>", "gT" }
 -- Make ESC leave terminal mode
 tnoremap { "<esc>", "<c-\\><c-n>" }
 

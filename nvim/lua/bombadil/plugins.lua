@@ -187,10 +187,10 @@ return require("packer").startup(function()
   }
   use "plasticboy/vim-markdown"
   use "LnL7/vim-nix"
-  use {
-    "ThePrimeagen/refactoring.nvim",
+  local_use {
+    "refactoring.nvim",
     config = function()
-      require "bombadil.config.refactoring"
+      require("refactoring").setup()
     end,
     requires = {
       "nvim-lua/plenary.nvim",
