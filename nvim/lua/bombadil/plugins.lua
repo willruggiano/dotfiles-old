@@ -30,10 +30,6 @@ return require("packer").startup(function()
       require("which-key").setup {}
     end,
   }
-  local_use {
-    "K.nvim",
-    requires = "MunifTanjim/nui.nvim",
-  }
 
   -- Movement, selection, search, etc
   use "ggandor/lightspeed.nvim"
@@ -191,6 +187,16 @@ return require("packer").startup(function()
   }
   use "plasticboy/vim-markdown"
   use "LnL7/vim-nix"
+  use {
+    "ThePrimeagen/refactoring.nvim",
+    config = function()
+      require "bombadil.config.refactoring"
+    end,
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+  }
 
   -- Visual stuff; sidebars, explorers, etc
   use {

@@ -67,7 +67,12 @@ local on_attach = function(client, bufnr)
       },
     },
     K = { vim.lsp.buf.hover, "hover" },
-    ["<C-K>"] = { handlers.peek_definition, "peek-definition" },
+    ["<C-K>"] = {
+      function()
+        R("bombadil.lsp.handlers").peek_definition()
+      end,
+      "peek-definition",
+    },
   }, {
     buffer = bufnr,
   })
