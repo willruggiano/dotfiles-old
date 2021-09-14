@@ -1,5 +1,22 @@
 local icons = require "nvim-nonicons"
 
+local jump_to_location = function(location)
+  local uri = location.uri or location.targetUri
+  if uri == nil then
+    return
+  end
+  local bufnr = vim.uri_to_bufnr(uri)
+
+  if vim.api.nvim_buf_is_loaded(bufnr) then
+    local wins = vim.fn.win_findbuf(bufnr)
+    if wins then
+      vim.fn.win_gotoid(wins[1])
+    end
+  end
+
+  return vim.lsp.util.jump_to_location(location)
+end
+
 vim.lsp.handlers["textDocument/definition"] = function(_, result)
   if not result or vim.tbl_isempty(result) then
     print "[LSP] Could not find definition"
@@ -7,9 +24,9 @@ vim.lsp.handlers["textDocument/definition"] = function(_, result)
   end
 
   if vim.tbl_islist(result) then
-    vim.lsp.util.jump_to_location(result[1])
+    jump_to_location(result[1])
   else
-    vim.lsp.util.jump_to_location(result)
+    jump_to_location(result)
   end
 end
 
