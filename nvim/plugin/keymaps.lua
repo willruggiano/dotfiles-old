@@ -3,9 +3,10 @@ local inoremap = vim.keymap.inoremap
 local nnoremap = vim.keymap.nnoremap
 local tnoremap = vim.keymap.tnoremap
 
-local list_loaded_buffers = require("bombadil.lib.buffer").list_loaded_buffers
+local lib = require "bombadil.lib"
 
 -- WhichKey doesn't seem to like these
+
 -- Opens line above or below the current line
 -- TODO(2021-09-13,wruggian): These don't seem to take for some reason...
 inoremap { "<c-cr>", "<c-o>O" }
@@ -23,6 +24,41 @@ nnoremap { "<right>", "gt" }
 nnoremap { "<left>", "gT" }
 -- Make ESC leave terminal mode
 tnoremap { "<esc>", "<c-\\><c-n>" }
+
+local quit = function()
+  vim.cmd "q"
+  return true
+end
+local bufdelete = function()
+  local bufs = lib.buffer.loaded()
+  if #bufs > 1 then
+    require("bufdelete").bufdelete(0, true)
+    return true
+  end
+  -- bufdelete on the last buffer does nothing
+  return false
+end
+local ft_closers = {
+  help = quit,
+  man = quit,
+}
+local bt_closers = {
+  terminal = quit,
+}
+local close = function()
+  if vim.fn.bufname("%") == "" then
+    quit()
+  end
+  local ft = vim.bo.filetype
+  local bt = vim.bo.buftype
+  local fn = ft_closers[ft] or bt_closers[bt] or bufdelete
+  if fn() then
+    -- Success; nothing to do.
+  else
+    -- The defacto fallback.
+    quit()
+  end
+end
 
 wk.register {
   -- Move lines
@@ -44,14 +80,7 @@ wk.register {
 
   -- Does anyone even use macros?
   q = {
-    function()
-      local bufs = list_loaded_buffers()
-      if #bufs > 1 then
-        require("bufdelete").bufdelete(0, true)
-      else
-        vim.cmd "q"
-      end
-    end,
+    close,
     "close",
   },
   Q = { "<cmd>quitall<cr>", ":quitall" },
