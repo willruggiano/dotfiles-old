@@ -332,6 +332,7 @@ return require("packer").startup(function()
     rocks = { "openssl", "lua-http-parser" },
   }
   use "nvim-telescope/telescope-vimspector.nvim"
+  use "nvim-telescope/telescope-project.nvim"
 
   -- Fzf
   use {

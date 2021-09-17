@@ -69,4 +69,11 @@ wk.register {
     end,
     "packer",
   },
+  -- Projects
+  ["<space>fp"] = {
+    function()
+      require("telescope").extensions.project.project {}
+    end,
+    "projects",
+  },
 }

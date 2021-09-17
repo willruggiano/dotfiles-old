@@ -122,6 +122,15 @@ require("telescope").setup {
         ["work"] = vim.fn.expand "~/workspaces",
       },
     },
+
+    project = {
+      base_dirs = {
+        "~/.config",
+        "~/dev",
+        "~/src",
+        "~/workspaces",
+      },
+    },
   },
 }
 
@@ -129,6 +138,7 @@ pcall(require("telescope").load_extension, "arecibo")
 pcall(require("telescope").load_extension, "cheat")
 pcall(require("telescope").load_extension, "fzf")
 pcall(require("telescope").load_extension, "git_worktree")
+pcall(require("telescope").load_extension, "project")
 
 if vim.fn.executable "gh" == 1 then
   pcall(require("telescope").load_extension, "gh")
