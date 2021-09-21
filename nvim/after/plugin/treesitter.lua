@@ -18,25 +18,12 @@ end)()
 require("nvim-treesitter.configs").setup {
   autopairs = { enable = true },
 
-  ensure_installed = {
-    "c",
-    "cpp",
-    "dockerfile",
-    "go",
-    "html",
-    "java",
-    "json",
-    "lua",
-    "python",
-    "rust",
-    "typescript",
-    "yaml",
-  },
+  ensure_installed = "maintained",
 
   highlight = {
     enable = true,
     use_languagetree = false,
-    disable = { "json" },
+    disable = { "cmake", "json" },
   },
 
   refactor = {

@@ -335,6 +335,7 @@ return require("packer").startup(function()
   use "nvim-telescope/telescope-project.nvim"
 
   -- Fzf
+  use "junegunn/fzf"
   use {
     "ibhagwan/fzf-lua",
     config = function()
