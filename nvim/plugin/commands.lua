@@ -8,3 +8,4 @@ cmd [[command! PackerCompile packadd packer.nvim | lua R('bombadil.plugins').com
 cmd [[command! PackerStatus packadd packer.nvim | lua R('bombadil.plugins').status()]]
 
 cmd [[cnoreabbrev h vert h]]
+cmd [[command! BOnly lua require("close_buffers").delete({ type = "hidden" })]]
