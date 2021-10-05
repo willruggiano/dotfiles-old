@@ -1,7 +1,7 @@
 local opt = vim.opt
 
 -- The pyenv virtualenv which has pynvim installed
-vim.g.python3_host_prog = vim.fn.expand "~/.pyenv/versions/neovim/bin/python"
+vim.g.python3_host_prog = vim.fn.expand "~/.local/.venvs/neovim/bin/python"
 
 -- Set our font
 opt.guifont = "JetBrainsMono-Regular:h11"

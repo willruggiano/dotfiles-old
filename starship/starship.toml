@@ -1,7 +1,8 @@
 format = """
 $hostname\
 $directory\
-$git_branch
+$git_branch\
+$python
 $character
 """
 scan_timeout = 30
@@ -44,3 +45,5 @@ format = """
 [$hostname](bold red)
 """
 
+[python]
+format = 'using [python/$version (\($virtualenv\))](bold yellow)'

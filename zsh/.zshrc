@@ -49,7 +49,8 @@ zinit wait lucid for \
     as:null from:gh make'install PREFIX=$ZPFX' Fakerr/git-recall \
     as:null from:gh has'asciidoc' \
         atclone'make install prefix=$ZPFX && make install-release-doc prefix=$ZPFX && cp -vf contrib/tig-completion.zsh _tig' atpull'%atclone' \
-        jonas/tig
+        jonas/tig \
+    wfxr/forgit
 
 function die() {
     echo "$@"
@@ -107,7 +108,7 @@ case "$OS" in
         zinit ice wait lucid from:gh-r bpick'*macos*.dmg' sbin'**/bin/cmake'
         ;;
     *)
-        zinit ice wait lucid from:gh-r extract'!' bpick'*linux-x86*.tar.gz' sbin'**/bin/cmake'
+        zinit ice wait lucid from:gh-r extract'!' bpick'*linux-x86*.tar.gz' sbin'**/bin/(cmake|ctest)'
         ;;
 esac
 zinit light Kitware/CMake

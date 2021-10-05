@@ -81,11 +81,15 @@ return require("packer").startup(function()
   }
   use "neovim/nvim-lspconfig"
   use {
-    "hrsh7th/nvim-compe",
+    "ms-jpq/coq_nvim",
+    branch = "coq",
     requires = {
-      "L3MON4D3/LuaSnip",
-      "rafamadriz/friendly-snippets",
+      { "ms-jpq/coq.artifacts", branch = "artifacts" },
+      { "ms-jpq/coq.thirdparty", branch = "3p" },
     },
+    setup = function()
+      require "bombadil.config.coq"
+    end,
   }
   use {
     "puremourning/vimspector",
