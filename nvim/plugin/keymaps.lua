@@ -8,7 +8,7 @@ local lib = require "bombadil.lib"
 -- WhichKey doesn't seem to like these
 
 -- Opens line above or below the current line
--- TODO(2021-09-13,wruggian): These don't seem to take for some reason...
+-- TODO: These don't seem to take for some reason...
 inoremap { "<c-cr>", "<c-o>O" }
 inoremap { "<s-cr>", "<c-o>o" }
 -- Better pane navigation
@@ -39,6 +39,7 @@ local bufdelete = function()
   return false
 end
 local ft_closers = {
+  harpoon = quit,
   help = quit,
   man = quit,
 }

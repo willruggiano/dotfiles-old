@@ -17,3 +17,7 @@ require "coq_3p" {
     deadline = 500,
   },
 }
+
+local inoremap = vim.keymap.inoremap
+
+inoremap { "<c-h>", "<c-\\><c-n><cmd>lua COQ.Nav_mark()<cr>" }

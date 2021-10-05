@@ -249,6 +249,7 @@ return require("packer").startup(function()
     rocks = "pcre2",
   }
   use "famiu/bufdelete.nvim"
+  use "kazhala/close-buffers.nvim"
 
   -- Colors
   use "norcalli/nvim-colorizer.lua"
@@ -317,6 +318,12 @@ return require("packer").startup(function()
       require "bombadil.config.harpoon"
     end,
     requires = "nvim-lua/popup.nvim",
+  }
+  use {
+    "nathom/filetype.nvim",
+    config = function()
+      require "bombadil.config.filetype"
+    end,
   }
 
   -- Telescope, et al
